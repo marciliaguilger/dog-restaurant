@@ -1,14 +1,32 @@
-import { Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, Post, Req } from "@nestjs/common";
 import { Customer } from "src/domain/customer/entities/Customer";
-import { ICreateCustomer } from "src/domain/customer/use-cases/create-customer.interface";
+import { CreateCustomerInput } from "../input/create-customer-input";
+import { CustomerOutput } from "../output/customer-output";
+import { ICreateCustomer } from "src/domain/customer/use-cases/customer-use-case.interface";
 
-@Controller()
+@Controller('customers')
 export class CustomerController {
-  constructor(private readonly createCustomerUseCase: ICreateCustomer) {}
+  constructor(
+    @Inject(ICreateCustomer)
+    private readonly createCustomerUseCase: ICreateCustomer) {}
 
-  @Post("/customer")
-  async createCustomer(): Promise<string> {
-    const customer = new Customer('Marcilia','12345','email');
+  @Post()
+  async createCustomer(@Body() createCustomerInput: CreateCustomerInput): Promise<string> {
+    const customer = new Customer(createCustomerInput.name,createCustomerInput.document ,createCustomerInput.email);
     return this.createCustomerUseCase.create(customer);
+  }
+
+  @Get(':document')
+  async getCustomerByDocumetn(@Param('document') document: string): Promise<CustomerOutput> {
+    const customer = await this.createCustomerUseCase.getByDocument(document);
+
+    return new CustomerOutput(customer.id, customer.name, customer.document, customer.email);
+  }
+
+  @Get()
+  async getAll(): Promise<CustomerOutput[]> {
+    const customer = await this.createCustomerUseCase.getAll();
+    
+    return customer.map(customer => new CustomerOutput(customer.id, customer.name, customer.document, customer.email));
   }
 }
