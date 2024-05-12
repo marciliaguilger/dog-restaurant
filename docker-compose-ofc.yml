@@ -1,4 +1,17 @@
 services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    container_name: dogRestaurant_api
+    restart: always
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - sqlserver    
+
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
