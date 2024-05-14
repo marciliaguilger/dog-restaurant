@@ -1,41 +1,35 @@
-import { Injectable } from "@nestjs/common";
-import { IManageProduct } from "./product-use-case.interface";
+import { Inject, Injectable } from "@nestjs/common";
+import { IProductUseCase } from "./product-use-case.interface";
 import { Product } from "../entities/Product";
 import { randomUUID } from "crypto";
+import { IProductRepository } from "../repositories/product-repository.interface";
 
 @Injectable()
-export class ProductService implements IManageProduct {
-    private products: Product[] = [];
-
+export class ProductUseCase implements IProductUseCase {
+    constructor(
+        @Inject(IProductRepository) 
+        private readonly productRepository: IProductRepository) {}
+        
+      private readonly products: Product[] = [];
+      
     async create(product: Product): Promise<string> {
         product.id = randomUUID()
 
-        this.products.push(product);
+        this.productRepository.create(product);
         return product.id;
     }
 
     async getByName(name: string): Promise<Product> {
-        const product = this.products.find(product => product.name === name);
-        if (!product) {
-            throw new Error(`Product with name ${name} not found`);
-        }
-        return product;
+        return this.productRepository.getByName(name)
     }
 
     async getById(id: string): Promise<Product> {
-        const product = this.products.find(product => product.id === id);
-        if (!product) {
-            throw new Error(`Product with id ${id} not found`);
-        }
-        return product;
+        return this.productRepository.getById(id)
     }
 
-    async getByCategory(category: string): Promise<Product> {
-        const product = this.products.find(product => product.category.name === category);
-        if (!product) {
-            throw new Error(`Product with category ${category} not found`);
-        }
-        return product;
+    async getByCategory(category: string): Promise<Product[]> {
+        return this.productRepository.getByCategory(category)
+
     }
 
     async getAll(): Promise<Product[]> {
