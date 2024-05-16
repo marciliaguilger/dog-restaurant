@@ -2,7 +2,7 @@ import { Customer } from "../entities/Customer";
 
 export interface ICustomerUseCase {
     create(customer: Customer): Promise<string>;
-    getByDocument(id: string): Promise<Customer>;
+    getByCpf(cpf: string): Promise<Customer>;
     getAll(): Promise<Customer[]>;
 }
 

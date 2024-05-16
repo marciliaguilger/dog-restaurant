@@ -13,23 +13,22 @@ export class CustomerController {
   @Post()
   async createCustomer(@Body() createCustomerInput: CreateCustomerInput): Promise<string> {
     const customer = new Customer(createCustomerInput.name,createCustomerInput.document ,createCustomerInput.email);
-    console.log(customer)
     return this.customerUseCase.create(customer);
   }
 
-  @Get(':document')
-  async getCustomerByDocument(@Param('document') document: string): Promise<CustomerOutput > {
-    const customer = await this.customerUseCase.getByDocument(document);
+  @Get(':cpf')
+  async getCustomerByDocument(@Param('cpf') cpf: string): Promise<CustomerOutput > {
+    const customer = await this.customerUseCase.getByCpf(cpf);
     if (!customer) {
       throw new NotFoundException(`Customer with document ${document} not found`);
     }
-    return new CustomerOutput(customer.id, customer.name, customer.document, customer.email);
+    return new CustomerOutput(customer.id, customer.name, customer.cpf.number, customer.email);
   }
 
   @Get()
   async getAll(): Promise<CustomerOutput[]> {
     const customer = await this.customerUseCase.getAll();
     
-    return customer.map(customer => new CustomerOutput(customer.id, customer.name, customer.document, customer.email));
+    return customer.map(customer => new CustomerOutput(customer.id, customer.name, customer.cpf.number, customer.email));
   }
 }
