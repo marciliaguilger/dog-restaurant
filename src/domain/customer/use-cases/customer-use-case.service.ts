@@ -12,8 +12,8 @@ export class CustomerUseCase implements ICustomerUseCase {
     
   private readonly customers: Customer[] = [];
   
-  async getByDocument(document: string): Promise<Customer | undefined> {
-    return this.customerRepository.getByDocument(document); 
+  async getByCpf(cpf: string): Promise<Customer | undefined> {
+    return this.customerRepository.getByCpf(cpf); 
   }
   
   async getAll(): Promise<Customer[]> {
@@ -21,7 +21,7 @@ export class CustomerUseCase implements ICustomerUseCase {
   }
 
   async create(customer: Customer): Promise<string> {
-    customer.id = randomUUID()
+   
 
     this.customerRepository.create(customer);
     return customer.id;
