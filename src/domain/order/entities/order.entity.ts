@@ -4,17 +4,18 @@ import { Combo } from "./combo.entity";
 import { randomUUID } from "crypto";
 
 export class Order {
-    private _customerId: string;
-    private _customerName: string;
+    private _customerId?: string;
+    private _customerName?: string;
     private _orderId: string;
     private _shortId: string;
     private _combos: Combo[];
     private _createdAt: Date;
-    private _startedPreparationAt: Date;
-    private _deliveredAt: Date;
+    //private confirmedAt: Date --analisar se faz sentido
+    private _startedPreparationAt?: Date;
+    private _deliveredAt?: Date;
     private _status: OrderStatus;
     private _totalAMount: number;
-    private _discountAmount: number;
+    private _discountAmount?: number;
 
     get shortId(): string {
         return this._shortId
@@ -56,12 +57,13 @@ export class Order {
         return this._discountAmount
     }
 
-    constructor(customerId: string) {
+    constructor(customerId?: string) {
         this._customerId = customerId
     }
 
     createOrder(){
         this._orderId = randomUUID()
+        this._shortId = this._orderId.substring(0, 5)
         this._createdAt = new Date(Date.now())
         this._status = OrderStatus.CREATED
         this._combos = []
@@ -86,13 +88,11 @@ export class Order {
         this._status = OrderStatus.WAITING_DELIVERY
     }
 
-    
-
     calculateOrderTotalAmount() {
         let totalAmount =+ this._combos.forEach(c => {
             c.comboAmount
         });
-        return totalAmount
+        this._totalAMount = totalAmount
     }
 
     setDiscount(discount: number) {

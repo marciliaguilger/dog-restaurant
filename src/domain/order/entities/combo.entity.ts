@@ -29,19 +29,19 @@ export class Combo {
       return this.sandwich.price + this._dessert.price + this._drink.price + this._accompaniment.price
     }
 
-    addItem(productType: string, productId: string, price: number) {
+    addItem(productType: string, productId: string) {
         switch (productType) {
             case 'SANDWICH':
-              this._sandwich = new Sandwich(productId, price);
+              this._sandwich = new Sandwich(productId);
               break;
             case 'DESSERT':
-              this._dessert =  new Dessert(productId, price);
+              this._dessert =  new Dessert(productId);
               break;
             case 'DRINK':
-              this._drink = new Drink(productId, price);
+              this._drink = new Drink(productId);
               break;
             case 'ACCOMPANIMENT':
-                this._accompaniment = new Accompaniment(productId, price)
+                this._accompaniment = new Accompaniment(productId)
                 break;
             default:
               throw new Error('Tipo de produto não cadastrado')
