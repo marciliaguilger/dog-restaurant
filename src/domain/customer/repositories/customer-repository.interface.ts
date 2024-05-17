@@ -1,4 +1,4 @@
-import { Customer } from "../entities/Customer";
+import { Customer } from "../entities/customer.entity";
 
 export interface ICustomerRepository {
     create(customer: Customer);

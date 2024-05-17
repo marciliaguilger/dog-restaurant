@@ -1,8 +1,8 @@
 import { Body, Controller, Get, HttpStatus, Inject, NotFoundException, Param, Post, Req, Res } from "@nestjs/common";
-import { Customer } from "src/domain/customer/entities/Customer";
 import { CreateCustomerInput } from "../input/create-customer-input";
 import { CustomerOutput } from "../output/customer-output";
 import { ICustomerUseCase } from "src/domain/customer/use-cases/customer-use-case.interface";
+import { Customer } from "src/domain/customer/entities/customer.entity";
 
 @Controller('customers')
 export class CustomerController {

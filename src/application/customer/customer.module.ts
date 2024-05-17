@@ -7,6 +7,8 @@ import { CustomerRepository } from "src/infrastructure/customer/repositories/cus
 import { DataBaseModule } from "src/infrastructure/data/database.module";
 import { customerProviders } from "src/infrastructure/data/customer.provider";
 import { databaseProviders } from "src/infrastructure/data/database.provider";
+import { IOrderUseCase } from "src/domain/order/use-cases/order-use-case.interface";
+import { OrderUseCase } from "src/domain/order/use-cases/order-use-case.service";
 
 @Module({
     imports: [DataBaseModule],
