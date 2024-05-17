@@ -1,5 +1,3 @@
-import { Category } from "src/domain/product/entities/Category";
-
 export class ProductOutput {        
     id: string;
     name: string;

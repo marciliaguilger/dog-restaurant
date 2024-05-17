@@ -5,7 +5,7 @@ import { Repository } from "typeorm";
 import { Products } from "../entities/product.entity";
 import { Categories } from "../entities/category.entity";
 
-@Injectable
+@Injectable()
 export class ProductRepository implements IProductRepository {
     constructor(
         @Inject('PRODUCT_REPOSITORY')
@@ -13,6 +13,38 @@ export class ProductRepository implements IProductRepository {
         @Inject('CATEGORY_REPOSITORY')
         private categoryRepo: Repository<Categories>,                
       ) {}
+
+    async create(product: Product) {
+        const productEntity = new Products();
+        productEntity.ProductId = product.id;
+        productEntity.ProductName = product.name;
+        productEntity.ProductDescription = product.description;
+        productEntity.Price = product.price;
+        productEntity.CategoryId = product.category; 
+    
+        await this.productRepo.save(productEntity);
+    }
+    async update(id: string, product: Product): Promise<string> {
+        const productEntity = await this.productRepo
+            .createQueryBuilder("Products")
+            .where("Products.ProductId = :id", { id: id })
+            .getOne();
+    
+        if (!productEntity) return undefined;
+    
+        productEntity.ProductName = product.name;
+        productEntity.ProductDescription = product.description;
+        productEntity.Price = product.price;
+        productEntity.CategoryId = product.category;
+    
+        await this.productRepo.save(productEntity);
+    
+        return id;
+    }
+    async getAllCategories(): Promise<Categories[]> {
+        const categories = await this.categoryRepo.find();
+        return categories;    
+    }
 
     async getByName(name: string): Promise<Product | undefined> {
         const productEntity = await this.productRepo
@@ -84,15 +116,5 @@ export class ProductRepository implements IProductRepository {
         ));
     
         return products;
-    }
-    async create(product: Product) {
-        const productEntity = new Products();
-        productEntity.ProductId = product.id;
-        productEntity.ProductName = product.name;
-        productEntity.ProductDescription = product.description;
-        productEntity.Price = product.price;
-        productEntity.CategoryId = product.category; 
-    
-        await this.productRepo.save(productEntity);
     }
 }
