@@ -1,10 +1,8 @@
-import { CreateOrderInput } from "../dtos/input/create-order.input";
-import { UpdateOrderInput } from "../dtos/input/update-order.input";
-import { Order } from "../entities/order.entity";
+import { Combo } from "../entities/combo.entity";
 
 export interface IOrderUseCase {
-    createOrder(createOrderInput: CreateOrderInput)
-    updateOrderStatus(orderId: string, updateOrderInput: UpdateOrderInput)
+    createOrder(customerId:string, combos: Combo[])
+    updateOrderStatus(orderId: string)
 }
 
 export const IOrderUseCase = Symbol('IOrderUseCase');
