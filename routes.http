@@ -4,7 +4,7 @@ content-type: application/json
 
 {
     "name": "Marcilia",
-    "document": "4155555555",
+    "document": "12345678911",
     "email":"marcilia@gmail.com"
 }
 
@@ -13,4 +13,4 @@ content-type: application/json
 GET http://localhost:3000/customers
 
 ###
-GET http://localhost:3000/customers/4155555555
+GET http://localhost:3000/customers/12345678911
