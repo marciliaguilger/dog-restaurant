@@ -11,6 +11,14 @@ export class ProductUseCase implements IProductUseCase {
         @Inject(IProductRepository) 
         private readonly productRepository: IProductRepository) {}
 
+    async updateStatus(id: string, active: boolean): Promise<string> {
+        this.productRepository.updateStatus(id, active);
+        return id;
+    }
+    async getAllCategories(): Promise<Categories[]> {
+        return this.productRepository.getAllCategories();
+    }
+
         private readonly products: Product[] = [];
 
     async update(id: string, product: Product): Promise<string> {

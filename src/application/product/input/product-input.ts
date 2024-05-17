@@ -6,4 +6,5 @@ export class ProductInput {
     category: Category;
     price: number;
     description: string;
+    active: boolean;
 }

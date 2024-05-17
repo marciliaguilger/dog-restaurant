@@ -12,4 +12,6 @@ export class Products {
     Price: number
     @Column()
     CategoryId: string
+    @Column()
+    Active: boolean    
 }

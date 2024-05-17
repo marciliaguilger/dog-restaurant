@@ -17,6 +17,7 @@ CREATE TABLE dbo.Products(
     ProductDescription varchar(255) NOT NULL,
     Price money NOT NULL,
     CategoryId varchar(10) NOT NULL,
+    Active bit NOT NULL default(1),
     CONSTRAINT PK_Product PRIMARY KEY (ProductId),
     CONSTRAINT FK_Product_Category FOREIGN KEY (CategoryId) REFERENCES dbo.Categories(CategoryId)
 )

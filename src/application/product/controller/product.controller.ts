@@ -58,5 +58,14 @@ export class ProductController {
       throw new NotFoundException(`Product with id ${id} not found`);
     }
     return `Product with id ${id} updated successfully`;  
-  }   
+  }
+  
+  @Put('/:id/status')
+  async updateProductStatus(@Param('id') id: string, @Body() active: boolean): Promise<string> {
+    const updatedProduct = await this.productUseCase.updateStatus(id, active);
+    if (!updatedProduct) {
+      throw new NotFoundException(`Product with id ${id} not found`);
+    }
+    return `Product with id ${id} updated successfully`;  
+  }  
 }

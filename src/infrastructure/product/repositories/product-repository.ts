@@ -13,6 +13,20 @@ export class ProductRepository implements IProductRepository {
         @Inject('CATEGORY_REPOSITORY')
         private categoryRepo: Repository<Categories>,                
       ) {}
+    async updateStatus(id: string, active: boolean) {
+        const productEntity = await this.productRepo
+            .createQueryBuilder("Products")
+            .where("Products.ProductId = :id", { id: id })
+            .getOne();
+    
+        if (!productEntity) return undefined;
+    
+        productEntity.Active = active;
+    
+        await this.productRepo.save(productEntity);
+    
+        return id;    
+    }
 
     async create(product: Product) {
         const productEntity = new Products();
@@ -40,7 +54,7 @@ export class ProductRepository implements IProductRepository {
         await this.productRepo.save(productEntity);
     
         return id;
-    }
+    }    
     async getAllCategories(): Promise<Categories[]> {
         const categories = await this.categoryRepo.find();
         return categories;    
