@@ -1,6 +1,11 @@
+networks:
+  default:
+
 services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      - default    
     environment:
       SA_PASSWORD: "SqlServer2019!"
       ACCEPT_EULA: "Y"
@@ -11,8 +16,25 @@ services:
     image: mcr.microsoft.com/mssql-tools
     depends_on:
       - sqlserver
+    networks:
+      - default      
     volumes:
       - ./db/01.sql:/tmp/01.sql
       - ./db/02.sql:/tmp/02.sql
       - ./db/init.sh:/tmp/init.sh
     command: /bin/bash ./tmp/init.sh      
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    container_name: dogrestaurantapi
+    restart: always
+    #environment:
+      #- NODE_ENV=development
+    depends_on:
+      - sqlserver
+    networks:
+      - default

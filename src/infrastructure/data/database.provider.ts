@@ -6,7 +6,7 @@ export const databaseProviders = [
     useFactory: async () => {
       const dataSource = new DataSource({
         type: 'mssql',
-        host: 'localhost',
+        host: 'sqlserver',
         port: 1433,
         username: 'sa',
         password: 'SqlServer2019!',
