@@ -47,12 +47,12 @@ export class ProductController {
 
   @Post()
   async createProduct(@Body() productInput: ProductInput): Promise<string> {
-    const product = new Product(productInput.name, productInput.category.id, productInput.price, productInput.description);
+    const product = new Product(productInput.name, productInput.category, productInput.price, productInput.description);
     return this.productUseCase.create(product);
   }
   @Put('/:id')
   async updateProduct(@Param('id') id: string, @Body() productInput: ProductInput): Promise<string> {
-    const product = new Product(productInput.name, productInput.category.id, productInput.price, productInput.description);
+    const product = new Product(productInput.name, productInput.category, productInput.price, productInput.description);
     const updatedProduct = await this.productUseCase.update(id, product);
     if (!updatedProduct) {
       throw new NotFoundException(`Product with id ${id} not found`);
