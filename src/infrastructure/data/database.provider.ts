@@ -6,13 +6,13 @@ export const databaseProviders = [
     useFactory: async () => {
       const dataSource = new DataSource({
         type: 'mssql',
-        host: 'sqlserver',
+        host: 'localhost',
         port: 1433,
         username: 'sa',
         password: 'SqlServer2019!',
         database: 'DogRestaurant',
         entities: [
-            __dirname + '/entities/*.entity{.ts,.js}',
+            __dirname + '/**/entities/*.entity{.ts,.js}',
         ],
         synchronize: false,
         logging: true,
@@ -22,8 +22,6 @@ export const databaseProviders = [
           trustServerCertificate: true,
         }
       });
-
-      console.log(dataSource);
       return dataSource.initialize();
     },
   },

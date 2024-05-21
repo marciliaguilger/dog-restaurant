@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 import { Orders } from "../entities/order.entity";
-import { OrderCombos } from "../entities/order-combos.entity";
+import { Ordercombos } from "../entities/order-combos.entity";
 
 export const orderProviders =[
     {
@@ -10,7 +10,7 @@ export const orderProviders =[
     },
     {
         provide: 'COMBOS_REPOSITORY',
-        useFactory: (dataSource: DataSource) => dataSource.getRepository(OrderCombos),
+        useFactory: (dataSource: DataSource) => dataSource.getRepository(Ordercombos),
         inject: ['DATA_SOURCE']
     }
 ]

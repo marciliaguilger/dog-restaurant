@@ -12,13 +12,13 @@ export class OrderUseCase implements IOrderUseCase {
     
     updateOrderStatus(orderId: string) {
         throw new Error("Method not implemented.");
-    }
+    }    
     
     async createOrder(customerId:string, combos: Combo[]) {
         let order = new Order(customerId)
-        
         order.createOrder()
         order.addComboList(combos)
+        
         this.orderRepository.createOrder(order)
     }
 

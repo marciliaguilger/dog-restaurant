@@ -16,17 +16,33 @@ GET http://localhost:3000/customers
 GET http://localhost:3000/customers/12345678911
 
 ###
-
 POST http://localhost:3000/orders
 content-type: application/json
 
 {
-    "customerId": "2167EE43-6BA1-40FE-82DC-0C32D273FF09",
-    "customerName": "Hermione",
-    "combs": [
-        {
-            "sandwichId": "PROD0001",
-            "sandwichPrice": 30000
-        }
-    ]
+  "customerId": "2167EE43-6BA1-40FE-82DC-0C32D273FF09",
+  "combs": [
+    {
+      "sandwichId": "PROD0001",
+      "sandwichPrice": 1000,
+      "dessertId": "PROD0002",
+      "dessertPrice": 1200,
+      "drinkId": "PROD0004",
+      "drinkPrice": 1300,
+      "accompanimentId": "PROD0003",
+      "accompanimenPrice": 500
+    },
+    {
+      "sandwichId": "PROD0001",
+      "sandwichPrice": 1000,
+      "drinkId": "PROD0004",
+      "drinkPrice": 1300
+    },
+    {
+      "dessertId": "PROD0002",
+      "dessertPrice": 1200,
+      "accompanimentId": "PROD0003",
+      "accompanimenPrice": 500
+    }
+  ]
 }

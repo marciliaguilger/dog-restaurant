@@ -3,9 +3,9 @@ import { IOrderRepository } from "src/domain/order/repositories/order-repository
 import { IOrderUseCase } from "src/domain/order/use-cases/order-use-case.interface";
 import { OrderUseCase } from "src/domain/order/use-cases/order-use-case.service";
 import { databaseProviders } from "src/infrastructure/data/database.provider";
-import { orderProviders } from "src/infrastructure/order/repositories/order.provider";
-import { OrderRepository } from "src/infrastructure/order/repositories/order.repository";
+import { OrderRepository } from "src/infrastructure/data/order/repositories/order.repository";
 import { OrderController } from "./controller/order.controller";
+import { orderProviders } from "src/infrastructure/data/order/repositories/order.provider";
 
 @Module({
     imports: [],

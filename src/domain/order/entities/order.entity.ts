@@ -1,4 +1,4 @@
-import { DomainException } from "src/domain/exception/domain.exception";
+import { DomainException } from "src/domain/base/exception/domain.exception";
 import { OrderStatus } from "../enum/order-status.enum";
 import { Combo } from "./combo.entity";
 import { randomUUID } from "crypto";
@@ -8,7 +8,7 @@ export class Order {
     private _customerName?: string;
     private _orderId: string;
     private _shortId: string;
-    private _combos: Combo[];
+    private _combos: Combo[] = [];
     private _createdAt: Date;
     //private confirmedAt: Date --analisar se faz sentido
     private _startedPreparationAt?: Date;
@@ -88,11 +88,13 @@ export class Order {
         this._status = OrderStatus.WAITING_DELIVERY
     }
 
-    calculateOrderTotalAmount() {
-        let totalAmount =+ this._combos.forEach(c => {
-            c.comboAmount
+    calculateOrderTotalAmount(): number{
+        let totalAmount = 0 
+        this._combos.forEach(c => {
+            totalAmount += c.comboAmount
         });
         this._totalAMount = totalAmount
+        return this._totalAMount
     }
 
     setDiscount(discount: number) {
@@ -107,12 +109,16 @@ export class Order {
 
 
     addCombo(combo: Combo) {
+        combo.setOrderId(this._orderId)
         this._combos.push(combo);
         this.calculateOrderTotalAmount()
     }
 
     addComboList(comboList: Combo[]) {
-        this._combos.concat(comboList);
+        comboList.forEach(c => {
+            c.setOrderId(this._orderId)
+            this._combos.push(c)
+        });
         this.calculateOrderTotalAmount()
     }
 

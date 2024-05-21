@@ -50,7 +50,7 @@ CREATE TABLE dbo.OrderCombos(
     ComboId varchar(40) NOT NULL,
     ProductId varchar(10) NOT NULL,
     PriceInCents MONEY NOT NULL,
-    CONSTRAINT PK_OrderCombo PRIMARY KEY (OrderId, ComboId),
+    CONSTRAINT PK_OrderCombo PRIMARY KEY (OrderId, ComboId, ProductId),
     CONSTRAINT FK_Order_OrderCombo FOREIGN KEY (OrderId) REFERENCES dbo.Orders(OrderId)
 )
 

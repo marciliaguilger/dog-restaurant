@@ -3,12 +3,10 @@ import { CustomerController } from "./controller/customer.controller";
 import { CustomerUseCase } from "src/domain/customer/use-cases/customer-use-case.service";
 import { ICustomerUseCase } from "src/domain/customer/use-cases/customer-use-case.interface";
 import { ICustomerRepository } from "src/domain/customer/repositories/customer-repository.interface";
-import { CustomerRepository } from "src/infrastructure/customer/repositories/customer-repository";
 import { DataBaseModule } from "src/infrastructure/data/database.module";
-import { customerProviders } from "src/infrastructure/data/customer.provider";
 import { databaseProviders } from "src/infrastructure/data/database.provider";
-import { IOrderUseCase } from "src/domain/order/use-cases/order-use-case.interface";
-import { OrderUseCase } from "src/domain/order/use-cases/order-use-case.service";
+import { CustomerRepository } from "src/infrastructure/data/customer/repositories/customer-repository";
+import { customerProviders } from "src/infrastructure/data/customer/repositories/customer.provider";
 
 @Module({
     imports: [DataBaseModule],

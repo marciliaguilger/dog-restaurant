@@ -6,11 +6,10 @@ export class OrderMapper {
 
     static mapToCombo(createComboInput: ComboInput): Combo {
         const combo = new Combo();
-        combo.addItem(ProductType.SANDWICH, createComboInput.sandwichId);
-        combo.addItem(ProductType.DRINK, createComboInput.drinkId);
-        combo.addItem(ProductType.DESSERT, createComboInput.dessertId);
-        combo.addItem(ProductType.ACCOMPANIMENT, createComboInput.accompanimentId);
-
+        combo.addItem(ProductType.SANDWICH, createComboInput.sandwichId,createComboInput.sandwichPrice);
+        combo.addItem(ProductType.DRINK, createComboInput.drinkId,createComboInput.drinkPrice);
+        combo.addItem(ProductType.DESSERT, createComboInput.dessertId,createComboInput.dessertPrice);
+        combo.addItem(ProductType.ACCOMPANIMENT, createComboInput.accompanimentId,createComboInput.accompanimentPrice);
         return combo;
     }
 
