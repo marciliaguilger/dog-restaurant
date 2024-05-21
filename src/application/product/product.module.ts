@@ -1,13 +1,13 @@
 import { Module } from "@nestjs/common";
 import { ProductController } from "./controller/product.controller";
 import { DataBaseModule } from "src/infrastructure/database/database.module";
-import { productProviders } from "src/infrastructure/product/product.provider";
+import { productProviders } from "src/infrastructure/database/product/product.provider";
 import { databaseProviders } from "src/infrastructure/database/database.provider";
-import { ProductRepository } from "src/infrastructure/product/repositories/product-repository";
+import { ProductRepository } from "src/infrastructure/database/product/repositories/product-repository";
 import { IProductRepository } from "src/domain/product/repositories/product-repository.interface";
 import { ProductUseCase } from "src/domain/product/use-cases/product-use-case.service";
 import { IProductUseCase } from "src/domain/product/use-cases/product-use-case.interface";
-import { categoryProviders } from "src/infrastructure/product/category.provider";
+import { categoryProviders } from "src/infrastructure/database/product/category.provider";
 
 @Module({
     imports: [DataBaseModule],

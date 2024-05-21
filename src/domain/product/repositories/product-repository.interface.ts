@@ -1,4 +1,4 @@
-import { Categories } from "src/infrastructure/product/entities/category.entity";
+import { Category } from "../entities/Category";
 import { Product } from "../entities/Product";
 
 export interface IProductRepository{
@@ -8,6 +8,7 @@ export interface IProductRepository{
     getByName(name: string): Promise<Product>;
     getById(id: string): Promise<Product>;
     getByCategory(category: string): Promise<Product[]>;
-    getAllCategories():  Promise<Categories[]>;
+    getAllCategories():  Promise<Category[]>;
+    getAll(): Promise<Product[]>;
 }
 export const IProductRepository = Symbol('IProductRepository');

@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Product } from "src/domain/product/entities/Product";
 import { IProductRepository } from "src/domain/product/repositories/product-repository.interface";
 import { Repository } from "typeorm";
+import { Category } from "src/domain/product/entities/Category";
 import { Products } from "../entities/product.entity";
 import { Categories } from "../entities/category.entity";
 
@@ -55,9 +56,32 @@ export class ProductRepository implements IProductRepository {
     
         return id;
     }    
-    async getAllCategories(): Promise<Categories[]> {
-        const categories = await this.categoryRepo.find();
-        return categories;    
+    async getAllCategories(): Promise<Category[]> {
+        const categoriesEntities = await this.categoryRepo.find();
+        const categories: Category[] = categoriesEntities.map(entity => {
+            try {
+                return new Category(entity.CategoryId, entity.CategoryDescription);
+            } catch (error) {
+                console.error(`Error creating category: ${error.message}`);
+
+            }
+        }).filter(category => category !== undefined);
+    
+        return categories;
+    }
+
+    async getAll(): Promise<Product[]> {
+        const productsEntities = await this.productRepo.find();
+        const products: Product[] = productsEntities.map(entity => {
+            try {
+                return new Product(entity.ProductName, entity.CategoryId, entity.Price, entity.ProductDescription);
+            } catch (error) {
+                console.error(`Error creating category: ${error.message}`);
+
+            }
+        }).filter(products => products !== undefined);
+    
+        return products;
     }
 
     async getByName(name: string): Promise<Product | undefined> {

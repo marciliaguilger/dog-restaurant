@@ -12,8 +12,9 @@ export const databaseProviders = [
         password: 'SqlServer2019!',
         database: 'DogRestaurant',
         entities: [
-            __dirname + '/entities/*.entity{.ts,.js}',
-        ],
+          __dirname + '/customer/entities/*.entity{.ts,.js}',
+          __dirname + '/product/entities/*.entity{.ts,.js}',
+      ],
         synchronize: false,
         logging: true,
         logger: 'advanced-console',

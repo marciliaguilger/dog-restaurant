@@ -3,7 +3,7 @@ import { IProductUseCase } from "./product-use-case.interface";
 import { Product } from "../entities/Product";
 import { randomUUID } from "crypto";
 import { IProductRepository } from "../repositories/product-repository.interface";
-import { Categories } from "src/infrastructure/product/entities/category.entity";
+import { Category } from "../entities/Category";
 
 @Injectable()
 export class ProductUseCase implements IProductUseCase {
@@ -11,25 +11,23 @@ export class ProductUseCase implements IProductUseCase {
         @Inject(IProductRepository) 
         private readonly productRepository: IProductRepository) {}
 
+        private readonly products: Product[] = [];
+
     async updateStatus(id: string, active: boolean): Promise<string> {
         this.productRepository.updateStatus(id, active);
         return id;
     }
-    async getAllCategories(): Promise<Categories[]> {
-        return this.productRepository.getAllCategories();
-    }
 
-        private readonly products: Product[] = [];
+    async getAllCategories(): Promise<Category[]> {
+        const categories = await this.productRepository.getAllCategories();    
+        return categories;
+    }
 
     async update(id: string, product: Product): Promise<string> {
         this.productRepository.update(id, product);
         return product.id;
     }
-    getCategories(): Promise<Categories[]> {
-        return this.productRepository.getAllCategories();
-    }
-        
-      
+              
     async create(product: Product): Promise<string> {
         product.id = randomUUID()
 

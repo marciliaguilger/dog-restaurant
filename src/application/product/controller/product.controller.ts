@@ -42,7 +42,7 @@ export class ProductController {
     if (!categories || categories.length < 1) {
       throw new NotFoundException('No categories found');
     }
-    return categories.map(category => new CategoryOutput(category.CategoryDescription, category.CategoryId));
+    return categories.map(category => new CategoryOutput(category.name, category.id));
   }
 
   @Post()
