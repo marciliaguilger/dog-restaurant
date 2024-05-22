@@ -14,8 +14,8 @@ VALUES ('CAT0003', 'Bebidas');
 INSERT INTO dbo.Categories(CategoryId, CategoryDescription)
 VALUES ('CAT0004', 'Acompanhamentos');
 
-INSERT INTO dbo.Products(ProductId, ProductName, ProductDescription, Price, CategoryId)
-VALUES('PROD0001','Frango especial', 'Hamburguer de frango com queijo gorgonzola', 25.00, 'CAT0001')
+INSERT INTO dbo.Products(ProductId, ProductName, ProductDescription, Price, CategoryId, Active)
+VALUES('PROD0001','Frango especial', 'Hamburguer de frango com queijo gorgonzola', 25.00, 'CAT0001', 1)
 
 INSERT INTO dbo.Customers(CustomerId, CustomerName, CustomerDocument, DocumentType, Email)
 VALUES('6B375A98-74B9-4922-94EC-E67EE3ACEAF8', 'Harry Potter', '86106924007', 'CPF', 'harrypotter@fakeemail.com')
