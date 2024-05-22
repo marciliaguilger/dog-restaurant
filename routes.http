@@ -24,25 +24,17 @@ content-type: application/json
   "combs": [
     {
       "sandwichId": "PROD0001",
-      "sandwichPrice": 1000,
       "dessertId": "PROD0002",
-      "dessertPrice": 1200,
       "drinkId": "PROD0004",
-      "drinkPrice": 1300,
-      "accompanimentId": "PROD0003",
-      "accompanimenPrice": 500
+      "accompanimentId": "PROD0003"
     },
     {
       "sandwichId": "PROD0001",
-      "sandwichPrice": 1000,
-      "drinkId": "PROD0004",
-      "drinkPrice": 1300
+      "drinkId": "PROD0004"
     },
     {
       "dessertId": "PROD0002",
-      "dessertPrice": 1200,
-      "accompanimentId": "PROD0003",
-      "accompanimenPrice": 500
+      "accompanimentId": "PROD0003"
     }
   ]
 }

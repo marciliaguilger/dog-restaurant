@@ -14,7 +14,8 @@ export class OrderController {
     @Post()
     async createOrder(@Body() createOrderInput: CreateOrderInput){
         let combos = OrderMapper.mapToComboList(createOrderInput.combs)
-        this.orderUseCase.createOrder(createOrderInput.customerId, combos)
+        
+        return { orderId: await this.orderUseCase.createOrder(createOrderInput.customerId, combos) }
     }
 
 

@@ -70,7 +70,7 @@ export class Order {
     }
 
     startPreparation() {
-        if(this._status > 1)
+        if(this._status !== OrderStatus.CONFIRMED) 
             throw new DomainException('Ação não permitida, pedido em: ${a}',);
             //TODO: CORRIGIR O STRING REPLACE
         
@@ -79,12 +79,9 @@ export class Order {
     }
 
     concludePreparation() {
-        if(this._status < 2)
+        if(this._status !== OrderStatus.PREPARING)
             throw new DomainException('Inicie a preparação do pedido antes de concluir')
 
-        if(this._status > 2)
-            throw new DomainException('Ação não permitida')
-        
         this._status = OrderStatus.WAITING_DELIVERY
     }
 

@@ -37,8 +37,14 @@ export class Combo {
     }
 
     get comboAmount(): number {
-      const amount = this.sandwich.price + this._dessert.price + this._drink.price + this._accompaniment.price
-      return this.sandwich.price + this._dessert.price + this._drink.price + this._accompaniment.price
+      const items = [
+        this.sandwich?.price || 0, 
+        this.dessert?.price || 0, 
+        this.drink?.price || 0, 
+        this.accompaniment?.price || 0
+      ];
+      const amount = items.reduce((total, item) => total + item, 0);
+      return amount;
     }
 
     constructor (){
@@ -50,7 +56,9 @@ export class Combo {
     }
 
     addItem(productType: string, productId: string, price: number) {
-        switch (productType) {
+      if (productId === undefined) return
+        
+      switch (productType) {
             case 'SANDWICH':
               this._sandwich = new Sandwich(productId, price);
               break;

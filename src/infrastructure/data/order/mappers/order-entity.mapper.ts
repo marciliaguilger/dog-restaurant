@@ -35,7 +35,7 @@ export class OrderEntityMapper {
     
     static mapToCombo(combo: Combo): Ordercombos[] {
         let orderCombo: Ordercombos[] = []
-        if(combo.sandwich.productId !== undefined) {
+        if(combo.sandwich?.productId !== undefined) {
             let product = new Ordercombos()
             product.ComboId = combo.comboId
             product.OrderId = combo.orderId
@@ -44,7 +44,7 @@ export class OrderEntityMapper {
             orderCombo.push(product)
         }
 
-        if(combo.dessert.productId !== undefined) {
+        if(combo.dessert?.productId !== undefined) {
             let product = new Ordercombos()
             product.ComboId = combo.comboId
             product.OrderId = combo.orderId
@@ -53,7 +53,7 @@ export class OrderEntityMapper {
             orderCombo.push(product)
         }
 
-        if(combo.accompaniment.productId !== undefined){
+        if(combo.accompaniment?.productId !== undefined){
             let product = new Ordercombos()
             product.ComboId = combo.comboId
             product.OrderId = combo.orderId
@@ -62,7 +62,7 @@ export class OrderEntityMapper {
             orderCombo.push(product)
         }
 
-        if(combo.drink.productId !== undefined){
+        if(combo.drink?.productId !== undefined){
             let product = new Ordercombos()
             product.ComboId = combo.comboId
             product.OrderId = combo.orderId
