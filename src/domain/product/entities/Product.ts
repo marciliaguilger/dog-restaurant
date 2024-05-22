@@ -8,7 +8,6 @@ export class Product {
 
     constructor(name: string, category:string, price: number, description: string, active?: boolean, id?: string) {
         if (!this.validateName(name)) throw new Error("Invalid name");
-        if (!this.validateCategory(category)) throw new Error("Invalid category");
         if (!this.validatePrice(price)) throw new Error("Invalid price");
         if (!this.validateDescription(description)) throw new Error("Invalid description");
 
@@ -22,10 +21,6 @@ export class Product {
 
     private validateName(name: string): boolean {
         return name.trim().length > 3;
-    }
-
-    private validateCategory(category: string): boolean {
-        return category.trim().length > 3;
     }
 
     private validatePrice(price: number): boolean {

@@ -24,7 +24,7 @@ export class ProductUseCase implements IProductUseCase {
 
     async update(id: string, product: Product): Promise<string> {
         this.productRepository.update(id, product);
-        return product.id;
+        return id;
     }
               
     async create(product: Product): Promise<string> {
