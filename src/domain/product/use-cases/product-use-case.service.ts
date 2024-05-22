@@ -9,9 +9,8 @@ import { Category } from "../entities/Category";
 export class ProductUseCase implements IProductUseCase {
     constructor(
         @Inject(IProductRepository) 
-        private readonly productRepository: IProductRepository) {}
-
-        private readonly products: Product[] = [];
+        private readonly productRepository: IProductRepository
+    ) {}
 
     async updateStatus(id: string, active: boolean): Promise<string> {
         this.productRepository.updateStatus(id, active);
@@ -35,6 +34,13 @@ export class ProductUseCase implements IProductUseCase {
         return product.id;
     }
 
+    async createCategory(category: Category): Promise<string> {
+        category.id = randomUUID();
+
+        this.productRepository.createCategory(category);
+        return category.id;
+    }
+
     async getByName(name: string): Promise<Product> {
         return this.productRepository.getByName(name)
     }
@@ -49,6 +55,7 @@ export class ProductUseCase implements IProductUseCase {
     }
 
     async getAll(): Promise<Product[]> {
-        return this.products;
+        const products = await this.productRepository.getAll()    
+        return products;    
     }
 }

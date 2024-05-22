@@ -5,18 +5,18 @@ USE DogRestaurant
 GO
 
 CREATE TABLE dbo.Categories(
-    CategoryId varchar(10) NOT NULL,
+    CategoryId varchar(40) NOT NULL,
     CategoryDescription varchar(20) NOT NULL,
     CONSTRAINT PK_Category PRIMARY KEY (CategoryId)
 )
 GO
 
 CREATE TABLE dbo.Products(
-    ProductId varchar(10) NOT NULL,
+    ProductId varchar(40) NOT NULL,
     ProductName varchar(100) NOT NULL,
     ProductDescription varchar(255) NOT NULL,
     Price money NOT NULL,
-    CategoryId varchar(10) NOT NULL,
+    CategoryId varchar(40) NOT NULL,
     Active bit NOT NULL default(1),
     CONSTRAINT PK_Product PRIMARY KEY (ProductId),
     CONSTRAINT FK_Product_Category FOREIGN KEY (CategoryId) REFERENCES dbo.Categories(CategoryId)
@@ -45,7 +45,7 @@ CREATE TABLE dbo.Orders(
 CREATE TABLE dbo.OrderCombs(
     OrderId varchar(40) NOT NULL,
     OrderItemId varchar(40) NOT NULL,
-    ProductId varchar(10) NOT NULL,
+    ProductId varchar(40) NOT NULL,
     CONSTRAINT PK_OrderComb PRIMARY KEY (OrderId),
     CONSTRAINT FK_Order_OrderComb FOREIGN KEY (OrderId) REFERENCES dbo.Orders(OrderId)
 )

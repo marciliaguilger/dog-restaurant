@@ -12,8 +12,9 @@ export class ProductRepository implements IProductRepository {
         @Inject('PRODUCT_REPOSITORY')
         private productRepo: Repository<Products>,
         @Inject('CATEGORY_REPOSITORY')
-        private categoryRepo: Repository<Categories>,                
+        private categoryRepo: Repository<Categories>,
       ) {}
+
     async updateStatus(id: string, active: boolean) {
         const productEntity = await this.productRepo
             .createQueryBuilder("Products")
@@ -36,9 +37,20 @@ export class ProductRepository implements IProductRepository {
         productEntity.ProductDescription = product.description;
         productEntity.Price = product.price;
         productEntity.CategoryId = product.category; 
+        productEntity.Active = product.active; 
     
         await this.productRepo.save(productEntity);
     }
+
+    async createCategory(category: Category) {
+        const categoryEntity = new Categories();
+
+        categoryEntity.CategoryId = category.id;
+        categoryEntity.CategoryDescription = category.name;
+
+        await this.categoryRepo.save(categoryEntity);
+    }
+
     async update(id: string, product: Product): Promise<string> {
         const productEntity = await this.productRepo
             .createQueryBuilder("Products")
@@ -50,17 +62,19 @@ export class ProductRepository implements IProductRepository {
         productEntity.ProductName = product.name;
         productEntity.ProductDescription = product.description;
         productEntity.Price = product.price;
-        productEntity.CategoryId = product.category;
     
         await this.productRepo.save(productEntity);
     
         return id;
     }    
     async getAllCategories(): Promise<Category[]> {
-        const categoriesEntities = await this.categoryRepo.find();
+        const categoriesEntities = await this.categoryRepo
+            .createQueryBuilder("Categories")
+            .getMany();
+
         const categories: Category[] = categoriesEntities.map(entity => {
             try {
-                return new Category(entity.CategoryId, entity.CategoryDescription);
+                return new Category(entity.CategoryDescription, entity.CategoryId);
             } catch (error) {
                 console.error(`Error creating category: ${error.message}`);
 
@@ -71,12 +85,15 @@ export class ProductRepository implements IProductRepository {
     }
 
     async getAll(): Promise<Product[]> {
-        const productsEntities = await this.productRepo.find();
+        const productsEntities = await this.productRepo
+            .createQueryBuilder("Products")
+            .getMany();
+
         const products: Product[] = productsEntities.map(entity => {
             try {
-                return new Product(entity.ProductName, entity.CategoryId, entity.Price, entity.ProductDescription);
+                return new Product(entity.ProductName, entity.CategoryId, entity.Price, entity.ProductDescription, entity.Active, entity.ProductId);
             } catch (error) {
-                console.error(`Error creating category: ${error.message}`);
+                console.error(`Error creating product: ${error.message}`);
 
             }
         }).filter(products => products !== undefined);
@@ -91,19 +108,14 @@ export class ProductRepository implements IProductRepository {
             .getOne();
     
         if (!productEntity) return undefined;
-    
-        const categoryEntity = await this.categoryRepo
-            .createQueryBuilder("Categories")
-            .where("Categories.CategoryId = :id", { id: productEntity.CategoryId })
-            .getOne();
-    
-        if (!categoryEntity) return undefined;
-    
+        
         const product = new Product(
             productEntity.ProductName,
-            categoryEntity.CategoryDescription,
+            productEntity.CategoryId,
             productEntity.Price,
-            productEntity.ProductDescription
+            productEntity.ProductDescription,
+            productEntity.Active,        
+            productEntity.ProductId, 
         );
     
         return product;
@@ -117,22 +129,18 @@ export class ProductRepository implements IProductRepository {
     
         if (!productEntity) return undefined;
     
-        const categoryEntity = await this.categoryRepo
-            .createQueryBuilder("Categories")
-            .where("Categories.ProductId = :id", { id: productEntity.CategoryId })
-            .getOne();
-    
-        if (!categoryEntity) return undefined;
-    
         const product = new Product(
             productEntity.ProductName,
-            categoryEntity.CategoryDescription,
+            productEntity.CategoryId,
             productEntity.Price,
-            productEntity.ProductDescription
+            productEntity.ProductDescription,
+            productEntity.Active,        
+            productEntity.ProductId,    
         );
     
         return product;    
     }
+
     async getByCategory(category: string): Promise<Product[] | undefined> {
         const categoryEntity = await this.categoryRepo
             .createQueryBuilder("Categories")

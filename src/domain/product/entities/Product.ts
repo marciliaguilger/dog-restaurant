@@ -1,13 +1,12 @@
-import { Category } from "./Category";
-
 export class Product {
     id: string;
     name: string;
     category: string;
     price: number;
     description: string;
+    active:boolean;
 
-    constructor(name: string, category:string, price: number, description: string) {
+    constructor(name: string, category:string, price: number, description: string, active?: boolean, id?: string) {
         if (!this.validateName(name)) throw new Error("Invalid name");
         if (!this.validateCategory(category)) throw new Error("Invalid category");
         if (!this.validatePrice(price)) throw new Error("Invalid price");
@@ -17,6 +16,8 @@ export class Product {
         this.category = category;
         this.price = price;
         this.description = description;
+        this.active = active;
+        this.id = id;
     }
 
     private validateName(name: string): boolean {
