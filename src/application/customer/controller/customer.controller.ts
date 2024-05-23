@@ -3,7 +3,9 @@ import { Customer } from "src/domain/customer/entities/Customer";
 import { CreateCustomerInput } from "../input/create-customer-input";
 import { CustomerOutput } from "../output/customer-output";
 import { ICustomerUseCase } from "src/domain/customer/use-cases/customer-use-case.interface";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Customer')
 @Controller('customers')
 export class CustomerController {
   constructor(
