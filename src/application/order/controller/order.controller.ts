@@ -8,12 +8,14 @@ import { OrderMapper } from "../mapper/order.mapper";
 export class OrderController {
     constructor(
         @Inject(IOrderUseCase)
-        private readonly orderUseCase: IOrderUseCase) {}
+        private readonly orderUseCase: IOrderUseCase,
+        private readonly orderMapper: OrderMapper
+    ) {}
     
         
     @Post()
     async createOrder(@Body() createOrderInput: CreateOrderInput){
-        let combos = OrderMapper.mapToComboList(createOrderInput.combs)
+        let combos = await this.orderMapper.mapToComboList(createOrderInput.combs)
         
         return { orderId: await this.orderUseCase.createOrder(createOrderInput.customerId, combos) }
     }
