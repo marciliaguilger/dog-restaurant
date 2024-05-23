@@ -41,6 +41,25 @@ content-type: application/json
   "customerId": "2167EE43-6BA1-40FE-82DC-0C32D273FF09",
   "combs": [
     {
+      "sandwichId": "PROD0001"
+    },
+    {
+      "sandwichId": "PROD0001"
+    },
+    {
+      "dessertId": "PROD0002"
+    }
+  ]
+}
+
+###
+POST http://localhost:3000/orders
+content-type: application/json
+
+{
+  "customerId": "2167EE43-6BA1-40FE-82DC-0C32D273FF09",
+  "combs": [
+    {
       "sandwichId": "PROD0001",
       "dessertId": "PROD0002",
       "drinkId": "PROD0004",

@@ -137,7 +137,7 @@ export class ProductRepository implements IProductRepository {
             productEntity.Active,        
             productEntity.ProductId,    
         );
-    
+        
         return product;    
     }
 
