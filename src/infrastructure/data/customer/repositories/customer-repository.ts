@@ -11,6 +11,20 @@ export class CustomerRepository implements ICustomerRepository  {
         private customerRepo: Repository<Customers>,
       ) {}
     
+    async getAll(): Promise<Customer[]> {
+        const customers = await this.customerRepo
+        .createQueryBuilder("Customers")
+        .getMany()
+
+        const customersList: Customer[] = []
+
+        customers.forEach(c => {
+            customersList.push(new Customer(c.CustomerName, c.CustomerDocument, c.Email))
+        })
+
+        return customersList
+    }
+    
     async getByCpf(cpf: string): Promise<Customer | undefined> {
         const customers = await this.customerRepo
         .createQueryBuilder("Customers")

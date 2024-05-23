@@ -1,7 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Customer } from "../entities/customer.entity";
 import { ICustomerUseCase } from "./customer-use-case.interface";
-import { randomUUID } from "crypto";
 import { ICustomerRepository } from "../repositories/customer-repository.interface";
 
 @Injectable()
@@ -15,7 +14,7 @@ export class CustomerUseCase implements ICustomerUseCase {
   }
   
   async getAll(): Promise<Customer[]> {
-    throw new Error('Não implementado')
+    return this.customerRepository.getAll(); 
   }
 
   async create(customer: Customer): Promise<string> {
