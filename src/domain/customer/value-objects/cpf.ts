@@ -1,4 +1,4 @@
-import { DomainException } from "src/domain/exception/domain.exception";
+import { DomainException } from "src/domain/base/exception/domain.exception";
 
 export class Cpf {
     private _number: string;

@@ -38,16 +38,21 @@ CREATE TABLE dbo.Orders(
     DeliveredAt DATETIME NULL,
     StartedPreparationAt DATETIME NULL,
     OrderStatus VARCHAR(10) NOT NULL,
+    CustomerId VARCHAR(40) NOT NULL,
     CustomerName varchar(40) NULL,
+    TotalAmountInCents MONEY NOT NULL,
+    DiscountAmountInCents MONEY NULL,
     CONSTRAINT PK_Order PRIMARY KEY (OrderId),
+    CONSTRAINT FK_Order_Customer FOREIGN KEY (CustomerId) REFERENCES dbo.Customers(CustomerId)
 )
 
-CREATE TABLE dbo.OrderCombs(
+CREATE TABLE dbo.OrderCombos(
     OrderId varchar(40) NOT NULL,
-    OrderItemId varchar(40) NOT NULL,
-    ProductId varchar(40) NOT NULL,
-    CONSTRAINT PK_OrderComb PRIMARY KEY (OrderId),
-    CONSTRAINT FK_Order_OrderComb FOREIGN KEY (OrderId) REFERENCES dbo.Orders(OrderId)
+    ComboId varchar(40) NOT NULL,
+    ProductId varchar(10) NOT NULL,
+    PriceInCents MONEY NOT NULL,
+    CONSTRAINT PK_OrderCombo PRIMARY KEY (OrderId, ComboId, ProductId),
+    CONSTRAINT FK_Order_OrderCombo FOREIGN KEY (OrderId) REFERENCES dbo.Orders(OrderId)
 )
 
 GO

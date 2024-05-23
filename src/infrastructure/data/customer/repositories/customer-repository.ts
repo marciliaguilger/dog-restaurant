@@ -1,8 +1,8 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Customer } from "src/domain/customer/entities/Customer";
+import { Customer } from "src/domain/customer/entities/customer.entity";
 import { ICustomerRepository } from "src/domain/customer/repositories/customer-repository.interface";
 import { Repository } from "typeorm";
-import { Customers } from "../../entities/customer.entity";
+import { Customers } from "../entities/customer.entity";
 
 @Injectable()
 export class CustomerRepository implements ICustomerRepository  {
@@ -10,6 +10,20 @@ export class CustomerRepository implements ICustomerRepository  {
         @Inject('CUSTOMER_REPOSITORY')
         private customerRepo: Repository<Customers>,
       ) {}
+    
+    async getAll(): Promise<Customer[]> {
+        const customers = await this.customerRepo
+        .createQueryBuilder("Customers")
+        .getMany()
+
+        const customersList: Customer[] = []
+
+        customers.forEach(c => {
+            customersList.push(new Customer(c.CustomerName, c.CustomerDocument, c.Email))
+        })
+
+        return customersList
+    }
     
     async getByCpf(cpf: string): Promise<Customer | undefined> {
         const customers = await this.customerRepo

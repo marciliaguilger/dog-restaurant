@@ -3,8 +3,8 @@ import { Product } from "src/domain/product/entities/Product";
 import { IProductRepository } from "src/domain/product/repositories/product-repository.interface";
 import { Repository } from "typeorm";
 import { Category } from "src/domain/product/entities/Category";
-import { Products } from "../../entities/product.entity";
-import { Categories } from "../../entities/category.entity";
+import { Categories } from "../entities/category.entity";
+import { Products } from "../entities/product.entity";
 
 @Injectable()
 export class ProductRepository implements IProductRepository {
