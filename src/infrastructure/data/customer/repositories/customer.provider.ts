@@ -1,9 +1,5 @@
-<<<<<<<< HEAD:src/infrastructure/data/customer/repositories/customer.provider.ts
 import { Customers } from "../entities/customer.entity";
-========
->>>>>>>> main:src/infrastructure/database/customer/customer.provider.ts
 import { DataSource } from "typeorm";
-import { Customers } from "../entities/customer.entity";
 
 export const customerProviders = [
     {

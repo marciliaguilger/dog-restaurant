@@ -2,11 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { Customer } from "src/domain/customer/entities/customer.entity";
 import { ICustomerRepository } from "src/domain/customer/repositories/customer-repository.interface";
 import { Repository } from "typeorm";
-<<<<<<<< HEAD:src/infrastructure/data/customer/repositories/customer-repository.ts
 import { Customers } from "../entities/customer.entity";
-========
-import { Customers } from "../../entities/customer.entity";
->>>>>>>> main:src/infrastructure/database/customer/repositories/customer-repository.ts
 
 @Injectable()
 export class CustomerRepository implements ICustomerRepository  {

@@ -6,7 +6,7 @@ import { ICustomerRepository } from "src/domain/customer/repositories/customer-r
 import { databaseProviders } from "src/infrastructure/data/database.provider";
 import { CustomerRepository } from "src/infrastructure/data/customer/repositories/customer-repository";
 import { customerProviders } from "src/infrastructure/data/customer/repositories/customer.provider";
-import { DataBaseModule } from "src/infrastructure/database/database.module";
+import { DataBaseModule } from "src/infrastructure/data/database.module";
 
 @Module({
     imports: [DataBaseModule],
