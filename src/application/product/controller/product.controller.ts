@@ -6,7 +6,9 @@ import { ProductOutput } from "../output/product-output";
 import { CategoryOutput } from "../output/category-output";
 import { CategoryInput } from "../input/category-input";
 import { Category } from "src/domain/product/entities/Category";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Product')
 @Controller('products')
 export class ProductController {
   constructor(
