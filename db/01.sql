@@ -38,7 +38,7 @@ CREATE TABLE dbo.Orders(
     DeliveredAt DATETIME NULL,
     StartedPreparationAt DATETIME NULL,
     OrderStatus VARCHAR(10) NOT NULL,
-    CustomerId VARCHAR(40) NOT NULL,
+    CustomerId VARCHAR(40) NULL,
     CustomerName varchar(40) NULL,
     TotalAmountInCents MONEY NOT NULL,
     DiscountAmountInCents MONEY NULL,

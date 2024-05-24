@@ -1,6 +1,6 @@
 export class CreateOrderInput {
     customerId: string;
-    combs: ComboInput[];
+    combos: ComboInput[];
 }
 
 

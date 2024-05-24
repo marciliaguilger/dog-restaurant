@@ -4,18 +4,18 @@ import { Combo } from "./combo.entity";
 import { randomUUID } from "crypto";
 
 export class Order {
-    private _customerId?: string;
-    private _customerName?: string;
-    private _orderId: string;
-    private _shortId: string;
-    private _combos: Combo[] = [];
-    private _createdAt: Date;
+    public _customerId?: string;
+    public _customerName?: string;
+    public _orderId: string;
+    public _shortId: string;
+    public _combos: Combo[] = [];
+    public _createdAt: Date;
     //private confirmedAt: Date --analisar se faz sentido
-    private _startedPreparationAt?: Date;
-    private _deliveredAt?: Date;
-    private _status: OrderStatus;
-    private _totalAMount: number;
-    private _discountAmount?: number;
+    public _startedPreparationAt?: Date;
+    public _deliveredAt?: Date;
+    public _status: OrderStatus;
+    public _totalAMount: number;
+    public _discountAmount?: number;
 
     get shortId(): string {
         return this._shortId

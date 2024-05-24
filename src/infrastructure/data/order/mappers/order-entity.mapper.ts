@@ -2,6 +2,7 @@ import { Order } from "src/domain/order/entities/order.entity";
 import { Orders } from "../entities/order.entity";
 import { Combo } from "src/domain/order/entities/combo.entity";
 import { Ordercombos } from "../entities/order-combos.entity";
+import { OrderStatus } from "src/domain/order/enum/order-status.enum";
 
 export class OrderEntityMapper {
 
@@ -20,6 +21,20 @@ export class OrderEntityMapper {
         return orders
     }
 
+    static mapToOrderDomain(orderEntity: Orders): Order {
+        const order = new Order(orderEntity.CustomerId);
+        order._orderId = orderEntity.OrderId;
+        order._shortId = orderEntity.ShortId;
+        order._createdAt = orderEntity.CreatedAt;
+        order._deliveredAt = orderEntity.DeliveredAt;
+        order._startedPreparationAt = orderEntity.StartedPreparationAt;
+        order._status = OrderStatus[orderEntity.OrderStatus as keyof typeof OrderStatus];
+        order._customerName = orderEntity.CustomerName;
+        order._totalAMount = orderEntity.TotalAmountInCents;
+        order._discountAmount = orderEntity.DiscountAmountInCents;
+
+        return order;
+    }
 
     static mapToOrderCombo(combo: Combo[]): Ordercombos[] {
         let combos: Ordercombos[] = []

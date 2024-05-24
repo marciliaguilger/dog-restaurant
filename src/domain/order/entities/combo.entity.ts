@@ -51,7 +51,7 @@ export class Combo {
       this._comboId = randomUUID()
     }
 
-    setOrderId(orderId: string) {
+    public setOrderId(orderId: string) {
       this._orderId = orderId;
     }
 
