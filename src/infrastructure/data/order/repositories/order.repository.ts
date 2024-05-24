@@ -15,6 +15,20 @@ export class OrderRepository implements IOrderRepository {
         private combosRepo: Repository<Ordercombos>,
     ) {}
     
+    async getByOrderId(orderId: string): Promise<Order> {
+        const order = this.orderRepo
+        .createQueryBuilder("Orders")
+        .where("Orders.OrderId = :orderId", { orderId:orderId })
+        .getOne()
+
+        //TODO: IMPLEMENTAR
+        return  new Order()
+    }
+    
+    updateOrder(order: Order) {
+        throw new Error("Method not implemented.");
+    }
+    
     
     createOrder(order: Order) {
         let orders = OrderEntityMapper.mapToOrderEntity(order)

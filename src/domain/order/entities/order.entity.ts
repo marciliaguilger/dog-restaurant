@@ -10,7 +10,8 @@ export class Order {
     private _shortId: string;
     private _combos: Combo[] = [];
     private _createdAt: Date;
-    //private confirmedAt: Date --analisar se faz sentido
+    private _preparationConcludedAt: Date;
+    private _cancelledAt: Date;
     private _startedPreparationAt?: Date;
     private _deliveredAt?: Date;
     private _status: OrderStatus;
@@ -69,6 +70,14 @@ export class Order {
         this._combos = []
     }
 
+    confirmOrder() {
+        if(this._status !== OrderStatus.CREATED) 
+            throw new DomainException('Ação não permitida, pedido em: ${a}',);
+        
+        this._startedPreparationAt = new Date(Date.now())
+        this._status = OrderStatus.CONFIRMED
+    }
+
     startPreparation() {
         if(this._status !== OrderStatus.CONFIRMED) 
             throw new DomainException('Ação não permitida, pedido em: ${a}',);
@@ -81,8 +90,21 @@ export class Order {
     concludePreparation() {
         if(this._status !== OrderStatus.PREPARING)
             throw new DomainException('Inicie a preparação do pedido antes de concluir')
-
+        this._preparationConcludedAt = new Date(Date.now())
         this._status = OrderStatus.WAITING_DELIVERY
+    }
+
+    deliverOder() {
+        if(this._status !== OrderStatus.WAITING_DELIVERY)
+            throw new DomainException('Inicie a preparação do pedido antes de concluir')
+
+        this._deliveredAt = new Date(Date.now())
+        this._status = OrderStatus.DELIVERED
+    }
+
+    cancelOrder() {
+        this._cancelledAt = new Date(Date.now())
+        this._status = OrderStatus.CANCELLED
     }
 
     calculateOrderTotalAmount(): number{

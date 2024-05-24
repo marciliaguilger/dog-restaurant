@@ -24,8 +24,7 @@ export class OrderController {
     //TODO: VER MELHOR PRATICA PARA ATUALIZAR O STATUS
     @Put(':orderId/status')
     async updateOrderStatus(@Param(':orderId') orderId: string, @Body() updateOrder: UpdateOrderInput) {
-        this.orderUseCase.updateOrderStatus(orderId)
+        this.orderUseCase.updateOrderStatus(orderId, updateOrder.status)
     }
-
 }
 
