@@ -3,6 +3,8 @@ import { ProductType } from "src/domain/order/enum/product-types.enum";
 import { ComboInput } from "../dtos/input/create-order.input";
 import { Inject, Injectable } from "@nestjs/common";
 import { IProductUseCase } from "src/domain/product/use-cases/product-use-case.interface";
+import { Order } from "src/domain/order/entities/order.entity";
+import { ComboItemOutput, GetComboOutput, GetOrderOutput } from "../dtos/output/get-order.output";
 
 @Injectable()
 export class OrderMapper {
@@ -31,5 +33,57 @@ export class OrderMapper {
         if(productId === undefined) return productPrice
         productPrice = (await this.productUseCase.getById(productId))?.price
         return productPrice
+    }
+
+    mapToOrderDto(order: Order): GetOrderOutput {
+        const combosDto: GetComboOutput[] = order.combos.map(combo => {
+            const itemsDto: ComboItemOutput[] = [];
+    
+            if (combo.sandwich) {
+                itemsDto.push({
+                    productId: combo.sandwich.productId,
+                    productType: 'SANDWICH',
+                    price: combo.sandwich.price,
+                });
+            }
+            if (combo.dessert) {
+                itemsDto.push({
+                    productId: combo.dessert.productId,
+                    productType: 'DESSERT',
+                    price: combo._dessert.price,
+                });
+            }
+            if (combo.drink) {
+                itemsDto.push({
+                    productId: combo.drink.productId,
+                    productType: 'DRINK',
+                    price: combo.drink.price,
+                });
+            }
+            if (combo.accompaniment) {
+                itemsDto.push({
+                    productId: combo.accompaniment.productId,
+                    productType: 'ACCOMPANIMENT',
+                    price: combo._accompaniment.price,
+                });
+            }
+    
+            return {
+                comboId: combo.comboId,
+                items: itemsDto,
+                comboAmount: combo.comboAmount,
+            };
+        });
+        
+        let getOrderOutput = new GetOrderOutput()
+        getOrderOutput.orderId = order.orderId,
+        getOrderOutput.customerId= order.customerId,
+        getOrderOutput.customerName= order.customerName,
+        getOrderOutput.createdAt= order.createdAt,
+        getOrderOutput.status=order.status,
+        getOrderOutput.combos= combosDto,
+        getOrderOutput.totalAmount= order.calculateOrderTotalAmount(),
+        getOrderOutput.discountAmount =order.discountAmount
+        return getOrderOutput;
     }
 }
