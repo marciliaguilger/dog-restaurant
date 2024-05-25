@@ -26,7 +26,7 @@ export const databaseProviders = [
     useFactory: async () => {
       return connectWithRetry({
         type: 'mssql',
-        host: 'localhost',
+        host: 'sqlserver',
         port: 1433,
         username: 'sa',
         password: 'SqlServer2019!',
