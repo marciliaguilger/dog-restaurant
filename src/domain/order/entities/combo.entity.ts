@@ -47,47 +47,47 @@ export class Combo {
       return amount;
     }
 
-    constructor (){
-      this._comboId = randomUUID()
+    constructor (comboId?:string) {
+      this._comboId = comboId === undefined ? randomUUID() : comboId
     }
 
     public setOrderId(orderId: string) {
       this._orderId = orderId;
     }
 
-    addItem(productType: string, productId: string, price: number) {
+    addItem(category: string, productId: string, price: number) {
       if (productId === undefined) return
         
-      switch (productType) {
-            case 'SANDWICH':
-              this._sandwich = new Sandwich(productId, price);
+      switch (category) {
+            case 'Lanche':
+              this._sandwich = new Sandwich(productId, category, price);
               break;
-            case 'DESSERT':
-              this._dessert =  new Dessert(productId, price);
+            case 'Sobremesa':
+              this._dessert =  new Dessert(productId, category, price);
               break;
-            case 'DRINK':
-              this._drink = new Drink(productId, price);
+            case 'Bebida':
+              this._drink = new Drink(productId, category, price);
               break;
-            case 'ACCOMPANIMENT':
-                this._accompaniment = new Accompaniment(productId, price)
+            case 'Acompanhamento':
+                this._accompaniment = new Accompaniment(productId, category, price)
                 break;
             default:
               throw new Error('Tipo de produto não cadastrado')
           }
     }
 
-    removeItem(productType: string) {
-        switch (productType) {
-            case 'SANDWICH':
+    removeItem(category: string) {
+        switch (category) {
+            case 'Lanche':
               this._sandwich = null
               break;
-            case 'DESSERT':
+            case 'Sobremesa':
               this._dessert =  null
               break;
-            case 'DRINK':
+            case 'Bebida':
               this._drink = null
               break;
-            case 'ACCOMPANIMENT':
+            case 'Acompanhamento':
                 this._accompaniment = null
                 break;
             default:

@@ -18,6 +18,7 @@ export class OrderController {
 
     @Post()
     async createOrder(@Body() createOrderInput: CreateOrderInput){
+        console.log('Criando novo pedido')
         let combos = await this.orderMapper.mapToComboList(createOrderInput.combos)
         return { orderId: await this.orderUseCase.createOrder(createOrderInput.customerId, combos) }
     }

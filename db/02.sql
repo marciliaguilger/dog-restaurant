@@ -3,28 +3,28 @@ USE DogRestaurant
 GO
 
 INSERT INTO dbo.Categories(CategoryId, CategoryDescription)
-VALUES ('CAT0001', 'Lanches');
+VALUES ('Lanche', 'Lanches');
 
 INSERT INTO dbo.Categories(CategoryId, CategoryDescription)
-VALUES ('CAT0002', 'Sobremesas');
+VALUES ('Sobremesa', 'Sobremesas');
 
 INSERT INTO dbo.Categories(CategoryId, CategoryDescription)
-VALUES ('CAT0003', 'Bebidas');
+VALUES ('Bebida', 'Bebidas');
 
 INSERT INTO dbo.Categories(CategoryId, CategoryDescription)
-VALUES ('CAT0004', 'Acompanhamentos');
+VALUES ('Acompanhamento', 'Acompanhamentos');
 
 INSERT INTO dbo.Products(ProductId, ProductName, ProductDescription, Price, CategoryId)
-VALUES('PROD0001','Frango especial', 'Hamburguer de frango com queijo gorgonzola', 2500, 'CAT0001')
+VALUES('PROD0001','Frango especial', 'Hamburguer de frango com queijo gorgonzola', 2500, 'Lanche')
 
 INSERT INTO dbo.Products(ProductId, ProductName, ProductDescription, Price, CategoryId)
-VALUES('PROD0002','Sorvete', 'Sorvete de creme', 2500, 'CAT0002')
+VALUES('PROD0002','Sorvete', 'Sorvete de creme', 2500, 'Sobremesa')
 
 INSERT INTO dbo.Products(ProductId, ProductName, ProductDescription, Price, CategoryId)
-VALUES('PROD0003','Batata Frita', 'Batata frita simples', 2500, 'CAT0003')
+VALUES('PROD0003','Batata Frita', 'Batata frita simples', 2500, 'Acompanhamento')
 
 INSERT INTO dbo.Products(ProductId, ProductName, ProductDescription, Price, CategoryId)
-VALUES('PROD0004','Suco de laranja', 'Suco de laranja', 1000, 'CAT0004')
+VALUES('PROD0004','Suco de laranja', 'Suco de laranja', 1000, 'Bebida')
 
 INSERT INTO dbo.Customers(CustomerId, CustomerName, CustomerDocument, DocumentType, Email)
 VALUES('6B375A98-74B9-4922-94EC-E67EE3ACEAF8', 'Harry Potter', '86106924007', 'CPF', 'harrypotter@fakeemail.com')

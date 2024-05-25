@@ -35,8 +35,8 @@ export const databaseProviders = [
           __dirname + '/**/entities/*.entity{.ts,.js}',
         ],
         synchronize: false,
-        logging: true,
-        logger: 'advanced-console',
+        logging: false,
+        //logger: 'advanced-console',
         options: {
           encrypt: true,
           trustServerCertificate: true,
