@@ -1,4 +1,4 @@
-import { Customer } from "../entities/customer.entity";
+import { Customer } from "../entities/cliente.entity";
 
 export interface ICustomerUseCase {
     create(customer: Customer): Promise<string>;

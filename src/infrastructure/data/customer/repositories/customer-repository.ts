@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Customer } from "src/domain/customer/entities/customer.entity";
-import { ICustomerRepository } from "src/domain/customer/repositories/customer-repository.interface";
+import { Customer } from "src/domain/cliente/entities/cliente.entity";
+import { ICustomerRepository } from "src/domain/cliente/repositories/customer-repository.interface";
 import { Repository } from "typeorm";
 import { Customers } from "../entities/customer.entity";
 
@@ -40,8 +40,8 @@ export class CustomerRepository implements ICustomerRepository  {
         //const customerEntity = new CustomerEntity(customer.id, customer.name, customer.document, customer.email);
         const customerEntity = new Customers()
         customerEntity.CustomerId = customer.id;
-        customerEntity.CustomerName = customer.name;
-        customerEntity.CustomerDocument = customer.cpf.number;
+        customerEntity.CustomerName = customer.nome;
+        customerEntity.CustomerDocument = customer.cpf.numero;
         customerEntity.DocumentType = "CPF";
         customerEntity.Email = customer.email;
 

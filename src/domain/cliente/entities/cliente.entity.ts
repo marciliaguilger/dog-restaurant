@@ -10,7 +10,7 @@ export class Customer implements IAggregateRoot {
     private _cpf: Cpf;
     private _email: string;
 
-    get name(): string {
+    get nome(): string {
         return this._name;
     }
     
@@ -43,7 +43,7 @@ export class Customer implements IAggregateRoot {
 
 
     validateName(): boolean {   
-        return this.name.length > 3;
+        return this.nome.length > 3;
     }
     
     validateEmail(): boolean {
