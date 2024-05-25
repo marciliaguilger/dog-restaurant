@@ -84,3 +84,11 @@ GET http://localhost:3000/orders/876a5d56-037f-4310-ba1f-d80afaa49b60
 
 ###
 GET http://localhost:3000/orders/state/CREATED
+
+###
+PUT http://localhost:3000/orders/876a5d56-037f-4310-ba1f-d80afaa49b60/state
+content-type: application/json
+
+{
+  "status": "DELIVERED"
+}

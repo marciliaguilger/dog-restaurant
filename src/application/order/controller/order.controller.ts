@@ -21,13 +21,13 @@ export class OrderController {
         return { orderId: await this.orderUseCase.createOrder(createOrderInput.customerId, combos) }
     }
 
-    @Put(':orderId/status')
+    @Put(':orderId/state')
     async updateOrderStatus(@Param('orderId') orderId: string, @Body() updateOrder: UpdateOrderInput) {
-        const status = OrderState[updateOrder.status as keyof typeof OrderState];
-        if (!status) {
+        //const status = OrderState[updateOrder.status as keyof typeof OrderState];
+        if (!updateOrder.status) {
             throw new Error('Invalid order status');
         }
-        await this.orderUseCase.updateOrderStatus(orderId, status);
+        await this.orderUseCase.updateOrderStatus(orderId, updateOrder.status);
         return { message: 'Order status updated successfully' };
     }
 
