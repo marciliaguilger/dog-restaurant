@@ -21,8 +21,6 @@ export class Orders {
     @Column()
     CustomerId: string
     @Column()
-    CustomerName: string
-    @Column()
     TotalAmountInCents: number
     @Column()
     DiscountAmountInCents: number

@@ -57,9 +57,9 @@ export class ProductController {
   }
 
   @Post()
-  async createProduct(@Body() productInput: ProductInput): Promise<string> {
+  async createProduct(@Body() productInput: ProductInput): Promise<any> {
     const product = new Product(productInput.name, productInput.categoryId, productInput.price, productInput.description, productInput.active);
-    return this.productUseCase.create(product);
+    return { 'productId': await this.productUseCase.create(product) } ;
   }
 
   @Post('/categories')

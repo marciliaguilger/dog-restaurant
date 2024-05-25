@@ -4,7 +4,7 @@ import { CreateOrderInput } from "../dtos/input/create-order.input";
 import { UpdateOrderInput } from "src/application/order/dtos/input/update-order.input";
 import { OrderMapper } from "../mapper/order.mapper";
 import { ApiTags } from "@nestjs/swagger";
-import { OrderStatus as OrderState } from "src/domain/order/enum/order-status.enum";
+import { OrderStatus as OrderState, OrderStatus } from "src/domain/order/enum/order-status.enum";
 
 @ApiTags('Order')
 @Controller('orders')
@@ -44,7 +44,7 @@ export class OrderController {
     }
 
     @Get('state/:state')
-    async getOrdersByState(@Param('state') state: OrderState) {
+    async getOrdersByState(@Param('state') state: OrderStatus) {
         const orders = await this.orderUseCase.getOrdersByState(state);
         return orders.map(order => this.orderMapper.mapToOrderDto(order));
     }

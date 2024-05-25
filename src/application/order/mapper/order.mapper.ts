@@ -35,55 +35,55 @@ export class OrderMapper {
         return productPrice
     }
 
-    async mapToOrderDto(order: Order): Promise<GetOrderOutput> {
+    mapToOrderDto(order: Order): GetOrderOutput {
         const combosDto: GetComboOutput[] = order.combos.map(combo => {
             const itemsDto: ComboItemOutput[] = [];
     
-            if (combo._sandwich) {
+            if (combo.sandwich) {
                 itemsDto.push({
-                    productId: combo._sandwich.productId,
+                    productId: combo.sandwich.productId,
                     productType: 'SANDWICH',
-                    price: combo._sandwich.price,
+                    price: combo.sandwich.price,
                 });
             }
-            if (combo._dessert) {
+            if (combo.dessert) {
                 itemsDto.push({
-                    productId: combo._dessert.productId,
+                    productId: combo.dessert.productId,
                     productType: 'DESSERT',
                     price: combo._dessert.price,
                 });
             }
-            if (combo._drink) {
+            if (combo.drink) {
                 itemsDto.push({
-                    productId: combo._drink.productId,
+                    productId: combo.drink.productId,
                     productType: 'DRINK',
-                    price: combo._drink.price,
+                    price: combo.drink.price,
                 });
             }
-            if (combo._accompaniment) {
+            if (combo.accompaniment) {
                 itemsDto.push({
-                    productId: combo._accompaniment.productId,
+                    productId: combo.accompaniment.productId,
                     productType: 'ACCOMPANIMENT',
                     price: combo._accompaniment.price,
                 });
             }
     
             return {
-                comboId: combo._comboId,
+                comboId: combo.comboId,
                 items: itemsDto,
                 comboAmount: combo.comboAmount,
             };
         });
-    
-        return {
-            orderId: order.orderId,
-            customerId: order.customerId,
-            customerName: order.customerName,
-            createdAt: order.createdAt,
-            status: order.status,
-            combos: combosDto,
-            totalAmount: order.calculateOrderTotalAmount(),
-            discountAmount: order.discountAmount,
-        };
+        
+        let getOrderOutput = new GetOrderOutput()
+        getOrderOutput.orderId = order.orderId,
+        getOrderOutput.customerId= order.customerId,
+        getOrderOutput.customerName= order.customerName,
+        getOrderOutput.createdAt= order.createdAt,
+        getOrderOutput.status=order.status,
+        getOrderOutput.combos= combosDto,
+        getOrderOutput.totalAmount= order.calculateOrderTotalAmount(),
+        getOrderOutput.discountAmount =order.discountAmount
+        return getOrderOutput;
     }
 }

@@ -52,16 +52,15 @@ export class OrderRepository implements IOrderRepository {
             .where("Orders.OrderStatus = :status", { status: state })
             .getMany();
     
-        const ordersWithCombos = await Promise.all(ordersEntities.map(async (orderEntity) => {
-            const combosEntities = await this.orderRepo
-                .createQueryBuilder("OrderCombos")
-                .where("OrderCombos.OrderId = :id", { id: orderEntity.OrderId })
-                .getMany();
-    
-            return OrderEntityMapper.mapToOrderDomain(orderEntity);
-        }));
-    
-        return ordersWithCombos;
+            const ordersWithCombos = await Promise.all(ordersEntities.map(async (orderEntity) => {
+                const combosEntities = await this.orderRepo
+                    .createQueryBuilder("OrderCombos")
+                    .where("OrderCombos.OrderId = :id", { id: orderEntity.OrderId })
+                    .getMany();
+        
+                return OrderEntityMapper.mapToOrderDomain(orderEntity);
+            }));
+            return ordersWithCombos;
     }
             
     updateOrder(order: Order) {

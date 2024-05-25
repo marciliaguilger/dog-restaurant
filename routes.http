@@ -39,7 +39,7 @@ content-type: application/json
 
 {
   "customerId": "2167EE43-6BA1-40FE-82DC-0C32D273FF09",
-  "combs": [
+  "combos": [
     {
       "sandwichId": "PROD0001"
     },
@@ -58,7 +58,7 @@ content-type: application/json
 
 {
   "customerId": "2167EE43-6BA1-40FE-82DC-0C32D273FF09",
-  "combs": [
+  "combos": [
     {
       "sandwichId": "PROD0001",
       "dessertId": "PROD0002",
@@ -75,3 +75,12 @@ content-type: application/json
     }
   ]
 }
+
+###
+GET http://localhost:3000/orders
+
+###
+GET http://localhost:3000/orders/876a5d56-037f-4310-ba1f-d80afaa49b60
+
+###
+GET http://localhost:3000/orders/state/CREATED
