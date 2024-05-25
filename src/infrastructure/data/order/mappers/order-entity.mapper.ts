@@ -21,18 +21,31 @@ export class OrderEntityMapper {
         return orders
     }
 
-    static mapToOrderDomain(orderEntity: Orders): Order {
-        const order = new Order(orderEntity.CustomerId);
+    static mapToOrderDomain(orderEntity: any, combosEntity: any[]): Order {
+        const order = new Order();
+        order._customerId = orderEntity.CustomerId;
+        order._customerName = orderEntity.CustomerName;
         order._orderId = orderEntity.OrderId;
         order._shortId = orderEntity.ShortId;
         order._createdAt = orderEntity.CreatedAt;
         order._deliveredAt = orderEntity.DeliveredAt;
         order._startedPreparationAt = orderEntity.StartedPreparationAt;
         order._status = OrderStatus[orderEntity.OrderStatus as keyof typeof OrderStatus];
-        order._customerName = orderEntity.CustomerName;
         order._totalAMount = orderEntity.TotalAmountInCents;
         order._discountAmount = orderEntity.DiscountAmountInCents;
-
+    
+        order._combos = combosEntity.map(comboEntity => {
+            const combo = new Combo();            
+            combo._orderId = comboEntity.OrderId;
+            combo._comboId = comboEntity.ComboId;        
+            combo._sandwich = comboEntity.sandwich;
+            combo._dessert = comboEntity.dessert;
+            combo._drink = comboEntity.drink;
+            combo._accompaniment = comboEntity.accompaniment;
+    
+            return combo;
+        });
+    
         return order;
     }
 

@@ -11,12 +11,12 @@ export class OrderUseCase implements IOrderUseCase {
         @Inject(IOrderRepository) 
         private readonly orderRepository: IOrderRepository) {}
 
-    async getAllOrders(): Promise<Combo[]> {
+    async getAllOrders(): Promise<Order[]> {
         const orders = await this.orderRepository.getAllOrders();
-        return orders.map(order => order.combos).flat();
+        return orders;
     }
 
-    async getOrderById(orderId: string): Promise<Combo> {
+    async getOrderById(orderId: string): Promise<Order> {
         const order = await this.orderRepository.getOrderById(orderId);
         if (!order) {
             throw new Error(`Order with ID ${orderId} not found.`);
@@ -24,18 +24,14 @@ export class OrderUseCase implements IOrderUseCase {
         return order;
     }
 
-    async getOrdersByState(state: OrderStatus): Promise<Combo[]> {
+    async getOrdersByState(state: OrderStatus): Promise<Order[]> {
         const orders = await this.orderRepository.getOrdersByStatus(state);
-        return orders.map(order => order.combos).flat();
+        return orders;
     }
     
     async updateOrderStatus(orderId: string, status: OrderStatus): Promise<void> {
-        const order = await this.orderRepository.getOrderById(orderId);
-        if (!order) {
-            throw new Error(`Order with ID ${orderId} not found.`);
-        }
-        order.status = status;
-        await this.orderRepository.updateOrder(order);
+
+        throw new Error("Method not implemented.");
     }   
     
     async createOrder(customerId:string, combos: Combo[]): Promise<string> {

@@ -18,11 +18,19 @@ export class OrderRepository implements IOrderRepository {
 
     async getAllOrders(): Promise<Order[]>{
         const ordersEntities = await this.orderRepo
-        .createQueryBuilder("Orders")
-        .getMany();
-
-        return ordersEntities.map(orderEntity => OrderEntityMapper.mapToOrderDomain(orderEntity));
-    }
+            .createQueryBuilder("Orders")
+            .getMany();
+    
+        const ordersWithCombos = await Promise.all(ordersEntities.map(async (orderEntity) => {
+            const combosEntities = await this.orderRepo
+                .createQueryBuilder("OrderCombos")
+                .where("OrderCombos.OrderId = :id", { id: orderEntity.OrderId })
+                .getMany();
+    
+            return OrderEntityMapper.mapToOrderDomain(orderEntity, combosEntities);
+        }));
+    
+        return ordersWithCombos;    }
 
     async getOrderById(orderId: string) : Promise<Order> {
         const orderEntity = await this.orderRepo
@@ -30,17 +38,31 @@ export class OrderRepository implements IOrderRepository {
         .where("Orders.OrderId = :id", { id: orderId })
         .getOne();
 
-        return OrderEntityMapper.mapToOrderDomain(orderEntity);
-    }
-    
-    async getOrdersByStatus(state: OrderStatus) : Promise<Order[]>{
-        const ordersEntities = await this.orderRepo
-        .createQueryBuilder("Orders")
-        .where("Orders.OrderStatus = :status", { status: state})
+        const combosEntities = await this.orderRepo
+        .createQueryBuilder("OrderCombos")
+        .where("OrderCombos.OrderId = :id", { id: orderId })
         .getMany();
 
-        return ordersEntities.map(orderEntity => OrderEntityMapper.mapToOrderDomain(orderEntity));
-    } 
+        return OrderEntityMapper.mapToOrderDomain(orderEntity, combosEntities);
+    }
+    
+    async getOrdersByStatus(state: OrderStatus): Promise<Order[]> {
+        const ordersEntities = await this.orderRepo
+            .createQueryBuilder("Orders")
+            .where("Orders.OrderStatus = :status", { status: state })
+            .getMany();
+    
+        const ordersWithCombos = await Promise.all(ordersEntities.map(async (orderEntity) => {
+            const combosEntities = await this.orderRepo
+                .createQueryBuilder("OrderCombos")
+                .where("OrderCombos.OrderId = :id", { id: orderEntity.OrderId })
+                .getMany();
+    
+            return OrderEntityMapper.mapToOrderDomain(orderEntity, combosEntities);
+        }));
+    
+        return ordersWithCombos;
+    }
             
     updateOrder(order: Order) {
         throw new Error("Method not implemented.");

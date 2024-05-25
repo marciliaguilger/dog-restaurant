@@ -36,54 +36,54 @@ export class OrderMapper {
     }
 
     async mapToOrderDto(order: Order): Promise<GetOrderOutput> {
-        const combosDto: GetComboOutput[] = order.combos.map(combo => {
+        const combosDto: GetComboOutput[] = order._combos.map(combo => {
             const itemsDto: ComboItemOutput[] = [];
-            
-            if (combo.sandwich) {
+    
+            if (combo._sandwich) {
                 itemsDto.push({
-                    productId: combo.sandwich.productId,
+                    productId: combo._sandwich.productId,
                     productType: 'SANDWICH',
-                    price: combo.sandwich.price,
+                    price: combo._sandwich.price,
                 });
             }
-            if (combo.dessert) {
+            if (combo._dessert) {
                 itemsDto.push({
-                    productId: combo.dessert.productId,
+                    productId: combo._dessert.productId,
                     productType: 'DESSERT',
-                    price: combo.dessert.price,
+                    price: combo._dessert.price,
                 });
             }
-            if (combo.drink) {
+            if (combo._drink) {
                 itemsDto.push({
-                    productId: combo.drink.productId,
+                    productId: combo._drink.productId,
                     productType: 'DRINK',
-                    price: combo.drink.price,
+                    price: combo._drink.price,
                 });
             }
-            if (combo.accompaniment) {
+            if (combo._accompaniment) {
                 itemsDto.push({
-                    productId: combo.accompaniment.productId,
+                    productId: combo._accompaniment.productId,
                     productType: 'ACCOMPANIMENT',
-                    price: combo.accompaniment.price,
+                    price: combo._accompaniment.price,
                 });
             }
     
             return {
-                comboId: combo.comboId,
+                comboId: combo._comboId,
                 items: itemsDto,
                 comboAmount: combo.comboAmount,
             };
         });
     
         return {
-            orderId: order.orderId,
-            customerId: order.customerId,
-            customerName: order.customerName,
-            createdAt: order.createdAt,
-            status: order.status,
+            orderId: order._orderId,
+            customerId: order._customerId,
+            customerName: order._customerName,
+            createdAt: order._createdAt,
+            status: order._status,
             combos: combosDto,
             totalAmount: order.calculateOrderTotalAmount(),
-            discountAmount: order.discount,
+            discountAmount: order._discountAmount,
         };
     }
 }
