@@ -4,7 +4,10 @@ import { ProductModule } from './application/product/product.module';
 import { OrderModule } from './application/order/order.module';
 
 @Module({
-  imports: [CustomerModule, ProductModule, OrderModule],
+  imports: [
+    CustomerModule, 
+    ProductModule, 
+    OrderModule],
   controllers: [],
   providers: [],
 })

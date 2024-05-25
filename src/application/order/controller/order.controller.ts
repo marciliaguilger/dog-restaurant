@@ -3,8 +3,9 @@ import { IOrderUseCase } from "src/domain/order/use-cases/order-use-case.interfa
 import { CreateOrderInput } from "../dtos/input/create-order.input";
 import { UpdateOrderInput } from "src/application/order/dtos/input/update-order.input";
 import { OrderMapper } from "../mapper/order.mapper";
+import { CheckoutOrderInput } from "../dtos/input/checkout-order.input";
 import { ApiTags } from "@nestjs/swagger";
-import { OrderStatus as OrderState, OrderStatus } from "src/domain/order/enum/order-status.enum";
+import { OrderStatus } from "src/domain/order/enum/order-status.enum";
 
 @ApiTags('Order')
 @Controller('orders')
@@ -23,12 +24,16 @@ export class OrderController {
 
     @Put(':orderId/state')
     async updateOrderStatus(@Param('orderId') orderId: string, @Body() updateOrder: UpdateOrderInput) {
-        //const status = OrderState[updateOrder.status as keyof typeof OrderState];
         if (!updateOrder.status) {
             throw new Error('Invalid order status');
         }
         await this.orderUseCase.updateOrderStatus(orderId, updateOrder.status);
         return { message: 'Order status updated successfully' };
+    }
+
+    @Put(':orderId/checkout')
+    async checkoutOrder(@Param('orderId') orderId: string, @Body() checkoutOrder: CheckoutOrderInput) {
+        this.orderUseCase.payOrder(orderId, checkoutOrder.qrCode)
     }
 
     @Get()
