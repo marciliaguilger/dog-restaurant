@@ -58,7 +58,9 @@ export class OrderUseCase implements IOrderUseCase {
     async payOrder(orderId: string, qrCode?: string): Promise<boolean> {
         if(qrCode === undefined) return false
         
-        let order = await this.orderRepository.getByOrderId(orderId);
+        let order = await this.orderRepository.getOrderById(orderId);
+        //TODO: retornar erro se o pedido não existir
+        
         order.confirmOrder()
         this.orderRepository.updateOrder(order)
         

@@ -80,7 +80,7 @@ content-type: application/json
 GET http://localhost:3000/orders
 
 ###
-GET http://localhost:3000/orders/876a5d56-037f-4310-ba1f-d80afaa49b60
+GET http://localhost:3000/orders/77ed7a35-5326-4324-8eef-60078c1bc580
 
 ###
 GET http://localhost:3000/orders/state/CREATED
@@ -91,4 +91,12 @@ content-type: application/json
 
 {
   "status": "DELIVERED"
+}
+
+###
+PUT http://localhost:3000/orders/77ed7a35-5326-4324-8eef-60078c1bc580/checkout
+content-type: application/json
+
+{
+  "qrCode": "TESTEPAGAMENTO"
 }

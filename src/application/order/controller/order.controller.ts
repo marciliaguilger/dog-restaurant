@@ -24,7 +24,6 @@ export class OrderController {
 
     @Put(':orderId/state')
     async updateOrderStatus(@Param('orderId') orderId: string, @Body() updateOrder: UpdateOrderInput) {
-        //const status = OrderState[updateOrder.status as keyof typeof OrderState];
         if (!updateOrder.status) {
             throw new Error('Invalid order status');
         }
@@ -32,8 +31,8 @@ export class OrderController {
         return { message: 'Order status updated successfully' };
     }
 
-    @Post(':orderId/checkout')
-    async checkoutOrder(@Param(':orderId') orderId: string, @Body() checkoutOrder: CheckoutOrderInput) {
+    @Put(':orderId/checkout')
+    async checkoutOrder(@Param('orderId') orderId: string, @Body() checkoutOrder: CheckoutOrderInput) {
         this.orderUseCase.payOrder(orderId, checkoutOrder.qrCode)
     }
 
