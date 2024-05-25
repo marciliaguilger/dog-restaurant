@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryColumn } from "typeorm"
+import { Column, Entity, ManyToOne, PrimaryColumn } from "typeorm"
 
 @Entity()
 export class Ordercombos {
@@ -6,8 +6,10 @@ export class Ordercombos {
     OrderId: string
     @PrimaryColumn()
     ComboId: string
-    @Column()
+    @PrimaryColumn()
     ProductId: string
+    @Column()
+    CategoryId: string
     @Column()
     PriceInCents: number
 }

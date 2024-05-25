@@ -16,51 +16,76 @@ export class OrderRepository implements IOrderRepository {
         private combosRepo: Repository<Ordercombos>,
     ) {}
 
-    async getAllOrders(): Promise<Order[]>{
+    async getAllOrders():Promise<Order[]>{
+        let ordersReturn: Order[] = [];
         const ordersEntities = await this.orderRepo
             .createQueryBuilder("Orders")
             .getMany();
-    
-        const ordersWithCombos = await Promise.all(ordersEntities.map(async (orderEntity) => {
-            const combosEntities = await this.orderRepo
-                .createQueryBuilder("OrderCombos")
-                .where("OrderCombos.OrderId = :id", { id: orderEntity.OrderId })
-                .getMany();
-    
-            return OrderEntityMapper.mapToOrderDomain(orderEntity);
-        }));
-    
-        return ordersWithCombos;    }
 
-    async getOrderById(orderId: string) : Promise<Order> {
-        const orderEntity = await this.orderRepo
-        .createQueryBuilder("Orders")
-        .where("Orders.OrderId = :id", { id: orderId })
-        .getOne();
+        for (const orderEntity of ordersEntities) {
+            
+            const combosEntities = await this.combosRepo
+            .createQueryBuilder("OrderCombos")
+            .where("OrderCombos.OrderId = :id", { id: orderEntity.OrderId })
+            .getMany();
 
-        const combosEntities = await this.orderRepo
-        .createQueryBuilder("OrderCombos")
-        .where("OrderCombos.OrderId = :id", { id: orderId })
-        .getMany();
+            let order = OrderEntityMapper.mapToOrderDomain(orderEntity)
+            let orderCombos = OrderEntityMapper.mapToOrderComboDomain(combosEntities)
+            order.addComboList(orderCombos);
 
-        return OrderEntityMapper.mapToOrderDomain(orderEntity);
+            ordersReturn.push(order)
+        }
+        return ordersReturn
+
+    }
+
+    async getOrderById(orderId: string): Promise<Order> {
+        try {
+            const [orderEntity, combosEntities] = await Promise.all([
+                this.orderRepo.createQueryBuilder("Orders")
+                    .where("Orders.OrderId = :id", { id: orderId })
+                    .getOne(),
+                this.combosRepo.createQueryBuilder("OrderCombos")
+                    .where("OrderCombos.OrderId = :id", { id: orderId })
+                    .getMany(),
+            ]);
+    
+            if (!orderEntity) {
+                throw new Error(`Order with ID ${orderId} not found.`);
+            }
+    
+            let order = OrderEntityMapper.mapToOrderDomain(orderEntity);
+            let orderCombos = OrderEntityMapper.mapToOrderComboDomain(combosEntities);
+            order.addComboList(orderCombos);
+    
+            return order;
+        } catch (error) {
+            console.error('Error fetching order by ID:', error);
+            throw error;
+        }
     }
     
     async getOrdersByStatus(state: OrderStatus): Promise<Order[]> {
+        let ordersReturn: Order[] = [];
         const ordersEntities = await this.orderRepo
             .createQueryBuilder("Orders")
             .where("Orders.OrderStatus = :status", { status: state })
             .getMany();
-    
-            const ordersWithCombos = await Promise.all(ordersEntities.map(async (orderEntity) => {
-                const combosEntities = await this.orderRepo
-                    .createQueryBuilder("OrderCombos")
-                    .where("OrderCombos.OrderId = :id", { id: orderEntity.OrderId })
-                    .getMany();
-        
-                return OrderEntityMapper.mapToOrderDomain(orderEntity);
-            }));
-            return ordersWithCombos;
+
+        for (const orderEntity of ordersEntities) {
+            
+            const combosEntities = await this.combosRepo
+            .createQueryBuilder("OrderCombos")
+            .where("OrderCombos.OrderId = :id", { id: orderEntity.OrderId })
+            .getMany();
+
+            let order = OrderEntityMapper.mapToOrderDomain(orderEntity)
+            let orderCombos = OrderEntityMapper.mapToOrderComboDomain(combosEntities)
+            order.addComboList(orderCombos);
+
+            ordersReturn.push(order)
+        }
+        return ordersReturn
     }
             
     updateOrder(order: Order) {
@@ -70,7 +95,7 @@ export class OrderRepository implements IOrderRepository {
     
     createOrder(order: Order) {
         let orders = OrderEntityMapper.mapToOrderEntity(order)
-        let combos = OrderEntityMapper.mapToOrderCombo(order.combos)
+        let combos = OrderEntityMapper.mapToOrderComboEntity(order.combos)
         this.orderRepo.save(orders)
         this.combosRepo.save(combos)
     }

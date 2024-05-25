@@ -13,10 +13,10 @@ export class OrderMapper {
 
     async mapToCombo(createComboInput: ComboInput): Promise<Combo> {
         const combo = new Combo();
-        combo.addItem(ProductType.SANDWICH, createComboInput.sandwichId, await this.getProductPrice(createComboInput.sandwichId));
-        combo.addItem(ProductType.DRINK, createComboInput.drinkId,await this.getProductPrice(createComboInput.drinkId));
-        combo.addItem(ProductType.DESSERT, createComboInput.dessertId,await this.getProductPrice(createComboInput.dessertId));
-        combo.addItem(ProductType.ACCOMPANIMENT, createComboInput.accompanimentId,await this.getProductPrice(createComboInput.accompanimentId));
+        combo.addItem(ProductType.Lanche, createComboInput.sandwichId, await this.getProductPrice(createComboInput.sandwichId));
+        combo.addItem(ProductType.Bebida, createComboInput.drinkId,await this.getProductPrice(createComboInput.drinkId));
+        combo.addItem(ProductType.Sobremesa, createComboInput.dessertId,await this.getProductPrice(createComboInput.dessertId));
+        combo.addItem(ProductType.Acompanhamento, createComboInput.accompanimentId,await this.getProductPrice(createComboInput.accompanimentId));
         return combo;
     }
 
@@ -42,28 +42,28 @@ export class OrderMapper {
             if (combo.sandwich) {
                 itemsDto.push({
                     productId: combo.sandwich.productId,
-                    productType: 'SANDWICH',
+                    productType: 'Lanche',
                     price: combo.sandwich.price,
                 });
             }
             if (combo.dessert) {
                 itemsDto.push({
                     productId: combo.dessert.productId,
-                    productType: 'DESSERT',
+                    productType: 'Sobremesa',
                     price: combo._dessert.price,
                 });
             }
             if (combo.drink) {
                 itemsDto.push({
                     productId: combo.drink.productId,
-                    productType: 'DRINK',
+                    productType: 'Bebida',
                     price: combo.drink.price,
                 });
             }
             if (combo.accompaniment) {
                 itemsDto.push({
                     productId: combo.accompaniment.productId,
-                    productType: 'ACCOMPANIMENT',
+                    productType: 'Acompanhamento',
                     price: combo._accompaniment.price,
                 });
             }

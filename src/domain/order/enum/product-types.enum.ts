@@ -1,6 +1,6 @@
 export enum ProductType {
-    SANDWICH = 'SANDWICH',
-    DESSERT = 'DESSERT',
-    DRINK = 'DRINK',
-    ACCOMPANIMENT = 'ACCOMPANIMENT'
+    Lanche = 'Lanche',
+    Sobremesa = 'Sobremesa',
+    Bebida = 'Bebida',
+    Acompanhamento = 'Acompanhamento'
 }

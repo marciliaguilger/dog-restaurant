@@ -1,5 +1,6 @@
 export abstract class BaseComboProduct {
     private _productId: string;
+    private _categoryId: string;
     private _price: number = 0;
     
     get productId(): string {
@@ -10,8 +11,13 @@ export abstract class BaseComboProduct {
         return this._price;
     }
 
-    constructor(productId: string, price: number) {
+    get categoryId(): string {
+        return this._categoryId;
+    }
+
+    constructor(productId: string, categoryId: string, price: number) {
         this._productId = productId;
         this._price = price
+        this._categoryId = categoryId
     }
 }

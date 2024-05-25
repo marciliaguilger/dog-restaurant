@@ -22,7 +22,7 @@ export class OrderEntityMapper {
 
     static mapToOrderDomain(orderEntity: Orders): Order {
         const orderStatus = OrderStatus[orderEntity.OrderStatus as keyof typeof OrderStatus] || null;
-    
+        
         let order = Order.buildOrder(
             orderEntity.OrderId,
             orderEntity.ShortId,
@@ -35,23 +35,29 @@ export class OrderEntityMapper {
             null,
             orderEntity.StartedPreparationAt,
             orderEntity.DeliveredAt,
-
-            // order._combos = combosEntity.map(comboEntity => {
-            //     const combo = new Combo();            
-            //     combo._orderId = comboEntity.OrderId;
-            //     combo._comboId = comboEntity.ComboId;        
-            //     combo._sandwich = comboEntity.sandwich;
-            //     combo._dessert = comboEntity.dessert;
-            //     combo._drink = comboEntity.drink;
-            //     combo._accompaniment = comboEntity.accompaniment;
-        
-            //     return combo;
-            // });
-        
         )
         return order;
     }
-    static mapToOrderCombo(combo: Combo[]): Ordercombos[] {
+
+    static mapToOrderComboDomain(orderCombos: Ordercombos[]): Combo[] {
+        const comboMap = new Map<string, Combo>();
+
+        for (const comboEntity of orderCombos) {
+            let combo = comboMap.get(comboEntity.ComboId);
+    
+            if (!combo) {
+                combo = new Combo(comboEntity.ComboId);
+                combo.setOrderId(comboEntity.OrderId);
+                comboMap.set(comboEntity.ComboId, combo);
+            }
+    
+            combo.addItem(comboEntity.CategoryId, comboEntity.ProductId, comboEntity.PriceInCents);
+        }
+    
+        return Array.from(comboMap.values());
+    }
+
+    static mapToOrderComboEntity(combo: Combo[]): Ordercombos[] {
         let combos: Ordercombos[] = []
         combo.forEach(c => {
             let mappedCombo = this.mapToCombo(c)
@@ -63,13 +69,14 @@ export class OrderEntityMapper {
         return combos
     }
     
-    static mapToCombo(combo: Combo): Ordercombos[] {
+    private static mapToCombo(combo: Combo): Ordercombos[] {
         let orderCombo: Ordercombos[] = []
         if(combo.sandwich?.productId !== undefined) {
             let product = new Ordercombos()
             product.ComboId = combo.comboId
             product.OrderId = combo.orderId
             product.ProductId = combo.sandwich.productId
+            product.CategoryId = combo.sandwich.categoryId
             product.PriceInCents = combo.sandwich.price
             orderCombo.push(product)
         }
@@ -79,6 +86,7 @@ export class OrderEntityMapper {
             product.ComboId = combo.comboId
             product.OrderId = combo.orderId
             product.ProductId = combo.dessert.productId
+            product.CategoryId = combo.dessert.categoryId
             product.PriceInCents = combo.dessert.price
             orderCombo.push(product)
         }
@@ -88,6 +96,7 @@ export class OrderEntityMapper {
             product.ComboId = combo.comboId
             product.OrderId = combo.orderId
             product.ProductId = combo.accompaniment.productId
+            product.CategoryId = combo.accompaniment.categoryId
             product.PriceInCents = combo.accompaniment.price
             orderCombo.push(product)
         }
@@ -97,6 +106,7 @@ export class OrderEntityMapper {
             product.ComboId = combo.comboId
             product.OrderId = combo.orderId
             product.ProductId = combo.drink.productId
+            product.CategoryId = combo.drink.categoryId
             product.PriceInCents = combo.drink.price
             orderCombo.push(product)
         }
