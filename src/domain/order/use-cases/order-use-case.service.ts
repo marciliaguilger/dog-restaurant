@@ -37,6 +37,16 @@ export class OrderUseCase implements IOrderUseCase {
         this.orderRepository.updateOrder(order)
     }    
     
+    async payOrder(orderId: string, qrCode?: string): Promise<boolean> {
+        if(qrCode === undefined) return false
+        
+        let order = await this.orderRepository.getByOrderId(orderId);
+        order.confirmOrder()
+        this.orderRepository.updateOrder(order)
+        
+        return true
+    }
+
     async createOrder(customerId:string, combos: Combo[]): Promise<string> {
         let order = new Order(customerId)
         order.createOrder()        
