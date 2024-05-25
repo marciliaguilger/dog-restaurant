@@ -10,6 +10,7 @@ export class Product {
         if (!this.validateName(name)) throw new Error("Invalid name");
         if (!this.validatePrice(price)) throw new Error("Invalid price");
         if (!this.validateDescription(description)) throw new Error("Invalid description");
+        if (!this.validateCategory(category)) throw new Error("Invalid category");
 
         this.name = name;
         this.category = category;
@@ -20,14 +21,18 @@ export class Product {
     }
 
     private validateName(name: string): boolean {
-        return name.trim().length > 3;
+        return (name!= null && name.trim().length > 3);
     }
 
     private validatePrice(price: number): boolean {
-        return price > 0;
+        return (price!= null && price > 0);
     }
 
     private validateDescription(description: string): boolean {
-        return description.trim().length > 5;
+        return (description!= null && description.trim().length > 5);
+    }
+
+    private validateCategory(category: string): boolean {
+        return (category!= null);
     }
 }

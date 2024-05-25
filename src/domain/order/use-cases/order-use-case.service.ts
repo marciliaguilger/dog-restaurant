@@ -59,8 +59,9 @@ export class OrderUseCase implements IOrderUseCase {
         if(qrCode === undefined) return false
         
         let order = await this.orderRepository.getOrderById(orderId);
-        //TODO: retornar erro se o pedido não existir
         
+        if(order == undefined) return false
+
         order.confirmOrder()
         this.orderRepository.updateOrder(order)
         
