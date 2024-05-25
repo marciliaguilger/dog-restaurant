@@ -23,3 +23,18 @@ services:
       - ./db/02.sql:/tmp/02.sql
       - ./db/init.sh:/tmp/init.sh
     command: /bin/bash ./tmp/init.sh      
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    container_name: dogrestaurantapi
+    restart: always
+    #environment:
+      #- NODE_ENV=development
+    depends_on:
+      - sqlserver
+    networks:
+      - default
