@@ -13,11 +13,13 @@ export class Orders {
     @Column()
     StartedPreparationAt: Date
     @Column()
+    PreparationConcludedAt: Date
+    @Column()
+    CancelledAt: Date
+    @Column()
     OrderStatus : string
     @Column()
     CustomerId: string
-    @Column()
-    CustomerName: string
     @Column()
     TotalAmountInCents: number
     @Column()

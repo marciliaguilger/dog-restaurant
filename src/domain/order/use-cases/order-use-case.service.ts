@@ -10,9 +10,27 @@ export class OrderUseCase implements IOrderUseCase {
     constructor(
         @Inject(IOrderRepository) 
         private readonly orderRepository: IOrderRepository) {}
-    
+
+    async getAllOrders(): Promise<Order[]> {
+        const orders = await this.orderRepository.getAllOrders();
+        return orders;
+    }
+
+    async getOrderById(orderId: string): Promise<Order> {
+        const order = await this.orderRepository.getOrderById(orderId);
+        if (!order) {
+            throw new Error(`Order with ID ${orderId} not found.`);
+        }
+        return order;
+    }
+
+    async getOrdersByState(state: OrderStatus): Promise<Order[]> {
+        const orders = await this.orderRepository.getOrdersByStatus(state);
+        return orders;
+    }
+
     async updateOrderStatus(orderId: string, newStatus: OrderStatus) {
-        let order = await this.orderRepository.getByOrderId(orderId);
+        let order = await this.orderRepository.getOrderById(orderId);
         
         switch (newStatus) {
             case OrderStatus.CONFIRMED: 

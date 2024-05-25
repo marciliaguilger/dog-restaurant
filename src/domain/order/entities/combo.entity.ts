@@ -5,12 +5,12 @@ import { Drink } from "../value-objects/drink.vo";
 import { Sandwich } from "../value-objects/sandwich.vo";
 
 export class Combo {
-    private _orderId: string;
-    private _comboId: string;
-    private _sandwich: Sandwich;
-    private _dessert: Dessert;
-    private _drink: Drink;
-    private _accompaniment: Accompaniment;
+    public _orderId: string;
+    public _comboId: string;
+    public _sandwich: Sandwich;
+    public _dessert: Dessert;
+    public _drink: Drink;
+    public _accompaniment: Accompaniment;
 
     get orderId(): string {
         return this._orderId;
@@ -51,7 +51,7 @@ export class Combo {
       this._comboId = randomUUID()
     }
 
-    setOrderId(orderId: string) {
+    public setOrderId(orderId: string) {
       this._orderId = orderId;
     }
 

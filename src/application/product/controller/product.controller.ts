@@ -6,7 +6,9 @@ import { ProductOutput } from "../output/product-output";
 import { CategoryOutput } from "../output/category-output";
 import { CategoryInput } from "../input/category-input";
 import { Category } from "src/domain/product/entities/Category";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('Product')
 @Controller('products')
 export class ProductController {
   constructor(
@@ -55,9 +57,9 @@ export class ProductController {
   }
 
   @Post()
-  async createProduct(@Body() productInput: ProductInput): Promise<string> {
+  async createProduct(@Body() productInput: ProductInput): Promise<any> {
     const product = new Product(productInput.name, productInput.categoryId, productInput.price, productInput.description, productInput.active);
-    return this.productUseCase.create(product);
+    return { 'productId': await this.productUseCase.create(product) } ;
   }
 
   @Post('/categories')

@@ -18,6 +18,40 @@ export class Order {
     private _totalAMount: number;
     private _discountAmount?: number;
 
+    constructor(customerId?: string) {
+        this._customerId = customerId
+    }
+
+    public static buildOrder(
+        orderId: string,
+        shortId: string,
+        createdAt: Date,
+        preparationConcludedAt: Date,
+        cancelledAt: Date,
+        status: OrderStatus,
+        totalAmount: number,
+        customerId?: string,
+        customerName?: string,
+        startedPreparationAt?: Date,
+        deliveredAt?: Date,
+        discountAmount?: number
+    ): Order {
+        const order = new Order();
+        order._orderId = orderId;
+        order._shortId = shortId;
+        order._createdAt = createdAt;
+        order._preparationConcludedAt = preparationConcludedAt;
+        order._cancelledAt = cancelledAt;
+        order._status = status;
+        order._totalAMount = totalAmount;
+        order._customerId = customerId;
+        order._customerName = customerName;
+        order._startedPreparationAt = startedPreparationAt;
+        order._deliveredAt = deliveredAt;
+        order._discountAmount = discountAmount;
+        return order;
+    }
+
     get shortId(): string {
         return this._shortId
     }
@@ -54,12 +88,8 @@ export class Order {
         return this._status
     }
 
-    get discount(): number {
+    get discountAmount(): number {
         return this._discountAmount
-    }
-
-    constructor(customerId?: string) {
-        this._customerId = customerId
     }
 
     createOrder(){
