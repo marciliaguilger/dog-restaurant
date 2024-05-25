@@ -4,9 +4,9 @@ import { OrderStatus } from "../enum/order-status.enum";
 
 export interface IOrderUseCase {
     createOrder(customerId:string, combos: Combo[]) : Promise<string>
-    getAllOrders() : Promise<Combo[]>
+    getAllOrders() : Promise<Order[]>
     getOrderById(order: string) : Promise<Order>
-    getOrdersByState(state: OrderStatus): Promise<Combo[]>
+    getOrdersByState(state: OrderStatus): Promise<Order[]>
     updateOrderStatus(orderId: string, status: OrderStatus): Promise<void>
 }
 
