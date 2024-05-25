@@ -27,7 +27,7 @@ export class OrderRepository implements IOrderRepository {
                 .where("OrderCombos.OrderId = :id", { id: orderEntity.OrderId })
                 .getMany();
     
-            return OrderEntityMapper.mapToOrderDomain(orderEntity, combosEntities);
+            return OrderEntityMapper.mapToOrderDomain(orderEntity);
         }));
     
         return ordersWithCombos;    }
@@ -43,7 +43,7 @@ export class OrderRepository implements IOrderRepository {
         .where("OrderCombos.OrderId = :id", { id: orderId })
         .getMany();
 
-        return OrderEntityMapper.mapToOrderDomain(orderEntity, combosEntities);
+        return OrderEntityMapper.mapToOrderDomain(orderEntity);
     }
     
     async getOrdersByStatus(state: OrderStatus): Promise<Order[]> {
@@ -58,22 +58,20 @@ export class OrderRepository implements IOrderRepository {
                 .where("OrderCombos.OrderId = :id", { id: orderEntity.OrderId })
                 .getMany();
     
-            return OrderEntityMapper.mapToOrderDomain(orderEntity, combosEntities);
+            return OrderEntityMapper.mapToOrderDomain(orderEntity);
         }));
     
         return ordersWithCombos;
     }
             
     updateOrder(order: Order) {
-        throw new Error("Method not implemented.");
+        let orders = OrderEntityMapper.mapToOrderEntity(order)
+        this.orderRepo.save(orders)
     }
-    
     
     createOrder(order: Order) {
         let orders = OrderEntityMapper.mapToOrderEntity(order)
         let combos = OrderEntityMapper.mapToOrderCombo(order.combos)
-        this.orderRepo.create(orders)
-        this.combosRepo.create(combos)
         this.orderRepo.save(orders)
         this.combosRepo.save(combos)
     }

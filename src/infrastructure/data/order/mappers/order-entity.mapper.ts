@@ -17,38 +17,41 @@ export class OrderEntityMapper {
         orders.CustomerName = order.customerName
         orders.CustomerId = order.customerId
         orders.TotalAmountInCents = order.calculateOrderTotalAmount()
-        orders.DiscountAmountInCents = order.discount        
+        orders.DiscountAmountInCents = order.discountAmount        
         return orders
     }
 
-    static mapToOrderDomain(orderEntity: any, combosEntity: any[]): Order {
-        const order = new Order();
-        order._customerId = orderEntity.CustomerId;
-        order._customerName = orderEntity.CustomerName;
-        order._orderId = orderEntity.OrderId;
-        order._shortId = orderEntity.ShortId;
-        order._createdAt = orderEntity.CreatedAt;
-        order._deliveredAt = orderEntity.DeliveredAt;
-        order._startedPreparationAt = orderEntity.StartedPreparationAt;
-        order._status = OrderStatus[orderEntity.OrderStatus as keyof typeof OrderStatus];
-        order._totalAMount = orderEntity.TotalAmountInCents;
-        order._discountAmount = orderEntity.DiscountAmountInCents;
+    static mapToOrderDomain(orderEntity: Orders): Order {
+        const orderStatus = OrderStatus[orderEntity.OrderStatus as keyof typeof OrderStatus] || null;
     
-        order._combos = combosEntity.map(comboEntity => {
-            const combo = new Combo();            
-            combo._orderId = comboEntity.OrderId;
-            combo._comboId = comboEntity.ComboId;        
-            combo._sandwich = comboEntity.sandwich;
-            combo._dessert = comboEntity.dessert;
-            combo._drink = comboEntity.drink;
-            combo._accompaniment = comboEntity.accompaniment;
-    
-            return combo;
-        });
-    
+        let order = Order.buildOrder(
+            orderEntity.OrderId,
+            orderEntity.ShortId,
+            orderEntity.CreatedAt,
+            orderEntity.PreparationConcludedAt,
+            orderEntity.CancelledAt,
+            orderStatus,
+            orderEntity.TotalAmountInCents,
+            orderEntity.CustomerId,
+            orderEntity.CustomerName,
+            orderEntity.StartedPreparationAt,
+            orderEntity.DeliveredAt,
+
+            // order._combos = combosEntity.map(comboEntity => {
+            //     const combo = new Combo();            
+            //     combo._orderId = comboEntity.OrderId;
+            //     combo._comboId = comboEntity.ComboId;        
+            //     combo._sandwich = comboEntity.sandwich;
+            //     combo._dessert = comboEntity.dessert;
+            //     combo._drink = comboEntity.drink;
+            //     combo._accompaniment = comboEntity.accompaniment;
+        
+            //     return combo;
+            // });
+        
+        )
         return order;
     }
-
     static mapToOrderCombo(combo: Combo[]): Ordercombos[] {
         let combos: Ordercombos[] = []
         combo.forEach(c => {

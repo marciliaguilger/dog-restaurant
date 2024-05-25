@@ -36,7 +36,7 @@ export class OrderMapper {
     }
 
     async mapToOrderDto(order: Order): Promise<GetOrderOutput> {
-        const combosDto: GetComboOutput[] = order._combos.map(combo => {
+        const combosDto: GetComboOutput[] = order.combos.map(combo => {
             const itemsDto: ComboItemOutput[] = [];
     
             if (combo._sandwich) {
@@ -76,14 +76,14 @@ export class OrderMapper {
         });
     
         return {
-            orderId: order._orderId,
-            customerId: order._customerId,
-            customerName: order._customerName,
-            createdAt: order._createdAt,
-            status: order._status,
+            orderId: order.orderId,
+            customerId: order.customerId,
+            customerName: order.customerName,
+            createdAt: order.createdAt,
+            status: order.status,
             combos: combosDto,
             totalAmount: order.calculateOrderTotalAmount(),
-            discountAmount: order._discountAmount,
+            discountAmount: order.discountAmount,
         };
     }
 }

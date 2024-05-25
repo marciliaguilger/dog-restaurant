@@ -28,11 +28,32 @@ export class OrderUseCase implements IOrderUseCase {
         const orders = await this.orderRepository.getOrdersByStatus(state);
         return orders;
     }
-    
-    async updateOrderStatus(orderId: string, status: OrderStatus): Promise<void> {
 
-        throw new Error("Method not implemented.");
-    }   
+    async updateOrderStatus(orderId: string, newStatus: OrderStatus) {
+        let order = await this.orderRepository.getOrderById(orderId);
+        
+        switch (newStatus) {
+            case OrderStatus.CONFIRMED: 
+                order.confirmOrder()
+                break;
+            case OrderStatus.PREPARING:
+                order.startPreparation()
+                break;
+            case OrderStatus.WAITING_DELIVERY:
+                order.concludePreparation()
+                break;
+            case OrderStatus.DELIVERED:
+                order.deliverOder()
+                break;
+            case OrderStatus.CANCELLED:
+                order.cancelOrder()
+                break;
+            default:
+                return
+        }
+        
+        this.orderRepository.updateOrder(order)
+    }    
     
     async createOrder(customerId:string, combos: Combo[]): Promise<string> {
         let order = new Order(customerId)

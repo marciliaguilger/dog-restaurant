@@ -4,18 +4,53 @@ import { Combo } from "./combo.entity";
 import { randomUUID } from "crypto";
 
 export class Order {
-    public _customerId?: string;
-    public _customerName?: string;
-    public _orderId: string;
-    public _shortId: string;
-    public _combos: Combo[] = [];
-    public _createdAt: Date;
-    //private confirmedAt: Date --analisar se faz sentido
-    public _startedPreparationAt?: Date;
-    public _deliveredAt?: Date;
-    public _status: OrderStatus;
-    public _totalAMount: number;
-    public _discountAmount?: number;
+    private _customerId?: string;
+    private _customerName?: string;
+    private _orderId: string;
+    private _shortId: string;
+    private _combos: Combo[] = [];
+    private _createdAt: Date;
+    private _preparationConcludedAt: Date;
+    private _cancelledAt: Date;
+    private _startedPreparationAt?: Date;
+    private _deliveredAt?: Date;
+    private _status: OrderStatus;
+    private _totalAMount: number;
+    private _discountAmount?: number;
+
+    constructor(customerId?: string) {
+        this._customerId = customerId
+    }
+
+    public static buildOrder(
+        orderId: string,
+        shortId: string,
+        createdAt: Date,
+        preparationConcludedAt: Date,
+        cancelledAt: Date,
+        status: OrderStatus,
+        totalAmount: number,
+        customerId?: string,
+        customerName?: string,
+        startedPreparationAt?: Date,
+        deliveredAt?: Date,
+        discountAmount?: number
+    ): Order {
+        const order = new Order();
+        order._orderId = orderId;
+        order._shortId = shortId;
+        order._createdAt = createdAt;
+        order._preparationConcludedAt = preparationConcludedAt;
+        order._cancelledAt = cancelledAt;
+        order._status = status;
+        order._totalAMount = totalAmount;
+        order._customerId = customerId;
+        order._customerName = customerName;
+        order._startedPreparationAt = startedPreparationAt;
+        order._deliveredAt = deliveredAt;
+        order._discountAmount = discountAmount;
+        return order;
+    }
 
     get shortId(): string {
         return this._shortId
@@ -53,12 +88,8 @@ export class Order {
         return this._status
     }
 
-    get discount(): number {
+    get discountAmount(): number {
         return this._discountAmount
-    }
-
-    constructor(customerId?: string) {
-        this._customerId = customerId
     }
 
     createOrder(){
@@ -67,6 +98,14 @@ export class Order {
         this._createdAt = new Date(Date.now())
         this._status = OrderStatus.CREATED
         this._combos = []
+    }
+
+    confirmOrder() {
+        if(this._status !== OrderStatus.CREATED) 
+            throw new DomainException('Ação não permitida, pedido em: ${a}',);
+        
+        this._startedPreparationAt = new Date(Date.now())
+        this._status = OrderStatus.CONFIRMED
     }
 
     startPreparation() {
@@ -81,8 +120,21 @@ export class Order {
     concludePreparation() {
         if(this._status !== OrderStatus.PREPARING)
             throw new DomainException('Inicie a preparação do pedido antes de concluir')
-
+        this._preparationConcludedAt = new Date(Date.now())
         this._status = OrderStatus.WAITING_DELIVERY
+    }
+
+    deliverOder() {
+        if(this._status !== OrderStatus.WAITING_DELIVERY)
+            throw new DomainException('Inicie a preparação do pedido antes de concluir')
+
+        this._deliveredAt = new Date(Date.now())
+        this._status = OrderStatus.DELIVERED
+    }
+
+    cancelOrder() {
+        this._cancelledAt = new Date(Date.now())
+        this._status = OrderStatus.CANCELLED
     }
 
     calculateOrderTotalAmount(): number{
