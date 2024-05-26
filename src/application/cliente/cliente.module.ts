@@ -1,27 +1,27 @@
 import { Module } from "@nestjs/common";
 import { ClienteController } from "./controller/cliente.controller";
-import { CustomerUseCase as ClienteUseCase } from "src/domain/cliente/use-cases/customer-use-case.service";
-import { ICustomerRepository as IClienteRepository } from "src/domain/cliente/repositories/customer-repository.interface";
+import { CustomerUseCase } from "src/domain/customer/use-cases/customer-use-case.service";
+import { ICustomerRepository } from "src/domain/customer/repositories/customer-repository.interface";
 import { databaseProviders } from "src/infrastructure/data/database.provider";
-import { CustomerRepository as ClienteRepository } from "src/infrastructure/data/customer/repositories/customer-repository";
-import { customerProviders as clienteProviders } from "src/infrastructure/data/customer/repositories/customer.provider";
+import { CustomerRepository } from "src/infrastructure/data/customer/repositories/customer-repository";
+import { customerProviders } from "src/infrastructure/data/customer/repositories/customer.provider";
 import { DataBaseModule } from "src/infrastructure/data/database.module";
 
 @Module({
     imports: [DataBaseModule],
     controllers: [ClienteController],
     providers: [
-      ... clienteProviders,
+      ... customerProviders,
       ... databaseProviders,
-      ClienteRepository,
+      CustomerRepository,
       {
-        provide: IClienteRepository,
-        useClass: ClienteRepository
+        provide: ICustomerRepository,
+        useClass: CustomerRepository
       },
-      ClienteUseCase,
+      CustomerUseCase,
       {
-        provide: IClienteRepository,
-        useClass: ClienteUseCase
+        provide: ICustomerRepository,
+        useClass: CustomerUseCase
       }
     ],
   })

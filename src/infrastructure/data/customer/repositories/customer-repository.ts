@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Customer } from "src/domain/cliente/entities/cliente.entity";
-import { ICustomerRepository } from "src/domain/cliente/repositories/customer-repository.interface";
+import { Customer } from "src/domain/customer/entities/customer.entity";
+import { ICustomerRepository } from "src/domain/customer/repositories/customer-repository.interface";
 import { Repository } from "typeorm";
 import { Customers } from "../entities/customer.entity";
 

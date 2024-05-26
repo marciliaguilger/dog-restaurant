@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Customer } from "../entities/cliente.entity";
+import { Customer } from "../entities/customer.entity";
 import { ICustomerUseCase } from "./customer-use-case.interface";
 import { ICustomerRepository } from "../repositories/customer-repository.interface";
 
