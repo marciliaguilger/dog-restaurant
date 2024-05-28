@@ -12,7 +12,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
   .setTitle('Dog Restaurant API')
-  .setDescription('API that manages Order Flow')
+  .setDescription('API que gerencia os pedidos da lanchonete')
   .setVersion('1.0')
   .build();
   

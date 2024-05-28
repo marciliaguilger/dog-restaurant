@@ -3,15 +3,15 @@ import { IAggregateRoot } from "../../base/aggregate-root.interface";
 import { Cpf } from "../value-objects/cpf";
 import { randomUUID } from "crypto";
 
-export class Customer implements IAggregateRoot {
+export class Cliente implements IAggregateRoot {
     
-    private _name: string;
+    private _nome: string;
     private _id: string;
     private _cpf: Cpf;
     private _email: string;
 
-    get name(): string {
-        return this._name;
+    get nome(): string {
+        return this._nome;
     }
     
     get id(): string {
@@ -26,9 +26,9 @@ export class Customer implements IAggregateRoot {
         return this._email;
     }
     
-    constructor(name: string, cpf: string, email: string){        
+    constructor(nome: string, cpf: string, email: string){        
         this._id = randomUUID()
-        this._name = name;
+        this._nome = nome;
         this._cpf = new Cpf(cpf);
         this._email = email;
 
@@ -43,7 +43,7 @@ export class Customer implements IAggregateRoot {
 
 
     validateName(): boolean {   
-        return this.name.length > 3;
+        return this.nome.length > 3;
     }
     
     validateEmail(): boolean {

@@ -1,15 +1,15 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity()
-export class Customers {
+export class Clientes {
     @PrimaryColumn()
-    CustomerId: string
+    ClienteId: string
     @Column()
-    CustomerName: string
+    ClienteNome: string
     @Column()
-    CustomerDocument: string
+    ClienteDocumento: string
     @Column()
-    DocumentType: string
+    TipoDocumento: string
     @Column()
     Email: string
 }

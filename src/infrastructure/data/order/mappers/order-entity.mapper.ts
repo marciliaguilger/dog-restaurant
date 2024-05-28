@@ -14,7 +14,7 @@ export class OrderEntityMapper {
         orders.DeliveredAt = order.deliveredAt
         orders.StartedPreparationAt = order.startedPreparationAt
         orders.OrderStatus = order.status.toString()
-        orders.CustomerId = order.customerId
+        orders.ClienteId = order.customerId
         orders.TotalAmountInCents = order.calculateOrderTotalAmount()
         orders.DiscountAmountInCents = order.discountAmount        
         return orders
@@ -31,7 +31,7 @@ export class OrderEntityMapper {
             orderEntity.CancelledAt,
             orderStatus,
             orderEntity.TotalAmountInCents,
-            orderEntity.CustomerId,
+            orderEntity.ClienteId,
             null,
             orderEntity.StartedPreparationAt,
             orderEntity.DeliveredAt,
