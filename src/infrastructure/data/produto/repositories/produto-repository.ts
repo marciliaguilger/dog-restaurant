@@ -23,9 +23,7 @@ export class ProductRepository implements IProdutoRepository {
             .getOne();
     
         if (!produtoEntity) return undefined;
-    
-        produtoEntity.Ativo = ativo;
-    
+        produtoEntity.Ativo = ativo
         await this.produtoRepo.save(produtoEntity);
     
         return id;    
@@ -100,12 +98,10 @@ export class ProductRepository implements IProdutoRepository {
     }
 
     async getAll(): Promise<Produto[]> {
-        console.log("Produtos");
         const produtosEntities = await this.produtoRepo
             .createQueryBuilder("Produtos")
             .getMany();
         
-        console.log("produtosEntities");
         const produtos: Produto[] = produtosEntities.map(entity => {
             try {
                 return new Produto(entity.ProdutoNome, entity.CategoriaId, entity.Preco, entity.ProdutoDescricao, entity.Ativo, entity.ProdutoId);
@@ -113,7 +109,7 @@ export class ProductRepository implements IProdutoRepository {
                 console.error(`Erro ao criar produto: ${error.message}`);
 
             }
-        }).filter(products => products !== undefined);
+        }).filter(produtos => produtos !== undefined);
     
         return produtos;
     }
@@ -141,7 +137,7 @@ export class ProductRepository implements IProdutoRepository {
     async getById(id: string): Promise<Produto | undefined> {
         const produtoEntity = await this.produtoRepo
             .createQueryBuilder("Produtos")
-            .where("Products.ProdutoId = :id", { id: id })
+            .where("Produtos.ProdutoId = :id", { id: id })
             .getOne();
     
         if (!produtoEntity) return undefined;
@@ -168,16 +164,16 @@ export class ProductRepository implements IProdutoRepository {
     
         const productEntities = await this.produtoRepo
             .createQueryBuilder("Produtos")
-            .where("Products.CategoriaId = :categoriaId", { categoriaId: categoriaEntity.CategoriaId })
+            .where("Produtos.CategoriaId = :categoriaId", { categoriaId: categoriaEntity.CategoriaId })
             .getMany();
     
-        const products = productEntities.map(productEntity => new Produto(
+        const produtos = productEntities.map(productEntity => new Produto(
             productEntity.ProdutoNome,
             categoriaEntity.CategoriaId,
             productEntity.Preco,
             productEntity.ProdutoDescricao
         ));
     
-        return products;
+        return produtos;
     }
 }
