@@ -9,53 +9,53 @@ import { Categoria } from "../entities/Categoria";
 export class ProdutoUseCase implements IProdutoUseCase {
     constructor(
         @Inject(IProdutoRepository) 
-        private readonly productRepository: IProdutoRepository
+        private readonly produtoRepository: IProdutoRepository
     ) {}
 
     async updateStatus(id: string, ativo: boolean): Promise<string> {
-        this.productRepository.updateStatus(id, ativo);
+        this.produtoRepository.updateStatus(id, ativo);
         return id;
     }
 
     async getAllCategorias(): Promise<Categoria[]> {
-        const categories = await this.productRepository.getAllCategorias();    
+        const categories = await this.produtoRepository.getAllCategorias();    
         return categories;
     }
 
     async update(id: string, produto: Produto): Promise<string> {
-        this.productRepository.update(id, produto);
+        this.produtoRepository.update(id, produto);
         return id;
     }
               
     async create(produto: Produto): Promise<string> {
         produto.id = randomUUID()
 
-        this.productRepository.create(produto);
+        this.produtoRepository.create(produto);
         return produto.id;
     }
 
     async createCategoria(categoria: Categoria): Promise<string> {
         categoria.id = randomUUID();
 
-        this.productRepository.createCategoria(categoria);
+        this.produtoRepository.createCategoria(categoria);
         return categoria.id;
     }
 
     async getByNome(nome: string): Promise<Produto> {
-        return this.productRepository.getByNome(nome)
+        return this.produtoRepository.getByNome(nome)
     }
 
     async getById(id: string): Promise<Produto> {
-        return this.productRepository.getById(id)
+        return this.produtoRepository.getById(id)
     }
 
     async getByCategoria(categoria: string): Promise<Produto[]> {
-        return this.productRepository.getByCategoria(categoria)
+        return this.produtoRepository.getByCategoria(categoria)
 
     }
 
     async getAll(): Promise<Produto[]> {
-        const produtos = await this.productRepository.getAll()    
+        const produtos = await this.produtoRepository.getAll()    
         return produtos;    
     }
 }
