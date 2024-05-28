@@ -1,9 +1,9 @@
 export class CategoriaOutput {
     id: string;
-    name: string;
+    nome: string;
 
-    constructor(name: string, id: string) {
-        this.name = name;
+    constructor(nome: string, id: string) {
+        this.nome = nome;
         this.id = id;
     }
 }

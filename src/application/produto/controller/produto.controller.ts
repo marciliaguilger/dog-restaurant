@@ -33,7 +33,7 @@ export class ProdutoController {
   async getById(@Param('id') id: string): Promise<ProdutoOutput> {
     const produto = await this.produtoUseCase.getById(id);
     if (!produto) {
-      throw new NotFoundException(`produto with id ${id} not found`);
+      throw new NotFoundException(`Produto com id ${id} não encontrado.`);
     }
     return new ProdutoOutput(produto.nome, produto.id, produto.categoria, produto.preco, produto.descricao, produto.ativo);
   }
@@ -42,7 +42,7 @@ export class ProdutoController {
   async getByName(@Param('nome') nome: string): Promise<ProdutoOutput> {
     const produto = await this.produtoUseCase.getByNome(nome);
     if (!produto) {
-      throw new NotFoundException(`Product with nome ${nome} not found`);
+      throw new NotFoundException(`Produto com nome ${nome} não encotrado.`);
     }
     return new ProdutoOutput(produto.nome, produto.id, produto.categoria, produto.preco, produto.descricao, produto.ativo);
   }
@@ -51,7 +51,7 @@ export class ProdutoController {
   async getByCategory(@Param('categoria') categoria: string): Promise<ProdutoOutput[]> {
     const produtos = await this.produtoUseCase.getByCategoria(categoria);
     if (produtos.length < 1) {
-      throw new NotFoundException(`Product with categoria ${categoria} not found`);
+      throw new NotFoundException(`Produto com categoria ${categoria} não encontrado.`);
     }
     return produtos.map(produto => new ProdutoOutput(produto.id, produto.nome, produto.categoria, produto.preco, produto.descricao));
   }
@@ -63,27 +63,27 @@ export class ProdutoController {
   }
 
   @Post('/categorias')
-  async createCategory(@Body() categoryInput: CategoriaInput): Promise<string> {
-    const categoria = new Categoria(categoryInput.nome);
+  async createCategory(@Body() categoriaInput: CategoriaInput): Promise<string> {
+    const categoria = new Categoria(categoriaInput.nome);
     return this.produtoUseCase.createCategoria(categoria);
   }
 
   @Put('/:id')
   async updateProduct(@Param('id') id: string, @Body() produtoInput: ProdutoInput): Promise<string> {
     const produto = new Produto(produtoInput.nome, produtoInput.categoriaId, produtoInput.preco, produtoInput.descricao);
-    const updatedProduct = await this.produtoUseCase.update(id, produto);
-    if (!updatedProduct) {
-      throw new NotFoundException(`Product with id ${id} not found`);
+    const produtoAtualizado = await this.produtoUseCase.update(id, produto);
+    if (!produtoAtualizado) {
+      throw new NotFoundException(`Produto com id ${id} não encontrado.`);
     }
-    return `Product with id ${id} updated successfully`;  
+    return `Produto com id ${id} atualizado com  sucesso.`;  
   }
   
   @Put('/:id/status')
   async updateProductStatus(@Param('id') id: string, @Body() active: boolean): Promise<string> {
-    const updatedProduct = await this.produtoUseCase.updateStatus(id, active);
-    if (!updatedProduct) {
-      throw new NotFoundException(`Product with id ${id} not found`);
+    const produtoAtualizado = await this.produtoUseCase.updateStatus(id, active);
+    if (!produtoAtualizado) {
+      throw new NotFoundException(`Produto com id ${id} não encontrado.`);
     }
-    return `Product with id ${id} updated successfully`;  
+    return `Produto com id ${id} atualizado com sucesso.`;  
   }  
 }

@@ -1,17 +1,17 @@
 export class ProdutoOutput {        
     id: string;
-    name: string;
-    category: string;
-    price: number;
-    description: string;
-    active?: boolean;
+    nome: string;
+    categoria: string;
+    preco: number;
+    descricao: string;
+    ativo?: boolean;
     
-    constructor(name: string, id: string, category: string, price: number, description: string, active?: boolean) {
-        this.name = name;
+    constructor(nome: string, id: string, categoria: string, preco: number, descricao: string, ativo?: boolean) {
+        this.nome = nome;
         this.id = id;
-        this.category = category;
-        this.price = price;
-        this.description = description;
-        this.active = active
+        this.categoria = categoria;
+        this.preco = preco;
+        this.descricao = descricao;
+        this.ativo = ativo
     }
 }

@@ -7,10 +7,10 @@ export class Produto {
     ativo:boolean;
 
     constructor(nome: string, categoria:string, preco: number, descricao: string, ativo?: boolean, id?: string) {
-        if (!this.validateName(nome)) throw new Error("Invalid nome");
-        if (!this.validatePrice(preco)) throw new Error("Invalid preco");
-        if (!this.validateDescription(descricao)) throw new Error("Invalid descricao");
-        if (!this.validateCategory(categoria)) throw new Error("Invalid categoria");
+        if (!this.validateName(nome)) throw new Error("Nome inválido");
+        if (!this.validatePrice(preco)) throw new Error("Preço inválido");
+        if (!this.validateDescription(descricao)) throw new Error("Descrição inválida");
+        if (!this.validateCategory(categoria)) throw new Error("Categoria inválida");
 
         this.nome = nome;
         this.categoria = categoria;
