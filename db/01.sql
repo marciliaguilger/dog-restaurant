@@ -22,13 +22,13 @@ CREATE TABLE dbo.Products(
     CONSTRAINT FK_Product_Category FOREIGN KEY (CategoryId) REFERENCES dbo.Categories(CategoryId)
 )
 
-CREATE TABLE dbo.Customers(
-    CustomerId varchar(40) NOT NULL,
-    CustomerName varchar(100) NOT NULL,
-    CustomerDocument varchar(50) NOT NULL,
-    DocumentType varchar(10) NOT NULL,
+CREATE TABLE dbo.Clientes(
+    ClienteId varchar(40) NOT NULL,
+    ClienteNome varchar(100) NOT NULL,
+    ClienteDocumento varchar(50) NOT NULL,
+    TipoDocumento varchar(10) NOT NULL,
     Email varchar(100) NOT NULL,
-    CONSTRAINT PK_Customer PRIMARY KEY (CustomerId),
+    CONSTRAINT PK_Customer PRIMARY KEY (ClienteId),
 )
 
 CREATE TABLE dbo.Orders(
@@ -40,11 +40,11 @@ CREATE TABLE dbo.Orders(
     DeliveredAt DATETIME NULL,
     CancelledAt DATETIME NULL,
     OrderStatus VARCHAR(25) NOT NULL,
-    CustomerId VARCHAR(40) NULL,
+    ClienteId VARCHAR(40) NULL,
     TotalAmountInCents MONEY NOT NULL,
     DiscountAmountInCents MONEY NULL,
     CONSTRAINT PK_Order PRIMARY KEY (OrderId),
-    CONSTRAINT FK_Order_Customer FOREIGN KEY (CustomerId) REFERENCES dbo.Customers(CustomerId)
+    CONSTRAINT FK_Order_Customer FOREIGN KEY (ClienteId) REFERENCES dbo.Clientes(ClienteId)
 )
 
 CREATE TABLE dbo.OrderCombos(

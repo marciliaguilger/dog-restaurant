@@ -3,7 +3,7 @@ import { DomainException } from "src/domain/base/exception/domain.exception";
 export class Cpf {
     private _number: string;
 
-    get number(): string {
+    get numero(): string {
         return this._number;
     }
 

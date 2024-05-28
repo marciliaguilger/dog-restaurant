@@ -20,7 +20,7 @@ export class Orders {
     @Column()
     OrderStatus : string
     @Column()
-    CustomerId: string
+    ClienteId: string
     @Column()
     TotalAmountInCents: number
     @Column()
