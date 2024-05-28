@@ -10,86 +10,88 @@ content-type: application/json
 
 ###
 
-GET http://localhost:3000/customers
+GET http://localhost:3000/clientes
 
 ###
 GET http://localhost:3000/customers/12345678911
 
 ###
-GET http://localhost:3000/products
+GET http://localhost:3000/produtos
 
 ###
 GET http://localhost:3000/products/categories
 
 ###
-POST http://localhost:3000/products
+POST http://localhost:3000/produtos
 content-type: application/json
 
 {
-    "name": "X-Tudo",
-    "categoryId": "CAT0001",
-    "price": "20.0",
-    "description": "Lanche completo",
-    "active":"true"
+    "nome": "X-Tudo",
+    "categoria": "CAT0001",
+    "preco": "200",
+    "descricao": "Lanche completo",
+    "ativo":"true"
 }
 
 ###
-POST http://localhost:3000/orders
+POST http://localhost:3000/pedidos
 content-type: application/json
 
 {
-  "customerId": "2167EE43-6BA1-40FE-82DC-0C32D273FF09",
+  "clienteId": "6B375A98-74B9-4922-94EC-E67EE3ACEAF8",
   "combos": [
     {
-      "sandwichId": "PROD0001",
-       "dessertId": "PROD0002"
+      "lancheId": "PROD0001",
+      "sobremesaId": "PROD0002",
+      "acompanhamentoId": "PROD0003",
+      "bebidaId": "PROD0004"
     } 
   ]
 }
 
 ###
-POST http://localhost:3000/orders
+POST http://localhost:3000/pedidos
 content-type: application/json
 
 {
-  "customerId": "2167EE43-6BA1-40FE-82DC-0C32D273FF09",
+  "clienteId": "6B375A98-74B9-4922-94EC-E67EE3ACEAF8",
   "combos": [
     {
-      "sandwichId": "PROD0001",
-      "dessertId": "PROD0002",
-      "drinkId": "PROD0004",
-      "accompanimentId": "PROD0003"
+      "lancheId": "PROD0001",
+      "sobremesaId": "PROD0002",
+      "bebidaId": "PROD0004",
+      "acompanhamentoId": "PROD0003"
     },
     {
-      "sandwichId": "PROD0001",
-      "drinkId": "PROD0004"
+      "lancheId": "PROD0001",
+      "bebidaId": "PROD0004"
     },
     {
-      "dessertId": "PROD0002",
-      "accompanimentId": "PROD0003"
+      "sobremesaId": "PROD0002",
+      "acompanhamentoId": "PROD0003"
     }
   ]
 }
 
 ###
-GET http://localhost:3000/orders
+GET http://localhost:3000/pedidos
 
 ###
-GET http://localhost:3000/orders/5d2301a3-7f41-416f-ac15-6d3cad6aa06f
+GET http://localhost:3000/pedidos/0076509f-a4df-412d-acfe-53e2735cb44f
 
 ###
-GET http://localhost:3000/orders/state/CREATED
+GET http://localhost:3000/pedidos/status/CREATED
 
 ###
-PUT http://localhost:3000/orders/876a5d56-037f-4310-ba1f-d80afaa49b60/state
+PUT http://localhost:3000/pedidos/0076509f-a4df-412d-acfe-53e2735cb44f/status
 content-type: application/json
 
 {
-  "status": "DELIVERED"
+  "status": "CONFIRMED"
 }
 
 ###
-PUT http://localhost:3000/orders/77ed7a35-5326-4324-8eef-60078c1bc580/checkout
+PUT http://localhost:3000/pedidos/0076509f-a4df-412d-acfe-53e2735cb44f/checkout
 content-type: application/json
 
 {
