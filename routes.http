@@ -16,21 +16,21 @@ GET http://localhost:3000/customers
 GET http://localhost:3000/customers/12345678911
 
 ###
-GET http://localhost:3000/products
+GET http://localhost:3000/produtos
 
 ###
-GET http://localhost:3000/products/categories
+GET http://localhost:3000/produtos/categorias
 
 ###
-POST http://localhost:3000/products
+POST http://localhost:3000/produtos
 content-type: application/json
 
 {
-    "name": "X-Tudo",
-    "categoryId": "CAT0001",
-    "price": "20.0",
-    "description": "Lanche completo",
-    "active":"true"
+    "nome": "X-Tudo",
+    "categoriaId": "Lanche",
+    "preco": "2000",
+    "descricao": "Lanche completo",
+    "ativo":"true"
 }
 
 ###
