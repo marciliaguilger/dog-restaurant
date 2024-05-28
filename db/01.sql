@@ -4,22 +4,22 @@ GO
 USE DogRestaurant
 GO
 
-CREATE TABLE dbo.Categories(
-    CategoryId varchar(40) NOT NULL,
-    CategoryDescription varchar(20) NOT NULL,
-    CONSTRAINT PK_Category PRIMARY KEY (CategoryId)
+CREATE TABLE dbo.Categorias(
+    CategoriaId varchar(40) NOT NULL,
+    CategoriaDescricao varchar(20) NOT NULL,
+    CONSTRAINT PK_Categoria PRIMARY KEY (CategoriaId)
 )
 GO
 
-CREATE TABLE dbo.Products(
-    ProductId varchar(40) NOT NULL,
-    ProductName varchar(100) NOT NULL,
-    ProductDescription varchar(255) NOT NULL,
-    Price money NOT NULL,
-    CategoryId varchar(40) NOT NULL,
-    Active bit NOT NULL default(1),
-    CONSTRAINT PK_Product PRIMARY KEY (ProductId),
-    CONSTRAINT FK_Product_Category FOREIGN KEY (CategoryId) REFERENCES dbo.Categories(CategoryId)
+CREATE TABLE dbo.Produtos(
+    ProdutoId varchar(40) NOT NULL,
+    ProdutoNome varchar(100) NOT NULL,
+    ProdutoDescricao varchar(255) NOT NULL,
+    Preco money NOT NULL,
+    CategoriaId varchar(40) NOT NULL,
+    Ativo bit NOT NULL default(1),
+    CONSTRAINT PK_Produto PRIMARY KEY (ProdutoId),
+    CONSTRAINT FK_Produto_Categoria FOREIGN KEY (CategoriaId) REFERENCES dbo.Categorias(CategoriaId)
 )
 
 CREATE TABLE dbo.Customers(
@@ -50,11 +50,12 @@ CREATE TABLE dbo.Orders(
 CREATE TABLE dbo.OrderCombos(
     OrderId varchar(40) NOT NULL,
     ComboId varchar(40) NOT NULL,
-    ProductId varchar(10) NOT NULL,
+    ProdutoId varchar(10) NOT NULL,
     CategoryId varchar(40) NOT NULL,
     PriceInCents MONEY NOT NULL,
     CONSTRAINT PK_OrderCombo PRIMARY KEY (OrderId, ComboId, ProductId),
-    CONSTRAINT FK_Order_OrderCombo FOREIGN KEY (OrderId) REFERENCES dbo.Orders(OrderId)
+    CONSTRAINT FK_Order_OrderCombo FOREIGN KEY (OrderId) REFERENCES dbo.Orders(OrderId),
+    CONSTRAINT FK_Order_Produto FOREIGN KEY (ProdutoId) REFERENCES dbo.Produtos(ProdutoId)
 )
 
 GO

@@ -7,12 +7,12 @@ import { OrderRepository } from "src/infrastructure/data/order/repositories/orde
 import { OrderController } from "./controller/order.controller";
 import { orderProviders } from "src/infrastructure/data/order/repositories/order.provider";
 import { OrderMapper } from "./mapper/order.mapper";
-import { ProductUseCase } from "src/domain/product/use-cases/product-use-case.service";
-import { IProductUseCase } from "src/domain/product/use-cases/product-use-case.interface";
-import { ProductRepository } from "src/infrastructure/data/product/repositories/product-repository";
-import { IProductRepository } from "src/domain/product/repositories/product-repository.interface";
-import { productProviders } from "src/infrastructure/data/product/repositories/product.provider";
-import { categoryProviders } from "src/infrastructure/data/product/repositories/category.provider";
+import { ProductRepository } from "src/infrastructure/data/produto/repositories/produto-repository";
+import { IProdutoRepository } from "src/domain/produto/repositories/product-repository.interface";
+import { produtoProviders } from "src/infrastructure/data/produto/repositories/produto.provider";
+import { categoriaProviders } from "src/infrastructure/data/produto/repositories/categoria.provider";
+import { ProdutoUseCase } from "src/domain/produto/use-cases/produto-use-case.service";
+import { IProdutoUseCase } from "src/domain/produto/use-cases/produto-use-case.interface";
 
 @Module({
     imports: [],
@@ -31,16 +31,16 @@ import { categoryProviders } from "src/infrastructure/data/product/repositories/
             provide: IOrderRepository,
             useClass: OrderRepository
         },
-        ...productProviders,
-        ...categoryProviders,
-        ProductUseCase,
+        ...produtoProviders,
+        ...categoriaProviders,
+        ProdutoUseCase,
         {
-            provide: IProductUseCase,
-            useClass: ProductUseCase
+            provide: IProdutoUseCase,
+            useClass: ProdutoUseCase
         },
         ProductRepository,
         {
-            provide: IProductRepository,
+            provide: IProdutoRepository,
             useClass: ProductRepository
         }
     ],

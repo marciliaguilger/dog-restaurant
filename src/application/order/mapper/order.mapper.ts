@@ -2,14 +2,14 @@ import { Combo } from "src/domain/order/entities/combo.entity";
 import { ProductType } from "src/domain/order/enum/product-types.enum";
 import { ComboInput } from "../dtos/input/create-order.input";
 import { Inject, Injectable } from "@nestjs/common";
-import { IProductUseCase } from "src/domain/product/use-cases/product-use-case.interface";
 import { Order } from "src/domain/order/entities/order.entity";
 import { ComboItemOutput, GetComboOutput, GetOrderOutput } from "../dtos/output/get-order.output";
+import { IProdutoUseCase } from "src/domain/produto/use-cases/produto-use-case.interface";
 
 @Injectable()
 export class OrderMapper {
-        constructor(@Inject(IProductUseCase) 
-        private readonly productUseCase: IProductUseCase) {}
+        constructor(@Inject(IProdutoUseCase) 
+        private readonly productUseCase: IProdutoUseCase) {}
 
     async mapToCombo(createComboInput: ComboInput): Promise<Combo> {
         const combo = new Combo();
@@ -31,7 +31,7 @@ export class OrderMapper {
     async getProductPrice(productId?: string): Promise<number> {
         let productPrice = 0
         if(productId === undefined) return productPrice
-        productPrice = (await this.productUseCase.getById(productId))?.price
+        productPrice = (await this.productUseCase.getById(productId))?.preco
         return productPrice
     }
 

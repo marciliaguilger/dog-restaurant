@@ -1,9 +1,9 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity()
-export class Categories {
+export class Categorias {
     @PrimaryColumn()
-    CategoryId: string
+    CategoriaId: string
     @Column()
-    CategoryDescription: string
+    CategoriaDescricao: string
 }
