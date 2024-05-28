@@ -31,31 +31,31 @@ CREATE TABLE dbo.Customers(
     CONSTRAINT PK_Customer PRIMARY KEY (CustomerId),
 )
 
-CREATE TABLE dbo.Orders(
-    OrderId varchar(40) NOT NULL,
+CREATE TABLE dbo.Pedidos(
+    PedidoId varchar(40) NOT NULL,
     ShortId varchar(10) NOT NULL,
-    CreatedAt DATETIME NOT NULL,
-    StartedPreparationAt DATETIME NULL,
-    PreparationConcludedAt DATETIME NULL,
-    DeliveredAt DATETIME NULL,
-    CancelledAt DATETIME NULL,
-    OrderStatus VARCHAR(25) NOT NULL,
-    CustomerId VARCHAR(40) NULL,
-    TotalAmountInCents MONEY NOT NULL,
-    DiscountAmountInCents MONEY NULL,
-    CONSTRAINT PK_Order PRIMARY KEY (OrderId),
-    CONSTRAINT FK_Order_Customer FOREIGN KEY (CustomerId) REFERENCES dbo.Customers(CustomerId)
+    Criado DATETIME NOT NULL,
+    PreparacaoIniciada DATETIME NULL,
+    PreparacaoConcluida DATETIME NULL,
+    Entregue DATETIME NULL,
+    Cancelado DATETIME NULL,
+    PedidoStatus VARCHAR(25) NOT NULL,
+    ClienteId VARCHAR(40) NULL,
+    TotalValorCentavos MONEY NOT NULL,
+    DescontoValorCentavos MONEY NULL,
+    CONSTRAINT PK_Pedido PRIMARY KEY (PedidoId),
+    CONSTRAINT FK_Pedido_Customer FOREIGN KEY (ClienteId) REFERENCES dbo.Customers(CustomerId)
 )
 
-CREATE TABLE dbo.OrderCombos(
-    OrderId varchar(40) NOT NULL,
+CREATE TABLE dbo.PedidosCombos(
+    PedidoId varchar(40) NOT NULL,
     ComboId varchar(40) NOT NULL,
-    ProdutoId varchar(10) NOT NULL,
-    CategoryId varchar(40) NOT NULL,
-    PriceInCents MONEY NOT NULL,
-    CONSTRAINT PK_OrderCombo PRIMARY KEY (OrderId, ComboId, ProductId),
-    CONSTRAINT FK_Order_OrderCombo FOREIGN KEY (OrderId) REFERENCES dbo.Orders(OrderId),
-    CONSTRAINT FK_Order_Produto FOREIGN KEY (ProdutoId) REFERENCES dbo.Produtos(ProdutoId)
+    ProdutoId varchar(40) NOT NULL,
+    CategoriaId varchar(40) NOT NULL,
+    PrecoCentavos MONEY NOT NULL,
+    CONSTRAINT PK_PedidoCombo PRIMARY KEY (PedidoId, ComboId, ProdutoId),
+    CONSTRAINT FK_Pedido_PedidoCombo FOREIGN KEY (PedidoId) REFERENCES dbo.Pedidos(PedidoId),
+    CONSTRAINT FK_Pedido_Produto FOREIGN KEY (ProdutoId) REFERENCES dbo.Produtos(ProdutoId)
 )
 
 GO
