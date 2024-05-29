@@ -5,7 +5,7 @@ export interface IProdutoUseCase{
     create(produto: Produto): Promise<string>;
     createCategoria(Categoria: Categoria): Promise<string>;
     update(id: string, produto: Produto): Promise<string>;
-    updateStatus(id: string, active: boolean): Promise<string>;
+    updateStatus(id: string, ativo: boolean): Promise<string>;
     getByNome(nome: string): Promise<Produto>;
     getById(id: string): Promise<Produto>;
     getByCategoria(Categoria: string): Promise<Produto[]>;

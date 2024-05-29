@@ -19,7 +19,7 @@ GET http://localhost:3000/customers/12345678911
 GET http://localhost:3000/produtos
 
 ###
-GET http://localhost:3000/products/categories
+GET http://localhost:3000/produtos/categorias
 
 ###
 POST http://localhost:3000/produtos

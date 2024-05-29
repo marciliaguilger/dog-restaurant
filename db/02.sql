@@ -14,8 +14,8 @@ VALUES ('Bebida', 'Bebidas');
 INSERT INTO dbo.Categorias(CategoriaId, CategoriaDescricao)
 VALUES ('Acompanhamento', 'Acompanhamentos');
 
-INSERT INTO dbo.Produtos(ProdutoId, ProdutoNome, ProdutoDescricao, Preco, CategoriaId)
-VALUES('PROD0001','Frango especial', 'Hamburguer de frango com queijo gorgonzola', 2500, 'Lanche')
+INSERT INTO dbo.Produtos(ProdutoId, ProdutoNome, ProdutoDescricao, Preco, CategoriaId, Ativo)
+VALUES('PROD0001','Frango especial', 'Hamburguer de frango com queijo gorgonzola', 2500, 'Lanche', 1)
 
 INSERT INTO dbo.Produtos(ProdutoId, ProdutoNome, ProdutoDescricao, Preco, CategoriaId)
 VALUES('PROD0002','Sorvete', 'Sorvete de creme', 2500, 'Sobremesa')

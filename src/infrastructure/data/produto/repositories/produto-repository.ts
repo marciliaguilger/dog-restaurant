@@ -1,8 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Produto } from "src/domain/produto/entities/Produto";
+import { QueryFailedError, Repository } from "typeorm";
+
 import { IProdutoRepository } from "src/domain/produto/repositories/product-repository.interface";
-import { Repository } from "typeorm";
 import { Categoria } from "src/domain/produto/entities/Categoria";
+import { Produto } from "src/domain/produto/entities/Produto";
 import { Categorias } from "../entities/categoria.entity";
 import { Produtos } from "../entities/produto.entity";
 
@@ -10,36 +11,48 @@ import { Produtos } from "../entities/produto.entity";
 export class ProductRepository implements IProdutoRepository {
     constructor(
         @Inject('PRODUTO_REPOSITORY')
-        private productRepo: Repository<Produtos>,
+        private produtoRepo: Repository<Produtos>,
         @Inject('CATEGORIA_REPOSITORY')
         private categoriaRepo: Repository<Categorias>,
       ) {}
 
-    async updateStatus(id: string, active: boolean) {
-        const productEntity = await this.productRepo
-            .createQueryBuilder("Products")
-            .where("Products.ProdutoId = :id", { id: id })
+    async updateStatus(id: string, ativo: boolean) {
+        const produtoEntity = await this.produtoRepo
+            .createQueryBuilder("Produtos")
+            .where("Produtos.ProdutoId = :id", { id: id })
             .getOne();
     
-        if (!productEntity) return undefined;
-    
-        productEntity.Ativo = active;
-    
-        await this.productRepo.save(productEntity);
+        if (!produtoEntity) return undefined;
+        produtoEntity.Ativo = ativo
+        await this.produtoRepo.save(produtoEntity);
     
         return id;    
     }
 
-    async create(product: Produto) {
-        const productEntity = new Produtos();
-        productEntity.ProdutoId = product.id;
-        productEntity.ProdutoNome = product.nome;
-        productEntity.ProdutoDescricao = product.descricao;
-        productEntity.Preco = product.preco;
-        productEntity.CategoriaId = product.categoria; 
-        productEntity.Ativo = product.ativo; 
-    
-        await this.productRepo.save(productEntity);
+    create(produto: Produto) {
+        console.log("create", produto);
+        const produtoEntity = new Produtos();
+        console.log("produtoEntity - empty", produtoEntity);
+        produtoEntity.ProdutoId = produto.id;
+        produtoEntity.ProdutoNome = produto.nome;
+        produtoEntity.ProdutoDescricao = produto.descricao;
+        produtoEntity.Preco = produto.preco;
+        produtoEntity.CategoriaId = produto.categoria; 
+        produtoEntity.Ativo = produto.ativo; 
+        console.log("produtoEntity - filled", produtoEntity);
+
+        try{
+            this.produtoRepo.create(produtoEntity);
+        }catch(error: any){
+            console.log("error: ", error);
+        }
+        console.log("create - passed", produtoEntity);
+        try{
+            this.produtoRepo.save(produtoEntity);
+        }catch(error: any){
+            console.log("error: ", error);
+        }
+        console.log("save - passed", produtoEntity);
     }
 
     async createCategoria(categoria: Categoria) {
@@ -51,19 +64,19 @@ export class ProductRepository implements IProdutoRepository {
         await this.categoriaRepo.save(categoriaEntity);
     }
 
-    async update(id: string, product: Produto): Promise<string> {
-        const productEntity = await this.productRepo
-            .createQueryBuilder("Products")
-            .where("Products.ProdutoId = :id", { id: id })
+    async update(id: string, produto: Produto): Promise<string> {
+        const produtoEntity = await this.produtoRepo
+            .createQueryBuilder("Produtos")
+            .where("Produtos.ProdutoId = :id", { id: id })
             .getOne();
     
-        if (!productEntity) return undefined;
+        if (!produtoEntity) return undefined;
     
-        productEntity.ProdutoNome = product.nome;
-        productEntity.ProdutoDescricao = product.descricao;
-        productEntity.Preco = product.preco;
+        produtoEntity.ProdutoNome = produto.nome;
+        produtoEntity.ProdutoDescricao = produto.descricao;
+        produtoEntity.Preco = produto.preco;
     
-        await this.productRepo.save(productEntity);
+        await this.produtoRepo.save(produtoEntity);
     
         return id;
     }    
@@ -76,7 +89,7 @@ export class ProductRepository implements IProdutoRepository {
             try {
                 return new Categoria(entity.CategoriaDescricao, entity.CategoriaId);
             } catch (error) {
-                console.error(`Error creating categoria: ${error.message}`);
+                console.error(`Erro ao criar categoria: ${error.message}`);
 
             }
         }).filter(categoria => categoria !== undefined);
@@ -85,57 +98,57 @@ export class ProductRepository implements IProdutoRepository {
     }
 
     async getAll(): Promise<Produto[]> {
-        const productsEntities = await this.productRepo
-            .createQueryBuilder("Products")
+        const produtosEntities = await this.produtoRepo
+            .createQueryBuilder("Produtos")
             .getMany();
-
-        const products: Produto[] = productsEntities.map(entity => {
+        
+        const produtos: Produto[] = produtosEntities.map(entity => {
             try {
                 return new Produto(entity.ProdutoNome, entity.CategoriaId, entity.Preco, entity.ProdutoDescricao, entity.Ativo, entity.ProdutoId);
             } catch (error) {
-                console.error(`Error creating product: ${error.message}`);
+                console.error(`Erro ao criar produto: ${error.message}`);
 
             }
-        }).filter(products => products !== undefined);
+        }).filter(produtos => produtos !== undefined);
     
-        return products;
+        return produtos;
     }
 
-    async getByNome(name: string): Promise<Produto | undefined> {
-        const productEntity = await this.productRepo
-            .createQueryBuilder("Products")
-            .where("Products.ProdutoNome = :name", { name: name })
+    async getByNome(nome: string): Promise<Produto | undefined> {
+        const produtoEntity = await this.produtoRepo
+            .createQueryBuilder("Produtos")
+            .where("Produtos.ProdutoNome = :nome", { nome: nome })
             .getOne();
     
-        if (!productEntity) return undefined;
+        if (!produtoEntity) return undefined;
         
         const product = new Produto(
-            productEntity.ProdutoNome,
-            productEntity.CategoriaId,
-            productEntity.Preco,
-            productEntity.ProdutoDescricao,
-            productEntity.Ativo,        
-            productEntity.ProdutoId, 
+            produtoEntity.ProdutoNome,
+            produtoEntity.CategoriaId,
+            produtoEntity.Preco,
+            produtoEntity.ProdutoDescricao,
+            produtoEntity.Ativo,        
+            produtoEntity.ProdutoId, 
         );
     
         return product;
     }
 
     async getById(id: string): Promise<Produto | undefined> {
-        const productEntity = await this.productRepo
-            .createQueryBuilder("Products")
-            .where("Products.ProdutoId = :id", { id: id })
+        const produtoEntity = await this.produtoRepo
+            .createQueryBuilder("Produtos")
+            .where("Produtos.ProdutoId = :id", { id: id })
             .getOne();
     
-        if (!productEntity) return undefined;
+        if (!produtoEntity) return undefined;
     
         const product = new Produto(
-            productEntity.ProdutoNome,
-            productEntity.CategoriaId,
-            productEntity.Preco,
-            productEntity.ProdutoDescricao,
-            productEntity.Ativo,        
-            productEntity.ProdutoId,    
+            produtoEntity.ProdutoNome,
+            produtoEntity.CategoriaId,
+            produtoEntity.Preco,
+            produtoEntity.ProdutoDescricao,
+            produtoEntity.Ativo,        
+            produtoEntity.ProdutoId,    
         );
         
         return product;    
@@ -149,18 +162,18 @@ export class ProductRepository implements IProdutoRepository {
     
         if (!categoriaEntity) return undefined;
     
-        const productEntities = await this.productRepo
-            .createQueryBuilder("Products")
-            .where("Products.CategoriaId = :categoriaId", { categoriaId: categoriaEntity.CategoriaId })
+        const productEntities = await this.produtoRepo
+            .createQueryBuilder("Produtos")
+            .where("Produtos.CategoriaId = :categoriaId", { categoriaId: categoriaEntity.CategoriaId })
             .getMany();
     
-        const products = productEntities.map(productEntity => new Produto(
+        const produtos = productEntities.map(productEntity => new Produto(
             productEntity.ProdutoNome,
             categoriaEntity.CategoriaId,
             productEntity.Preco,
             productEntity.ProdutoDescricao
         ));
     
-        return products;
+        return produtos;
     }
 }

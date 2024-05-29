@@ -10,6 +10,6 @@ export class Categoria {
     }    
 
     private validateName(nome: string): boolean {
-        return (nome!= null && nome.trim().length > 3);
+        return nome?.trim().length > 3;
     }
 }
