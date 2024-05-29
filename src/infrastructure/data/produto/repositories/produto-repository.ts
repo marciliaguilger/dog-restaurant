@@ -23,23 +23,21 @@ export class ProductRepository implements IProdutoRepository {
             .getOne();
     
         if (!produtoEntity) return undefined;
-        produtoEntity.Ativo = ativo
+        ativo ? produtoEntity.Ativo = true : produtoEntity.Ativo = false;
+        
         await this.produtoRepo.save(produtoEntity);
     
         return id;    
     }
 
     create(produto: Produto) {
-        console.log("create", produto);
         const produtoEntity = new Produtos();
-        console.log("produtoEntity - empty", produtoEntity);
         produtoEntity.ProdutoId = produto.id;
         produtoEntity.ProdutoNome = produto.nome;
         produtoEntity.ProdutoDescricao = produto.descricao;
         produtoEntity.Preco = produto.preco;
         produtoEntity.CategoriaId = produto.categoria; 
         produtoEntity.Ativo = produto.ativo; 
-        console.log("produtoEntity - filled", produtoEntity);
 
         try{
             this.produtoRepo.create(produtoEntity);
