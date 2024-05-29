@@ -23,7 +23,7 @@ export class ProductRepository implements IProdutoRepository {
             .getOne();
     
         if (!produtoEntity) return undefined;
-        produtoEntity.Ativo = ativo
+        ativo ? produtoEntity.Ativo = true : produtoEntity.Ativo = false;
         await this.produtoRepo.save(produtoEntity);
     
         return id;    
