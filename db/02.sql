@@ -2,29 +2,29 @@
 USE DogRestaurant
 GO
 
-INSERT INTO dbo.Categories(CategoryId, CategoryDescription)
-VALUES ('CAT001', 'Lanches');
+INSERT INTO dbo.Categorias(CategoriaId, CategoriaDescricao)
+VALUES ('Lanche', 'Lanches');
 
-INSERT INTO dbo.Categories(CategoryId, CategoryDescription)
-VALUES ('CAT002', 'Sobremesas');
+INSERT INTO dbo.Categorias(CategoriaId, CategoriaDescricao)
+VALUES ('Sobremesa', 'Sobremesas');
 
-INSERT INTO dbo.Categories(CategoryId, CategoryDescription)
-VALUES ('CAT003', 'Bebidas');
+INSERT INTO dbo.Categorias(CategoriaId, CategoriaDescricao)
+VALUES ('Bebida', 'Bebidas');
 
-INSERT INTO dbo.Categories(CategoryId, CategoryDescription)
-VALUES ('CAT004', 'Acompanhamentos');
+INSERT INTO dbo.Categorias(CategoriaId, CategoriaDescricao)
+VALUES ('Acompanhamento', 'Acompanhamentos');
 
-INSERT INTO dbo.Products(ProductId, ProductName, ProductDescription, Price, CategoryId)
-VALUES('PROD0001','Frango especial', 'Hamburguer de frango com queijo gorgonzola', 2500, 'CAT001')
+INSERT INTO dbo.Produtos(ProdutoId, ProdutoNome, ProdutoDescricao, Preco, CategoriaId, Ativo)
+VALUES('PROD0001','Frango especial', 'Hamburguer de frango com queijo gorgonzola', 2500, 'Lanche', 1)
 
-INSERT INTO dbo.Products(ProductId, ProductName, ProductDescription, Price, CategoryId)
-VALUES('PROD0002','Sorvete', 'Sorvete de creme', 2500, 'CAT002')
+INSERT INTO dbo.Produtos(ProdutoId, ProdutoNome, ProdutoDescricao, Preco, CategoriaId)
+VALUES('PROD0002','Sorvete', 'Sorvete de creme', 2500, 'Sobremesa')
 
-INSERT INTO dbo.Products(ProductId, ProductName, ProductDescription, Price, CategoryId)
-VALUES('PROD0003','Batata Frita', 'Batata frita simples', 2500, 'CAT004')
+INSERT INTO dbo.Produtos(ProdutoId, ProdutoNome, ProdutoDescricao, Preco, CategoriaId)
+VALUES('PROD0003','Batata Frita', 'Batata frita simples', 2500, 'Acompanhamento')
 
-INSERT INTO dbo.Products(ProductId, ProductName, ProductDescription, Price, CategoryId)
-VALUES('PROD0004','Suco de laranja', 'Suco de laranja', 1000, 'CAT003')
+INSERT INTO dbo.Produtos(ProdutoId, ProdutoNome, ProdutoDescricao, Preco, CategoriaId)
+VALUES('PROD0004','Suco de laranja', 'Suco de laranja', 1000, 'Bebida')
 
 INSERT INTO dbo.Clientes(ClienteId, ClienteNome, ClienteDocumento, TipoDocumento, Email)
 VALUES('6B375A98-74B9-4922-94EC-E67EE3ACEAF8', 'Harry Potter', '86106924007', 'CPF', 'harrypotter@fakeemail.com')

@@ -4,22 +4,22 @@ GO
 USE DogRestaurant
 GO
 
-CREATE TABLE dbo.Categories(
-    CategoryId varchar(40) NOT NULL,
-    CategoryDescription varchar(20) NOT NULL,
-    CONSTRAINT PK_Category PRIMARY KEY (CategoryId)
+CREATE TABLE dbo.Categorias(
+    CategoriaId varchar(40) NOT NULL,
+    CategoriaDescricao varchar(20) NOT NULL,
+    CONSTRAINT PK_Categoria PRIMARY KEY (CategoriaId)
 )
 GO
 
-CREATE TABLE dbo.Products(
-    ProductId varchar(40) NOT NULL,
-    ProductName varchar(100) NOT NULL,
-    ProductDescription varchar(255) NOT NULL,
-    Price money NOT NULL,
-    CategoryId varchar(40) NOT NULL,
-    Active bit NOT NULL default(1),
-    CONSTRAINT PK_Product PRIMARY KEY (ProductId),
-    CONSTRAINT FK_Product_Category FOREIGN KEY (CategoryId) REFERENCES dbo.Categories(CategoryId)
+CREATE TABLE dbo.Produtos(
+    ProdutoId varchar(40) NOT NULL,
+    ProdutoNome varchar(100) NOT NULL,
+    ProdutoDescricao varchar(255) NOT NULL,
+    Preco money NOT NULL,
+    CategoriaId varchar(40) NOT NULL,
+    Ativo bit NOT NULL default(1),
+    CONSTRAINT PK_Produto PRIMARY KEY (ProdutoId),
+    CONSTRAINT FK_Produto_Categoria FOREIGN KEY (CategoriaId) REFERENCES dbo.Categorias(CategoriaId)
 )
 
 CREATE TABLE dbo.Clientes(
@@ -31,30 +31,31 @@ CREATE TABLE dbo.Clientes(
     CONSTRAINT PK_Customer PRIMARY KEY (ClienteId),
 )
 
-CREATE TABLE dbo.Orders(
-    OrderId varchar(40) NOT NULL,
+CREATE TABLE dbo.Pedidos(
+    PedidoId varchar(40) NOT NULL,
     ShortId varchar(10) NOT NULL,
-    CreatedAt DATETIME NOT NULL,
-    StartedPreparationAt DATETIME NULL,
-    PreparationConcludedAt DATETIME NULL,
-    DeliveredAt DATETIME NULL,
-    CancelledAt DATETIME NULL,
-    OrderStatus VARCHAR(25) NOT NULL,
+    Criado DATETIME NOT NULL,
+    PreparacaoIniciada DATETIME NULL,
+    PreparacaoConcluida DATETIME NULL,
+    Entregue DATETIME NULL,
+    Cancelado DATETIME NULL,
+    PedidoStatus VARCHAR(25) NOT NULL,
     ClienteId VARCHAR(40) NULL,
-    TotalAmountInCents MONEY NOT NULL,
-    DiscountAmountInCents MONEY NULL,
-    CONSTRAINT PK_Order PRIMARY KEY (OrderId),
-    CONSTRAINT FK_Order_Customer FOREIGN KEY (ClienteId) REFERENCES dbo.Clientes(ClienteId)
+    TotalValorCentavos MONEY NOT NULL,
+    DescontoValorCentavos MONEY NULL,
+    CONSTRAINT PK_Pedido PRIMARY KEY (PedidoId),
+    CONSTRAINT FK_Pedido_Customer FOREIGN KEY (ClienteId) REFERENCES dbo.Clientes(ClienteId)
 )
 
-CREATE TABLE dbo.OrderCombos(
-    OrderId varchar(40) NOT NULL,
+CREATE TABLE dbo.PedidosCombos(
+    PedidoId varchar(40) NOT NULL,
     ComboId varchar(40) NOT NULL,
-    ProductId varchar(10) NOT NULL,
-    CategoryId varchar(40) NOT NULL,
-    PriceInCents MONEY NOT NULL,
-    CONSTRAINT PK_OrderCombo PRIMARY KEY (OrderId, ComboId, ProductId),
-    CONSTRAINT FK_Order_OrderCombo FOREIGN KEY (OrderId) REFERENCES dbo.Orders(OrderId)
+    ProdutoId varchar(40) NOT NULL,
+    CategoriaId varchar(40) NOT NULL,
+    PrecoCentavos MONEY NOT NULL,
+    CONSTRAINT PK_PedidoCombo PRIMARY KEY (PedidoId, ComboId, ProdutoId),
+    CONSTRAINT FK_Pedido_PedidoCombo FOREIGN KEY (PedidoId) REFERENCES dbo.Pedidos(PedidoId),
+    CONSTRAINT FK_Pedido_Produto FOREIGN KEY (ProdutoId) REFERENCES dbo.Produtos(ProdutoId)
 )
 
 GO
