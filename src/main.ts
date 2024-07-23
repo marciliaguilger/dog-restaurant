@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AllExceptionsFilter } from './domain/base/all-exceptions.filter';
 import { TypeErrorFilter } from './domain/base/type-error-exceptions.filter';
+require('dotenv').config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
