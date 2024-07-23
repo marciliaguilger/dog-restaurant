@@ -1,4 +1,4 @@
-import { DomainException } from "src/domain/base/exception/domain.exception";
+import { DomainException } from "../../base/exception/domain.exception";
 import { IAggregateRoot } from "../../base/aggregate-root.interface";
 import { Cpf } from "../value-objects/cpf";
 import { randomUUID } from "crypto";

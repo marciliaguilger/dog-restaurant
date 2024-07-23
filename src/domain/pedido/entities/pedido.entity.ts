@@ -1,4 +1,4 @@
-import { DomainException } from "src/domain/base/exception/domain.exception";
+import { DomainException } from "../../base/exception/domain.exception";
 import { PedidoStatus } from "../enum/order-status.enum";
 import { Combo } from "./combo.entity";
 import { randomUUID } from "crypto";
