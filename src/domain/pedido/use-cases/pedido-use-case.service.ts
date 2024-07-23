@@ -4,7 +4,6 @@ import { IPedidoRepository } from "../repositories/order-repository.interface";
 import { IPedidoUseCase } from "./pedido-use-case.interface";
 import { Combo } from "../entities/combo.entity";
 import { PedidoStatus } from "../enum/order-status.enum";
-
 @Injectable()
 export class PedidoUseCase implements IPedidoUseCase {
     constructor(
@@ -13,7 +12,24 @@ export class PedidoUseCase implements IPedidoUseCase {
 
     async getAllPedidos(): Promise<Pedido[]> {
         const orders = await this.pedidoRepository.getAllPedidos();
-        return orders;
+        return this.filterAndSortPedidos(orders);
+    }
+
+    private filterAndSortPedidos(orders: Pedido[]): Pedido[] {
+        return orders
+            .filter(order => order.status !== PedidoStatus.DELIVERED)
+            .sort((a, b) => {
+                const statusPriority = {
+                    [PedidoStatus.WAITING_DELIVERY]: 1,
+                    [PedidoStatus.PREPARING]: 2,
+                    [PedidoStatus.CONFIRMED]: 3
+                };
+    
+                if (statusPriority[a.status] < statusPriority[b.status]) return -1;
+                if (statusPriority[a.status] > statusPriority[b.status]) return 1;
+    
+                return a.criado.getTime() - b.criado.getTime();
+            });
     }
 
     async getPedidoById(orderId: string): Promise<Pedido> {
