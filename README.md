@@ -18,5 +18,7 @@ Fornece serviços de gestão de clientes, produtos e pedidos.
 
 tendo rodado esses comandos, a console deve exibir "Service is running".
 
+## Rodar os testes
 
+To run unit tests, run `npm test`.
    
