@@ -1,9 +1,9 @@
 import { DataSource } from 'typeorm';
 
-
 const connectWithRetry = async (dataSourceOptions, maxRetries = 5, retryDelay = 5000) => {
   let retries = 0;
-
+  console.log(process.env.DB_HOST)
+  
   while (retries < maxRetries) {
     try {
       const dataSource = new DataSource(dataSourceOptions);
@@ -26,10 +26,10 @@ export const databaseProviders = [
     useFactory: async () => {
       return connectWithRetry({
         type: 'mssql',
-        host: 'sqlserver',
+        host: process.env.DB_HOST,
         port: 1433,
         username: 'sa',
-        password: 'SqlServer2019!',
+        password: process.env.DB_PASSWORD,
         database: 'DogRestaurant',
         entities: [
           __dirname + '/**/entities/*.entity{.ts,.js}',

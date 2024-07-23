@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dog-restaurant-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dog-restaurant-api
+  template:
+    metadata:
+      labels:
+        app: dog-restaurant-api
+    spec:
+      hostname: dog-restaurant-api
+      containers:
+      - name: dog-restaurant-api
+        image: marciliaguilger/dog-restaurant:v3
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: data
+              key: DB_HOST
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: passwords
+              key: DB_PASSWORD
