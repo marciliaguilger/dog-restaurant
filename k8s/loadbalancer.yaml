@@ -9,3 +9,15 @@ spec:
   selector:
     app: dog-restaurant-api
   type: LoadBalancer    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loadbalancer-mssql
+spec:
+  ports:
+  - port: 1433
+    targetPort: 1433
+  selector:
+    app: mssql
+  type: LoadBalancer    

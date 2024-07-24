@@ -6,7 +6,9 @@ metadata:
     app: mssql
 spec:
   ports:
-  - port: 1433
+  - protocol: TCP
+    port: 1433
+    targetPort: 1433
     name: mssql
   clusterIP: None
   selector:
