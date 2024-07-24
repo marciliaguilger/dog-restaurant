@@ -2,7 +2,6 @@ import { DataSource } from 'typeorm';
 
 const connectWithRetry = async (dataSourceOptions, maxRetries = 5, retryDelay = 5000) => {
   let retries = 0;
-  console.log(process.env.DB_HOST)
   
   while (retries < maxRetries) {
     try {
