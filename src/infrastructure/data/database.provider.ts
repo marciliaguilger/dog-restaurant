@@ -33,6 +33,10 @@ export const databaseProviders = [
         entities: [
           __dirname + '/**/entities/*.entity{.ts,.js}',
         ],
+        migrations: [
+          __dirname + '/**/entities/*.entity{.ts,.js}',
+        ],
+
         synchronize: false,
         logging: false,
         //logger: 'advanced-console',
