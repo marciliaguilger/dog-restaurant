@@ -13,18 +13,4 @@ spec:
   clusterIP: None
   selector:
     app: mssql
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: dog-restaurant-api
-  labels:
-    app: dog-restaurant-api
-spec:
-  type: NodePort
-  ports:
-  - port: 3000
-    name: dog-restaurant-api
-  clusterIP: None
-  selector:
-    app: dog-restaurant-api
+

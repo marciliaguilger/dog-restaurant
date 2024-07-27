@@ -15,7 +15,14 @@ spec:
       hostname: dog-restaurant-api
       containers:
       - name: dog-restaurant-api
-        image: marciliaguilger/dog-restaurant:v6
+        image: marciliaguilger/dog-restaurant:v7
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
         ports:
         - containerPort: 3000
         env:
@@ -27,5 +34,5 @@ spec:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: passwords
+              name: apppasswords
               key: DB_PASSWORD

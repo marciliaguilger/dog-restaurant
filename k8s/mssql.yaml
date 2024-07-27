@@ -34,7 +34,7 @@ spec:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: passwords
+              name: dbpasswords
               key: DB_PASSWORD
         volumeMounts:
         - name: mssql-pv

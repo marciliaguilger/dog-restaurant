@@ -1,9 +1,6 @@
 import { DataSource } from 'typeorm';
 require('dotenv').config();
 
-console.log("Database host:", process.env.DB_HOST); // This should print the actual host string
-console.log("Database DB_PASSWORD:", process.env.DB_PASSWORD); // This should print the actual host string
-
 const AppDataSource = new DataSource({
   type: 'mssql',
   host: process.env.DB_HOST,

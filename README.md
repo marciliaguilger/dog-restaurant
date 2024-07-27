@@ -28,10 +28,10 @@ To run unit tests, run `npm test`.
 - ` minikube start --driver=docker`
 
 - Aplicar as configurações do k8s
-- ` kubectl apply -f k8s/volumes.yaml -f k8s/mssql.yaml -f k8s/secrets.yaml -f k8s/configmap.yaml -f k8s/dog-restaurant-api.yaml -f k8s/loadbalancer.yaml `
+- ` kubectl apply -f k8s/volumes.yaml -f k8s/mssql.yaml -f k8s/secrets.yaml -f k8s/configmap.yaml -f k8s/dog-restaurant-api.yaml -f k8s/loadbalancer.yaml -f k8s/dog-restaurant-hpa.yaml`
 
 - Ver os pods via dashboard:
-`minikube dashboard`
+
 - `minikube dashboard`
 
 - Expor o tunel para acessar a api:
