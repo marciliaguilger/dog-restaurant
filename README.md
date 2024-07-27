@@ -31,11 +31,8 @@ To run unit tests, run `npm test`.
 - ` kubectl apply -f k8s/volumes.yaml -f k8s/mssql.yaml -f k8s/secrets.yaml -f k8s/configmap.yaml -f k8s/dog-restaurant-api.yaml -f k8s/loadbalancer.yaml `
 
 - Ver os pods via dashboard:
-<<<<<<< HEAD
 `minikube dashboard`
-=======
 - `minikube dashboard`
 
 - Expor o tunel para acessar a api:
 - ` minikube tunnel --bind-address=192.168.0.108(endereço ip do host) ` 
->>>>>>> 552fa19 (automatic create database)
