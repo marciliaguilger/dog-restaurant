@@ -4,6 +4,7 @@ import { IPedidoRepository } from "../repositories/order-repository.interface";
 import { IPedidoUseCase } from "./pedido-use-case.interface";
 import { Combo } from "../entities/combo.entity";
 import { PedidoStatus } from "../enum/order-status.enum";
+
 @Injectable()
 export class PedidoUseCase implements IPedidoUseCase {
     constructor(
@@ -72,6 +73,7 @@ export class PedidoUseCase implements IPedidoUseCase {
     }    
     
     async payPedido(orderId: string, qrCode?: string): Promise<boolean> {
+
         if(qrCode === undefined) return false
         
         let order = await this.pedidoRepository.getPedidoById(orderId);
