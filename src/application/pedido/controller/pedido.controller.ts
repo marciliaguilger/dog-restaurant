@@ -34,8 +34,8 @@ export class OrderController {
     }
 
     @Put(':pedidoId/checkout')
-    async checkoutPedido(@Param('pedidoId') pedidoId: string, @Body() checkoutPedidos: CheckoutPedidoInput): Promise<string> {
-        this.pedidoUseCase.payPedido(pedidoId, checkoutPedidos.qrCode)
+    async checkoutPedido(@Param('pedidoId') pedidoId: string): Promise<string> {
+        this.pedidoUseCase.payPedido(pedidoId)
         return pedidoId;
     }
 

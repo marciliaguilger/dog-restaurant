@@ -71,17 +71,13 @@ export class PedidoUseCase implements IPedidoUseCase {
         this.pedidoRepository.updatePedido(order)
     }    
     
-    async payPedido(orderId: string, qrCode?: string): Promise<boolean> {
-        if(qrCode === undefined) return false
-        
-        let order = await this.pedidoRepository.getPedidoById(orderId);
-        
-        if(order == undefined) return false
-
+    async payPedido(orderId: string): Promise<string> {
+        const qrCode = 'qrCode'        
+        let order = await this.pedidoRepository.getPedidoById(orderId);        
         order.confirmOrder()
         this.pedidoRepository.updatePedido(order)
         
-        return true
+        return qrCode
     }
 
     async createPedido(customerId:string, combos: Combo[]): Promise<string> {
