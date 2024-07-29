@@ -1,15 +1,9 @@
-<p align="center">
+<!-- <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
-</p>
+ <img width=500px height=500px src="dog-restaurant-logo-v2.jpg" alt="Project logo"></a>
+</p> -->
 
 <h3 align="center">dog-restaurant</h3>
-
-<div align="center">
-
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-
-</div>
 
 ---
 
@@ -68,7 +62,7 @@ Espero que isso ajude a esclarecer o funcionamento dos controladores e a sequên
 - [NestJS](https://nestjs.com/) - Server Framework
 - [Docker](https://www.docker.com) - Containerization
 - [Kubernetes](https://kubernetes.io) - Container Orchestration
-- [PostgreSQL](https://www.postgresql.org/) - Database
+- [SQL Server](https://www.microsoft.com/en-us/sql-server) - Database
 - [TypeScript](https://www.typescriptlang.org/) - Programming Language
 
 
