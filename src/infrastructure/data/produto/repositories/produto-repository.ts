@@ -1,9 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { QueryFailedError, Repository } from "typeorm";
+import { Repository } from "typeorm";
 
-import { IProdutoRepository } from "src/domain/produto/repositories/product-repository.interface";
-import { Categoria } from "src/domain/produto/entities/Categoria";
-import { Produto } from "src/domain/produto/entities/Produto";
+import { IProdutoRepository } from "../../../../domain/produto/repositories/product-repository.interface";
+import { Produto } from '../../../../domain/produto/entities/Produto';
+import { Categoria } from '../../../../domain/produto/entities/Categoria';
 import { Categorias } from "../entities/categoria.entity";
 import { Produtos } from "../entities/produto.entity";
 
@@ -30,16 +30,13 @@ export class ProductRepository implements IProdutoRepository {
     }
 
     create(produto: Produto) {
-        console.log("create", produto);
         const produtoEntity = new Produtos();
-        console.log("produtoEntity - empty", produtoEntity);
         produtoEntity.ProdutoId = produto.id;
         produtoEntity.ProdutoNome = produto.nome;
         produtoEntity.ProdutoDescricao = produto.descricao;
         produtoEntity.Preco = produto.preco;
         produtoEntity.CategoriaId = produto.categoria; 
         produtoEntity.Ativo = produto.ativo; 
-        console.log("produtoEntity - filled", produtoEntity);
 
         try{
             this.produtoRepo.create(produtoEntity);
