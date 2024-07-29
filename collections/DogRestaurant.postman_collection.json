@@ -1,0 +1,489 @@
+{
+	"info": {
+		"_postman_id": "915daac3-eee6-4fe7-9b8d-7475047d9489",
+		"name": "DogRestaurant",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11522303"
+	},
+	"item": [
+		{
+			"name": "Clientes - Cadastrar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Chico Buarque\",\n    \"document\": \"61116236052\",\n    \"email\":\"chico.buarque@email.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dog-api-url}}/clientes",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clientes - Buscar",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Chico Buarque\",\n    \"document\": \"61116236052\",\n    \"email\":\"chico.buarque@email.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dog-api-url}}/clientes",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clientes - Buscar por cpf",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Chico Buarque\",\n    \"document\": \"61116236052\",\n    \"email\":\"chico.buarque@email.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dog-api-url}}/clientes/88261898032",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"clientes",
+						"88261898032"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pedidos - Cadastrar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"clienteId\": \"2167EE43-6BA1-40FE-82DC-0C32D273FF09\",\n  \"combos\": [\n    {\n      \"lancheId\": \"PROD0001\",\n      \"sobremesaId\": \"PROD0002\",\n      \"bebidaId\": \"PROD0004\",\n      \"acompanhamentoId\": \"PROD0003\"\n    },\n    {\n      \"lancheId\": \"PROD0001\",\n      \"bebidaId\": \"PROD0004\"\n    },\n    {\n      \"sobremesaId\": \"PROD0002\",\n      \"acompanhamentoId\": \"PROD0003\"\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dog-api-url}}/pedidos",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"pedidos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pedidos - Atualizar status",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"status\": \"CONFIRMED\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dog-api-url}}/pedidos/:pedidoId/status",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"pedidos",
+						":pedidoId",
+						"status"
+					],
+					"variable": [
+						{
+							"key": "pedidoId",
+							"value": "0d44dbb1-14de-405f-9575-893b8b28d4ef"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pedidos - Checkout",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"qrCode\": \"TESTE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dog-api-url}}/pedidos/:pedidoId",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"pedidos",
+						":pedidoId"
+					],
+					"variable": [
+						{
+							"key": "pedidoId",
+							"value": "db136fc1-287f-4185-af8f-e2fd34a242b6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pedidos - Buscar todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dog-api-url}}/pedidos",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"pedidos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pedidos - Buscar por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dog-api-url}}/pedidos/:pedidoId",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"pedidos",
+						":pedidoId"
+					],
+					"variable": [
+						{
+							"key": "pedidoId",
+							"value": "0d44dbb1-14de-405f-9575-893b8b28d4ef"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pedidos - Buscar por stauts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dog-api-url}}/pedidos/status/CONFIRMED",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"pedidos",
+						"status",
+						"CONFIRMED"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos - Cadastrar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"X-tudo cheddar\",\n    \"categoriaId\": \"Lanche\",\n    \"preco\": \"200\",\n    \"descricao\": \"Lanche completo com cheddar\",\n    \"ativo\":\"true\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dog-api-url}}/produtos",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos - buscar todos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"X-tudo cheddar\",\n    \"categoriaId\": \"Lanche\",\n    \"preco\": \"200\",\n    \"descricao\": \"Lanche completo com cheddar\",\n    \"ativo\":\"true\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dog-api-url}}/produtos",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos - Buscar categorias",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dog-api-url}}/produtos/categorias",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"produtos",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos - Buscar por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dog-api-url}}/produtos/:id",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"produtos",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "48004fbb-cd4f-4fe0-99e3-9375eaebdcf9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos - Buscar por nome",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dog-api-url}}/produtos/nome/:nome",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"produtos",
+						"nome",
+						":nome"
+					],
+					"variable": [
+						{
+							"key": "nome",
+							"value": "X-tudo cheddar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos - Buscar por categoria",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{dog-api-url}}/produtos/categorias/:categoria",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"produtos",
+						"categorias",
+						":categoria"
+					],
+					"variable": [
+						{
+							"key": "categoria",
+							"value": "Acompanhamentos"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos - Cadastrar categoria",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Diversos\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dog-api-url}}/produtos/categorias",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"produtos",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos - Atualizar produto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"X queijo\",\n    \"categoriaId\": \"lanches\",\n    \"preco\": \"3000\",\n    \"descricao\": \"X queijo novo\",\n    \"ativo\": \"true\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dog-api-url}}/produtos/:produtoId",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"produtos",
+						":produtoId"
+					],
+					"variable": [
+						{
+							"key": "produtoId",
+							"value": "48004fbb-cd4f-4fe0-99e3-9375eaebdcf9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Produtos - Atualizar status do produto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ativo\": \"false\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{dog-api-url}}/produtos/:produtoId/status",
+					"host": [
+						"{{dog-api-url}}"
+					],
+					"path": [
+						"produtos",
+						":produtoId",
+						"status"
+					],
+					"variable": [
+						{
+							"key": "produtoId",
+							"value": "48004fbb-cd4f-4fe0-99e3-9375eaebdcf9"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

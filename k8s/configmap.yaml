@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data
+data:
+  DB_HOST: "mssql"
+  

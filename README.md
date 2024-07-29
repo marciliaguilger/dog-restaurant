@@ -40,6 +40,20 @@ Essas instruções irão facilitar rodar o projeto na sua máquina local para fi
 - npm
 ```
 
+## 🔧 Rodar aplicação no minikube
+
+-Iniciar o minikube
+- ` minikube start --driver=docker`
+
+- Aplicar as configurações do k8s
+- ` kubectl apply -f k8s/volumes.yaml -f k8s/mssql.yaml -f k8s/secrets.yaml -f k8s/configmap.yaml -f k8s/dog-restaurant-api.yaml -f k8s/loadbalancer.yaml -f k8s/dog-restaurant-hpa.yaml`
+
+- Ver os pods via dashboard:
+- `minikube dashboard`
+
+- Expor o tunel para acessar a api e o banco de dados pelo host:
+- ` minikube tunnel --bind-address=192.168.0.108(endereço ip do host) ` 
+
 ## 🔧 Rodando os testes <a name = "tests"></a>
 
 Para rodar os testes unitários, execute `npm test`.
