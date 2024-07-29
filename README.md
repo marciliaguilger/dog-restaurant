@@ -24,6 +24,14 @@ Fornece serviços de gestão de clientes, produtos e pedidos.<br>
 
 O dog-restaurant é uma solução integrada projetada para otimizar e simplificar a gestão de operações diárias em estabelecimentos de alimentação. Este sistema fornece serviços de gestão de clientes, produtos e pedidos, permitindo que os proprietários e gerentes mantenham um controle eficiente e organizado de suas operações. Com funcionalidades que vão desde o cadastro e gerenciamento de clientes até a criação e categorização de produtos, o sistema assegura que todas as informações essenciais estejam centralizadas e facilmente acessíveis, melhorando a eficiência operacional e contribuindo para uma melhor experiência do cliente.
 
+## Arquitetura do projeto 
+
+<!-- <p align="center">
+  <a href="" rel="noopener">
+ <img width=500px height=500px src="kubernetes-diagram.jpg" alt="Project logo"></a>
+</p> -->
+
+
 ## 🏁 Comece por aqui <a name = "getting_started"></a>
 
 Essas instruções irão facilitar rodar o projeto na sua máquina local para fins de desenvolvimento e testes.
