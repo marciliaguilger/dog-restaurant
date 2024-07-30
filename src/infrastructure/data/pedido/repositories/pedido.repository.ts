@@ -93,12 +93,12 @@ export class PedidoRepository implements IPedidoRepository {
         this.orderRepo.save(orders)
     }
     
-    createPedido(order: Pedido) {
+    async createPedido(order: Pedido) {
         let orders = OrderEntityMapper.mapToOrderEntity(order)
         console.log('clientee')
         console.log(orders.ClienteId)
         let combos = OrderEntityMapper.mapToOrderComboEntity(order.combos)
-        this.orderRepo.save(orders)
-        this.combosRepo.save(combos)
+        await this.orderRepo.save(orders)
+        await this.combosRepo.save(combos)
     }
 }

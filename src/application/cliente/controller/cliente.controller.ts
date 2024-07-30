@@ -13,9 +13,9 @@ export class ClienteController {
     private readonly clienteUseCase: IClienteUseCase) {}
 
   @Post()
-  async createCliente(@Body() createClienteInput: CreateClienteInput): Promise<string> {
+  async createCliente(@Body() createClienteInput: CreateClienteInput) {
     const cliente = new Cliente(createClienteInput.nome,createClienteInput.documento ,createClienteInput.email);
-    return this.clienteUseCase.create(cliente);
+    return {clienteId:  await this.clienteUseCase.create(cliente) };
   }
 
   @Get(':cpf')
