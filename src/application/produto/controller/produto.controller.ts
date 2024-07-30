@@ -63,27 +63,27 @@ export class ProdutoController {
   }
 
   @Post('/categorias')
-  async createCategory(@Body() categoriaInput: CategoriaInput): Promise<string> {
+  async createCategory(@Body() categoriaInput: CategoriaInput) {
     const categoria = new Categoria(categoriaInput.nome);
-    return this.produtoUseCase.createCategoria(categoria);
+    return {id: this.produtoUseCase.createCategoria(categoria) };
   }
 
   @Put('/:id')
-  async updateProduct(@Param('id') id: string, @Body() produtoInput: ProdutoInput): Promise<string> {
+  async updateProduct(@Param('id') id: string, @Body() produtoInput: ProdutoInput) {
     const produto = new Produto(produtoInput.nome, produtoInput.categoriaId, produtoInput.preco, produtoInput.descricao);
     const produtoAtualizado = await this.produtoUseCase.update(id, produto);
     if (!produtoAtualizado) {
       throw new NotFoundException(`Produto com id ${id} não encontrado.`);
     }
-    return `Produto com id ${id} atualizado com  sucesso.`;  
+    return {id, message: `Produto atualizado com  sucesso.`};  
   }
   
   @Put('/:id/status')
-  async updateProductStatus(@Param('id') id: string, @Body() ativo: boolean): Promise<string> {
+  async updateProductStatus(@Param('id') id: string, @Body() ativo: boolean) {
     const produtoAtualizado = await this.produtoUseCase.updateStatus(id, ativo);
     if (!produtoAtualizado) {
       throw new NotFoundException(`Produto com id ${id} não encontrado.`);
     }
-    return `Produto com id ${id} atualizado com sucesso.`;  
+    return {id, message: `Produto atualizado com  sucesso.`};  
   }  
 }

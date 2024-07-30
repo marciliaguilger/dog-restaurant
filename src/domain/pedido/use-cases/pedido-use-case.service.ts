@@ -85,7 +85,7 @@ export class PedidoUseCase implements IPedidoUseCase {
         let order = new Pedido(customerId)
         order.createOrder()               
         order.addComboList(combos)
-        this.pedidoRepository.createPedido(order)
+        await this.pedidoRepository.createPedido(order)
         return order.pedidoId
     }
 }

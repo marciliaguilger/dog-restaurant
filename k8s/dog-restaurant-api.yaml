@@ -15,7 +15,7 @@ spec:
       hostname: dog-restaurant-api
       containers:
       - name: dog-restaurant-api
-        image: marciliaguilger/dog-restaurant:v7
+        image: marciliaguilger/dog-restaurant:v16
         resources:
           requests:
             memory: "256Mi"
