@@ -5,7 +5,7 @@ import { PedidoStatus } from "../enum/order-status.enum";
 export interface IPedidoUseCase {
     getAllPedidos(): Promise<Pedido[]> ;
     createPedido(customerId:string, combos: Combo[]) : Promise<string>
-    payPedido(orderId: string, qrCode: string): Promise<boolean>
+    payPedido(orderId: string): Promise<string>
     getAllPedidos() : Promise<Pedido[]>
     getPedidoById(order: string) : Promise<Pedido>
     getPedidosByStatus(state: PedidoStatus): Promise<Pedido[]>

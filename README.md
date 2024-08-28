@@ -23,6 +23,14 @@ Fornece serviços de gestão de clientes, produtos e pedidos.<br>
 
 O dog-restaurant é uma solução integrada projetada para otimizar e simplificar a gestão de operações diárias em estabelecimentos de alimentação. Este sistema fornece serviços de gestão de clientes, produtos e pedidos, permitindo que os proprietários e gerentes mantenham um controle eficiente e organizado de suas operações. Com funcionalidades que vão desde o cadastro e gerenciamento de clientes até a criação e categorização de produtos, o sistema assegura que todas as informações essenciais estejam centralizadas e facilmente acessíveis, melhorando a eficiência operacional e contribuindo para uma melhor experiência do cliente.
 
+## Arquitetura do projeto 
+
+<!-- <p align="center">
+  <a href="" rel="noopener">
+ <img width=500px height=500px src="kubernetes-diagram.jpg" alt="Project logo"></a>
+</p> -->
+
+
 ## 🏁 Comece por aqui <a name = "getting_started"></a>
 
 Essas instruções irão facilitar rodar o projeto na sua máquina local para fins de desenvolvimento e testes.
@@ -38,6 +46,20 @@ Essas instruções irão facilitar rodar o projeto na sua máquina local para fi
 - Node.js
 - npm
 ```
+
+## 🔧 Rodar aplicação no minikube
+
+-Iniciar o minikube
+- ` minikube start --driver=docker`
+
+- Aplicar as configurações do k8s
+- ` kubectl apply -f k8s/volumes.yaml -f k8s/mssql.yaml -f k8s/secrets.yaml -f k8s/configmap.yaml -f k8s/dog-restaurant-api.yaml -f k8s/loadbalancer.yaml -f k8s/dog-restaurant-hpa.yaml`
+
+- Ver os pods via dashboard:
+- `minikube dashboard`
+
+- Expor o tunel para acessar a api e o banco de dados pelo host:
+- ` minikube tunnel --bind-address=192.168.0.108(endereço ip do host) ` 
 
 ## 🔧 Rodando os testes <a name = "tests"></a>
 

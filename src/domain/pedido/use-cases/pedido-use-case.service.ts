@@ -4,7 +4,7 @@ import { IPedidoRepository } from "../repositories/order-repository.interface";
 import { IPedidoUseCase } from "./pedido-use-case.interface";
 import { Combo } from "../entities/combo.entity";
 import { PedidoStatus } from "../enum/order-status.enum";
-
+import { randomFill } from "crypto";
 @Injectable()
 export class PedidoUseCase implements IPedidoUseCase {
     constructor(
@@ -72,25 +72,20 @@ export class PedidoUseCase implements IPedidoUseCase {
         this.pedidoRepository.updatePedido(order)
     }    
     
-    async payPedido(orderId: string, qrCode?: string): Promise<boolean> {
-
-        if(qrCode === undefined) return false
-        
-        let order = await this.pedidoRepository.getPedidoById(orderId);
-        
-        if(order == undefined) return false
-
+    async payPedido(orderId: string): Promise<string> {
+        const qrCode = '00020101021243650016COM.MERCADOLIBRE02013063638f1192a-5fd1-4180-a180-8bcae3556bc35204000053039865802BR5925IZABEL AAAA DE MELO6007BARUERI62070503***63040B6D'      
+        let order = await this.pedidoRepository.getPedidoById(orderId);        
         order.confirmOrder()
         this.pedidoRepository.updatePedido(order)
         
-        return true
+        return qrCode
     }
 
     async createPedido(customerId:string, combos: Combo[]): Promise<string> {
         let order = new Pedido(customerId)
         order.createOrder()               
         order.addComboList(combos)
-        this.pedidoRepository.createPedido(order)
+        await this.pedidoRepository.createPedido(order)
         return order.pedidoId
     }
 }

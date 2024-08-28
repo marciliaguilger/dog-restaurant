@@ -20,7 +20,7 @@ export class OrderEntityMapper {
         return orders
     }
 
-    static mapToOrderDomain(orderEntity: Pedidos): Pedido {
+    static mapToOrderDomain(orderEntity: Pedidos, clienteName: string): Pedido {
         const orderStatus = PedidoStatus[orderEntity.PedidoStatus as keyof typeof PedidoStatus] || null;
         
         let order = Pedido.buildOrder(
@@ -32,7 +32,7 @@ export class OrderEntityMapper {
             orderStatus,
             orderEntity.TotalValorCentavos,
             orderEntity.ClienteId,
-            null,
+            clienteName,
             orderEntity.PreparacaoIniciada,
             orderEntity.Entregue,
         )
