@@ -29,9 +29,3 @@ jobs:
 
     - name: Run unit tests
       run: npm test
-
-    - name: Publish to npm
-      if: github.ref == 'refs/heads/main'
-      run: npm publish
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
