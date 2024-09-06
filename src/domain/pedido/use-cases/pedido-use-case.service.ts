@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Pedido } from "../entities/pedido.entity";
-import { IPedidoRepository } from "../repositories/order-repository.interface";
+import { IPedidoRepository } from "../ports/order-repository.interface";
 import { IPedidoUseCase } from "./pedido-use-case.interface";
 import { Combo } from "../entities/combo.entity";
 import { PedidoStatus } from "../enum/order-status.enum";

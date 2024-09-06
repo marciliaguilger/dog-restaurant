@@ -1,6 +1,6 @@
 import { TestingModule, Test } from "@nestjs/testing";
 import { Pedido } from "../entities/pedido.entity";
-import { IPedidoRepository } from "../repositories/order-repository.interface";
+import { IPedidoRepository } from "../ports/order-repository.interface";
 import { PedidoUseCase } from "./pedido-use-case.service";
 import { PedidoStatus } from "../enum/order-status.enum";
 

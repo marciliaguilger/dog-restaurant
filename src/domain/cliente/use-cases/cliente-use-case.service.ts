@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Cliente } from "../entities/cliente.entity";
 import { IClienteUseCase } from "./cliente-use-case.interface";
-import { IClienteRepository } from "../repositories/cliente-repository.interface";
+import { IClienteRepository } from "../ports/cliente-repository.interface";
 
 @Injectable()
 export class ClienteUseCase implements IClienteUseCase {

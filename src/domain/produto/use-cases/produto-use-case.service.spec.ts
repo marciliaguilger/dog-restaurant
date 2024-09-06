@@ -1,7 +1,7 @@
 import { TestingModule, Test } from "@nestjs/testing";
 import { Categoria } from "../entities/Categoria";
 import { Produto } from "../entities/Produto";
-import { IProdutoRepository } from "../repositories/product-repository.interface";
+import { IProdutoRepository } from "../ports/product-repository.interface";
 import { ProdutoUseCase } from "./produto-use-case.service";
 
 describe('ProdutoUseCase', () => {

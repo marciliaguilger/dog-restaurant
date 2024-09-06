@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ProdutoModule } from './application/produto/produto.module';
-import { ClienteModule } from './application/cliente/cliente.module';
-import { PedidoModule } from './application/pedido/pedido.module';
+import { ProdutoModule } from './frameworks-drivers/api/produto/produto.module';
+import { ClienteModule } from './frameworks-drivers/api/cliente/cliente.module';
+import { PedidoModule } from './frameworks-drivers/api/pedido/pedido.module';
 
 @Module({
   imports: [

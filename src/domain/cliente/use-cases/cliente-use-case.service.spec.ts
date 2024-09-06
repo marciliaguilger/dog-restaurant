@@ -1,6 +1,6 @@
 import { TestingModule, Test } from "@nestjs/testing";
 import { Cliente } from "../entities/cliente.entity";
-import { IClienteRepository } from "../repositories/cliente-repository.interface";
+import { IClienteRepository } from "../ports/cliente-repository.interface";
 import { ClienteUseCase } from "./cliente-use-case.service";
 
 describe('ClienteUseCase', () => {
