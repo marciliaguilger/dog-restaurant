@@ -1,5 +1,4 @@
 <!-- <p align="center">
-  <a href="" rel="noopener">
  <img width=500px height=500px src="dog-restaurant-logo-v2.jpg" alt="Project logo"></a>
 </p> -->
 
