@@ -1,8 +1,20 @@
+import 'reflect-metadata';
+import { Expose, Type} from 'class-transformer';
 export class OrderPostInput {
+    @Expose({ name: 'title' })
     title: string;
+
+    @Expose({ name: 'total-amount' })
     totalAmount: number;
+
+    @Expose({ name: 'external-reference' })
     externalReference: string;
+
+    @Expose({ name: 'description' })
     description: string;
+
+    @Expose({ name: 'items' })
+    @Type(() => Item)
     items: Item[];
 
     constructor(
@@ -20,14 +32,29 @@ export class OrderPostInput {
     }
 }
 
-export class Item {
+class Item {
+    @Expose({ name: 'sku-number' })
     skuNumber: string;
+
+    @Expose({ name: 'category' })
     category: string;
+
+    @Expose({ name: 'title' })
     title: string;
+
+    @Expose({ name: 'description' })
     description: string;
+
+    @Expose({ name: 'unit-price' })
     unitPrice: number;
+
+    @Expose({ name: 'quantity' })
     quantity: number;
+
+    @Expose({ name: 'unit-measure' })
     unitMeasure: string;
+
+    @Expose({ name: 'total-amount' })
     totalAmount: number;
 
     constructor(
@@ -50,4 +77,3 @@ export class Item {
         this.totalAmount = totalAmount;
     }
 }
-  
