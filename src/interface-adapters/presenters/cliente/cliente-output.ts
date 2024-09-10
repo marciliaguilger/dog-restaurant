@@ -1,4 +1,5 @@
 export class CustomerOutput {
+    cpf: Cpf;
 
     constructor(id: string, nome: string, documento: string, email: string)
     {
@@ -12,4 +13,8 @@ export class CustomerOutput {
     nome: string;
     documento: string;
     email: string;
+}
+
+class Cpf{
+    numero:string;
 }

@@ -1,36 +1,33 @@
-import { Body, Controller, Get, HttpStatus, Inject, NotFoundException, Param, Post, Req, Res } from "@nestjs/common";
-import { CreateClienteInput as CreateClienteInput } from "../../../../interface-adapters/presenters/cliente/create-cliente-input";
+import { Body, Controller, Get, Inject, NotFoundException, Param, Post } from "@nestjs/common";
+import { CreateClienteInput } from "../../../../interface-adapters/presenters/cliente/create-cliente-input";
 import { CustomerOutput as ClienteOutput } from "../../../../interface-adapters/presenters/cliente/cliente-output";
-import { IClienteUseCase } from "src/domain/cliente/use-cases/cliente-use-case.interface";
 import { ApiTags } from "@nestjs/swagger";
-import { Cliente as Cliente } from "src/domain/cliente/entities/cliente.entity";
+import { ClienteInterfaceController } from "src/interface-adapters/controllers/cliente-interface.controller";
 
 @ApiTags('Cliente')
 @Controller('clientes')
 export class ClienteController {
-  constructor(
-    @Inject(IClienteUseCase)
-    private readonly clienteUseCase: IClienteUseCase) {}
+    constructor(
+        @Inject(ClienteInterfaceController)
+        private readonly clienteController: ClienteInterfaceController) {}
 
-  @Post()
-  async createCliente(@Body() createClienteInput: CreateClienteInput) {
-    const cliente = new Cliente(createClienteInput.nome,createClienteInput.documento ,createClienteInput.email);
-    return {clienteId:  await this.clienteUseCase.create(cliente) };
-  }
-
-  @Get(':cpf')
-  async getClienteByDocument(@Param('cpf') cpf: string): Promise<ClienteOutput > {
-    const cliente = await this.clienteUseCase.getByCpf(cpf);
-    if (!cliente) {
-      throw new NotFoundException(`Cliente com o documento: ${document} não encontrado`);
+    @Post()
+    async createCliente(@Body() createClienteInput: CreateClienteInput) {
+        return { clienteId: await this.clienteController.createCliente(createClienteInput) };
     }
-    return new ClienteOutput(cliente.id, cliente.nome, cliente.cpf.numero, cliente.email);
-  }
 
-  @Get()
-  async getAll(): Promise<ClienteOutput[]> {
-    const cliente = await this.clienteUseCase.getAll();
-    
-    return cliente.map(cliente => new ClienteOutput(cliente.id, cliente.nome, cliente.cpf.numero, cliente.email));
-  }
+    @Get(':cpf')
+    async getClienteByDocument(@Param('cpf') cpf: string): Promise<ClienteOutput> {
+        const cliente = await this.clienteController.getClienteByDocument(cpf);
+        if (!cliente) {
+            throw new NotFoundException(`Cliente com o documento: ${cpf} não encontrado`);
+        }
+        return new ClienteOutput(cliente.id, cliente.nome, cliente.cpf.numero, cliente.email);
+    }
+
+    @Get()
+    async getAll(): Promise<ClienteOutput[]> {
+        const clientes = await this.clienteController.getAll();
+        return clientes.map(cliente => new ClienteOutput(cliente.id, cliente.nome, cliente.cpf.numero, cliente.email));
+    }
 }
