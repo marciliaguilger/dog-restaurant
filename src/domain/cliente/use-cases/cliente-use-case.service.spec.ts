@@ -1,17 +1,17 @@
 import { TestingModule, Test } from "@nestjs/testing";
 import { Cliente } from "../entities/cliente.entity";
-import { IClienteRepository } from "../ports/cliente-repository.interface";
 import { ClienteUseCase } from "./cliente-use-case.service";
+import { IClienteGateway } from "../ports/cliente-gateway.interface";
 
 describe('ClienteUseCase', () => {
     let service: ClienteUseCase;
-    let mockClienteRepository: Partial<IClienteRepository>;
+    let mockClienteGateway: Partial<IClienteGateway>;
     const nomeMocked = 'some-name';
     const cpfMocked = '99999999999';
     const emailMocked = 'email@teste.com'
   
     beforeEach(async () => {
-      mockClienteRepository = {
+      mockClienteGateway = {
         getByCpf: jest.fn().mockImplementation((cpf: string) => {
             cpf = '99999999999';
             const cliente = new Cliente(nomeMocked, cpf, emailMocked);
@@ -31,8 +31,8 @@ describe('ClienteUseCase', () => {
         providers: [
           ClienteUseCase,
           {
-            provide: IClienteRepository,
-            useValue: mockClienteRepository
+            provide: IClienteGateway,
+            useValue: mockClienteGateway
           },
         ],
       }).compile();
@@ -48,12 +48,12 @@ describe('ClienteUseCase', () => {
       const cliente = await service.getByCpf(cpfMocked);
       expect(cliente).toBeDefined();
       expect(cliente.cpf.numero).toBe(cpfMocked);
-      expect(mockClienteRepository.getByCpf).toHaveBeenCalledWith(cpfMocked);
+      expect(mockClienteGateway.getByCpf).toHaveBeenCalledWith(cpfMocked);
     });
   
     it('should return all clientes', async () => {
       const clientes = await service.getAll();
       expect(clientes).toHaveLength(2);
-      expect(mockClienteRepository.getAll).toHaveBeenCalled();
+      expect(mockClienteGateway.getAll).toHaveBeenCalled();
     });
   });

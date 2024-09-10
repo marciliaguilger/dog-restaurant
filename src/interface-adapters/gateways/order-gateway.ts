@@ -1,34 +1,31 @@
-import { Categoria } from "src/domain/produto/entities/Categoria";
-import { Produto } from "src/domain/produto/entities/Produto";
-import { IProdutoGateway } from "src/domain/produto/ports/product-gateway.interface";
+import { Inject } from "@nestjs/common";
+import { Pedido } from "src/domain/pedido/entities/pedido.entity";
+import { PedidoStatus } from "src/domain/pedido/enum/order-status.enum";
+import { IPedidoGateway } from "src/domain/pedido/ports/order-gateway.interface";
+import { IPedidoRepository } from "src/domain/pedido/ports/order-repository.interface";
 
-export class PedidoGateway implements IProdutoGateway {
-    create(produto: Produto) {
-        throw new Error("Method not implemented.");
+export class PedidoGateway implements IPedidoGateway {
+    constructor(
+        @Inject(IPedidoRepository)
+        private readonly pedidoRepository: IPedidoRepository
+    )
+    {}
+    createPedido(order: Pedido) {
+        this.pedidoRepository.createPedido(order)
     }
-    createCategoria(categoria: Categoria) {
-        throw new Error("Method not implemented.");
+    getAllPedidos(): Promise<Pedido[]> {
+        return this.pedidoRepository.getAllPedidos()
     }
-    update(id: string, produto: Produto) {
-        throw new Error("Method not implemented.");
+    getPedidoById(orderId: string): Promise<Pedido> {
+        return this.pedidoRepository.getPedidoById(orderId)
     }
-    updateStatus(id: string, ativo: boolean) {
-        throw new Error("Method not implemented.");
+    getPedidosByStatus(status: PedidoStatus): Promise<Pedido[]> {
+        return this.pedidoRepository.getPedidosByStatus(status)
     }
-    getByNome(nome: string): Promise<Produto> {
-        throw new Error("Method not implemented.");
+    updatePedido(order: Pedido) {
+        this.pedidoRepository.updatePedido(order)
     }
-    getById(id: string): Promise<Produto> {
-        throw new Error("Method not implemented.");
-    }
-    getByCategoria(categoria: string): Promise<Produto[]> {
-        throw new Error("Method not implemented.");
-    }
-    getAllCategorias(): Promise<Categoria[]> {
-        throw new Error("Method not implemented.");
-    }
-    getAll(): Promise<Produto[]> {
-        throw new Error("Method not implemented.");
-    }
+
+    
 
 }

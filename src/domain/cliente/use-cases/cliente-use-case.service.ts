@@ -1,24 +1,24 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Cliente } from "../entities/cliente.entity";
 import { IClienteUseCase } from "./cliente-use-case.interface";
-import { IClienteRepository } from "../ports/cliente-repository.interface";
+import { IClienteGateway } from "../ports/cliente-gateway.interface";
 
 @Injectable()
 export class ClienteUseCase implements IClienteUseCase {
   constructor(
-    @Inject(IClienteRepository) 
-    private readonly clienteRepository: IClienteRepository) {}
+    @Inject(IClienteGateway) 
+    private readonly clienteGateway: IClienteGateway) {}
   
   async getByCpf(cpf: string): Promise<Cliente | undefined> {
-    return this.clienteRepository.getByCpf(cpf); 
+    return this.clienteGateway.getByCpf(cpf); 
   }
   
   async getAll(): Promise<Cliente[]> {
-    return this.clienteRepository.getAll(); 
+    return this.clienteGateway.getAll(); 
   }
 
   async create(cliente: Cliente): Promise<string> {
-    this.clienteRepository.create(cliente);
+    this.clienteGateway.create(cliente);
     return cliente.id;
   }
 }

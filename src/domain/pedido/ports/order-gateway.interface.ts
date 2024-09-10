@@ -8,3 +8,5 @@ export interface IPedidoGateway {
     getPedidosByStatus(status: PedidoStatus): Promise<Pedido[]>
     updatePedido(order: Pedido)
 }
+
+export const IPedidoGateway = Symbol('IPedidoGateway');

@@ -7,6 +7,8 @@ import { DataBaseModule } from "src/frameworks-drivers/data/database.module";
 import { customerProviders } from "src/frameworks-drivers/data/cliente/repositories/customer.provider";
 import { databaseProviders } from "src/frameworks-drivers/data/database.provider";
 import { ClienteRepository } from "src/frameworks-drivers/data/cliente/repositories/cliente-repository";
+import { ClienteGateway } from "src/interface-adapters/gateways/cliente-gateway";
+import { IClienteGateway } from "src/domain/cliente/ports/cliente-gateway.interface";
 
 @Module({
     imports: [DataBaseModule],
@@ -23,6 +25,11 @@ import { ClienteRepository } from "src/frameworks-drivers/data/cliente/repositor
       {
         provide: IClienteUseCase,
         useClass: ClienteUseCase
+      },
+      ClienteGateway,
+      {
+        provide: IClienteGateway,
+        useClass: ClienteGateway
       }
     ],
   })

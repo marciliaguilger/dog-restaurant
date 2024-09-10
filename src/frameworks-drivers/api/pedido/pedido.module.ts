@@ -15,6 +15,8 @@ import { categoriaProviders } from "src/frameworks-drivers/data/produto/reposito
 import { ProductRepository } from "src/frameworks-drivers/data/produto/repositories/produto-repository";
 import { ProdutoGateway } from "src/interface-adapters/gateways/product-gateway";
 import { IProdutoGateway } from "src/domain/produto/ports/product-gateway.interface";
+import { PedidoGateway } from "src/interface-adapters/gateways/order-gateway";
+import { IPedidoGateway } from "src/domain/pedido/ports/order-gateway.interface";
 
 @Module({
     imports: [],
@@ -49,6 +51,11 @@ import { IProdutoGateway } from "src/domain/produto/ports/product-gateway.interf
         {
             provide: IProdutoGateway,
             useClass: ProdutoGateway,
+        },
+        PedidoGateway,
+        {
+            provide: IPedidoGateway,
+            useClass: PedidoGateway,
         }
     ],
   

@@ -5,3 +5,5 @@ export interface IClienteGateway {
     getByCpf(cpf: string): Promise<Cliente>;
     getAll(): Promise<Cliente[]>;
 }
+
+export const IClienteGateway=Symbol('IClienteGateway')

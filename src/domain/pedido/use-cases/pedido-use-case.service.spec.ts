@@ -1,15 +1,15 @@
 import { TestingModule, Test } from "@nestjs/testing";
 import { Pedido } from "../entities/pedido.entity";
-import { IPedidoRepository } from "../ports/order-repository.interface";
 import { PedidoUseCase } from "./pedido-use-case.service";
 import { PedidoStatus } from "../enum/order-status.enum";
+import { IPedidoGateway } from "../ports/order-gateway.interface";
 
 describe('PedidoUseCase', () => {
     let service: PedidoUseCase;
-    let mockPedidoRepository: Partial<IPedidoRepository>;
+    let mockPedidoGateway: Partial<IPedidoGateway>;
   
     beforeEach(async () => {
-      mockPedidoRepository = {
+      mockPedidoGateway = {
         getAllPedidos: jest.fn().mockResolvedValue([
           { ...new Pedido('1'), status: PedidoStatus.CONFIRMED, criado: new Date() },
           { ...new Pedido('2'), status: PedidoStatus.PREPARING, criado: new Date() }
@@ -29,7 +29,7 @@ describe('PedidoUseCase', () => {
       const module: TestingModule = await Test.createTestingModule({
         providers: [
           PedidoUseCase,
-          { provide: IPedidoRepository, useValue: mockPedidoRepository }
+          { provide: IPedidoGateway, useValue: mockPedidoGateway }
         ],
       }).compile();
   
@@ -44,11 +44,11 @@ describe('PedidoUseCase', () => {
       const result = await service.getAllPedidos();
       expect(result).toHaveLength(2);
       expect(result[0].status).toBe(PedidoStatus.PREPARING);
-      expect(mockPedidoRepository.getAllPedidos).toHaveBeenCalled();
+      expect(mockPedidoGateway.getAllPedidos).toHaveBeenCalled();
     });      
   
     it('getPedidoById should throw if pedido does not exist', async () => {
-      jest.spyOn(mockPedidoRepository, 'getPedidoById').mockResolvedValueOnce(undefined);
+      jest.spyOn(mockPedidoGateway, 'getPedidoById').mockResolvedValueOnce(undefined);
       await expect(service.getPedidoById('3')).rejects.toThrow('Pedido with ID 3 not found.');
     });
 
@@ -56,6 +56,6 @@ describe('PedidoUseCase', () => {
       const combos = [];
       const result = await service.createPedido('customer1', combos);
       expect(result).toBeDefined();
-      expect(mockPedidoRepository.createPedido).toHaveBeenCalled();
+      expect(mockPedidoGateway.createPedido).toHaveBeenCalled();
     });
   });

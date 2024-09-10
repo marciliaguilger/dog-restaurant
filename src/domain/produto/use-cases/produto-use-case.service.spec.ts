@@ -3,13 +3,14 @@ import { Categoria } from "../entities/Categoria";
 import { Produto } from "../entities/Produto";
 import { IProdutoRepository } from "../ports/product-repository.interface";
 import { ProdutoUseCase } from "./produto-use-case.service";
+import { IProdutoGateway } from "../ports/product-gateway.interface";
 
 describe('ProdutoUseCase', () => {
     let service: ProdutoUseCase;
-    let mockProdutoRepository: Partial<IProdutoRepository>;
+    let mockProdutoGateway: Partial<IProdutoGateway>;
   
     beforeEach(async () => {
-      mockProdutoRepository = {
+      mockProdutoGateway = {
         updateStatus: jest.fn().mockResolvedValue(undefined),
         getAllCategorias: jest.fn().mockResolvedValue([]),
         update: jest.fn().mockResolvedValue(undefined),
@@ -25,8 +26,8 @@ describe('ProdutoUseCase', () => {
         providers: [
           ProdutoUseCase,
           {
-            provide: IProdutoRepository,
-            useValue: mockProdutoRepository
+            provide: IProdutoGateway,
+            useValue: mockProdutoGateway
           }
         ],
       }).compile();
@@ -42,34 +43,34 @@ describe('ProdutoUseCase', () => {
       const id = 'some-id';
       const ativo = true;
       await service.updateStatus(id, ativo);
-      expect(mockProdutoRepository.updateStatus).toHaveBeenCalledWith(id, ativo);
+      expect(mockProdutoGateway.updateStatus).toHaveBeenCalledWith(id, ativo);
     });
   
     it('should get all categories', async () => {
       await service.getAllCategorias();
-      expect(mockProdutoRepository.getAllCategorias).toHaveBeenCalled();
+      expect(mockProdutoGateway.getAllCategorias).toHaveBeenCalled();
     });
   
     it('should get product by name', async () => {
       const nome = 'some-name';
       await service.getByNome(nome);
-      expect(mockProdutoRepository.getByNome).toHaveBeenCalledWith(nome);
+      expect(mockProdutoGateway.getByNome).toHaveBeenCalledWith(nome);
     });
   
     it('should get product by id', async () => {
       const id = 'some-id';
       await service.getById(id);
-      expect(mockProdutoRepository.getById).toHaveBeenCalledWith(id);
+      expect(mockProdutoGateway.getById).toHaveBeenCalledWith(id);
     });
   
     it('should get products by category', async () => {
       const categoria = 'some-category';
       await service.getByCategoria(categoria);
-      expect(mockProdutoRepository.getByCategoria).toHaveBeenCalledWith(categoria);
+      expect(mockProdutoGateway.getByCategoria).toHaveBeenCalledWith(categoria);
     });
   
     it('should get all products', async () => {
       await service.getAll();
-      expect(mockProdutoRepository.getAll).toHaveBeenCalled();
+      expect(mockProdutoGateway.getAll).toHaveBeenCalled();
     });
   });

@@ -1,18 +1,18 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Pedido } from "../entities/pedido.entity";
-import { IPedidoRepository } from "../ports/order-repository.interface";
 import { IPedidoUseCase } from "./pedido-use-case.interface";
 import { Combo } from "../entities/combo.entity";
 import { PedidoStatus } from "../enum/order-status.enum";
 import { randomFill } from "crypto";
+import { IPedidoGateway } from "../ports/order-gateway.interface";
 @Injectable()
 export class PedidoUseCase implements IPedidoUseCase {
     constructor(
-        @Inject(IPedidoRepository) 
-        private readonly pedidoRepository: IPedidoRepository) {}
+        @Inject(IPedidoGateway) 
+        private readonly pedidoGateway: IPedidoGateway) {}
 
     async getAllPedidos(): Promise<Pedido[]> {
-        const orders = await this.pedidoRepository.getAllPedidos();
+        const orders = await this.pedidoGateway.getAllPedidos();
         return this.filterAndSortPedidos(orders);
     }
 
@@ -34,7 +34,7 @@ export class PedidoUseCase implements IPedidoUseCase {
     }
 
     async getPedidoById(orderId: string): Promise<Pedido> {
-        const order = await this.pedidoRepository.getPedidoById(orderId);
+        const order = await this.pedidoGateway.getPedidoById(orderId);
         if (!order) {
             throw new Error(`Pedido with ID ${orderId} not found.`);
         }
@@ -42,12 +42,12 @@ export class PedidoUseCase implements IPedidoUseCase {
     }
 
     async getPedidosByStatus(status: PedidoStatus): Promise<Pedido[]> {
-        const orders = await this.pedidoRepository.getPedidosByStatus(status);
+        const orders = await this.pedidoGateway.getPedidosByStatus(status);
         return orders;
     }
 
     async updatePedidoStatus(orderId: string, newStatus: PedidoStatus) {
-        let order = await this.pedidoRepository.getPedidoById(orderId);
+        let order = await this.pedidoGateway.getPedidoById(orderId);
         
         switch (newStatus) {
             case PedidoStatus.CONFIRMED: 
@@ -69,14 +69,14 @@ export class PedidoUseCase implements IPedidoUseCase {
                 return
         }
         
-        this.pedidoRepository.updatePedido(order)
+        this.pedidoGateway.updatePedido(order)
     }    
     
     async payPedido(orderId: string): Promise<string> {
         const qrCode = '00020101021243650016COM.MERCADOLIBRE02013063638f1192a-5fd1-4180-a180-8bcae3556bc35204000053039865802BR5925IZABEL AAAA DE MELO6007BARUERI62070503***63040B6D'      
-        let order = await this.pedidoRepository.getPedidoById(orderId);        
+        let order = await this.pedidoGateway.getPedidoById(orderId);        
         order.confirmOrder()
-        this.pedidoRepository.updatePedido(order)
+        this.pedidoGateway.updatePedido(order)
         
         return qrCode
     }
@@ -85,7 +85,7 @@ export class PedidoUseCase implements IPedidoUseCase {
         let order = new Pedido(customerId)
         order.createOrder()               
         order.addComboList(combos)
-        await this.pedidoRepository.createPedido(order)
+        await this.pedidoGateway.createPedido(order)
         return order.pedidoId
     }
 }
