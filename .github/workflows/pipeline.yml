@@ -54,7 +54,7 @@ jobs:
       if: success()
       run: |
         aws eks --region us-east-1 update-kubeconfig --name dog-eks-cluster
-        kubectl apply -f ../../k8s/deployment.yaml
+        kubectl apply -f deployment.yaml
     
     - name: Update Kubernetes deployment
       env:
