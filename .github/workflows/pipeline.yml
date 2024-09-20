@@ -57,7 +57,7 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         aws eks --region us-east-1 update-kubeconfig --name dog-eks-cluster
-        kubectl set image deployment/dog-restaurant-api dog-restaurant-api=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        kubectl set image k8s/dog-restaurant-api/dog-restaurant-api dog-restaurant-api=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
     - name: Set up Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
