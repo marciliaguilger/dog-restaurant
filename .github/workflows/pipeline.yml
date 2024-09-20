@@ -35,6 +35,11 @@ jobs:
     - name: Log in to Amazon ECR
       id: ecr-login
       uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Create ECR repository if it doesn't exist
+      if: success()
+      run: |
+        aws ecr describe-repositories --repository-names dog-restaurant-api || aws ecr create-repository --repository-name dog-restaurant-api  
     
     - name: Build, tag, and push Docker image to Amazon ECR
       env:
