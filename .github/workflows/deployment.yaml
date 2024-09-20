@@ -15,7 +15,7 @@ spec:
       hostname: dog-restaurant-api
       containers:
       - name: dog-restaurant-api
-        image: marciliaguilger/dog-restaurant:v16
+        image: 764549915701.dkr.ecr.us-east-1.amazonaws.com/dog-restaurant-api:latest
         resources:
           requests:
             memory: "256Mi"
