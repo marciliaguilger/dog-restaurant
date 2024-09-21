@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AllExceptionsFilter } from './domain/base/all-exceptions.filter';
 import { TypeErrorFilter } from './domain/base/type-error-exceptions.filter';
-import { loadSecretsToEnv } from './loadsecrets';
+import { getSecretValue } from './loadsecrets';
 
 require('dotenv').config();
 
@@ -22,7 +22,11 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   try {
-    await loadSecretsToEnv('rds/postgres/dog-restaurant/credentials');
+    var secrets = getSecretValue()
+    for (const key in secrets) {
+      process.env[key] = secrets[key];
+    }
+    console.log(secrets)
     console.log('Segredos carregados com sucesso!');
     await app.listen(3000);
   } catch (err) {

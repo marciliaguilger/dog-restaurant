@@ -1,30 +1,20 @@
-import AWS from 'aws-sdk';
-import * as dotenv from 'dotenv';
+import { GetSecretValueCommand, SecretsManagerClient } from "@aws-sdk/client-secrets-manager";
 
-dotenv.config();
+const client = new SecretsManagerClient({ region: process.env.AWS_REGION });
 
-   const client = new AWS.SecretsManager({
-     region: process.env.AWS_REGION
-   });
+export const getSecretValue = async (secretName = "rds/postgres/dog-restaurant/credentials") => {
+  try {
+    const response = await client.send(
+      new GetSecretValueCommand({
+        SecretId: secretName,
+      })
+    );
 
-   async function getSecretValue(secretName: string): Promise<any> {
-     try {
-       const data = await client.getSecretValue({ SecretId: secretName }).promise();
-       if ('SecretString' in data) {
-         return JSON.parse(data.SecretString);
-       } else {
-         const buff = Buffer.from(data.SecretBinary as string, 'base64');
-         return JSON.parse(buff.toString('ascii'));
-       }
-     } catch (err) {
-       console.error(err);
-       throw err;
-     }
-   }
-
-   export async function loadSecretsToEnv(secretName: string): Promise<void> {
-     const secrets = await getSecretValue(secretName);
-     for (const key in secrets) {
-       process.env[key] = secrets[key];
-     }
-   }
+    if (response.SecretString) {
+      return JSON.parse(response.SecretString);
+    }
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
