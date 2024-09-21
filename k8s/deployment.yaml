@@ -25,14 +25,4 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 3000
-        env:
-        - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: data
-              key: DB_HOST
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: apppasswords
-              key: DB_PASSWORD
+        
