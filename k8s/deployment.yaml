@@ -15,7 +15,7 @@ spec:
       hostname: dog-restaurant-api
       containers:
       - name: dog-restaurant-api
-        image: marciliaguilger/dog-restaurant:v16
+        image: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/dog-restaurant-api:latest
         resources:
           requests:
             memory: "256Mi"
@@ -25,14 +25,3 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 3000
-        env:
-        - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: data
-              key: DB_HOST
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: apppasswords
-              key: DB_PASSWORD

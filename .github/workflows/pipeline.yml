@@ -16,11 +16,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-
     - name: Install dependencies
       run: npm install
 
@@ -29,3 +24,51 @@ jobs:
 
     - name: Run unit tests
       run: npm test
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Log in to Amazon ECR
+      id: ecr-login
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Create ECR repository if it doesn't exist
+      if: success()
+      run: |
+        aws ecr describe-repositories --repository-names dog-restaurant-api || aws ecr create-repository --repository-name dog-restaurant-api  
+    
+    - name: Build, tag, and push Docker image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+        ECR_REPOSITORY: dog-restaurant-api
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    - name: Replace AWS Account ID in deployment.yaml
+      if: success()
+      run: |
+        sed -i 's/<AWS_ACCOUNT_ID>/${{ secrets.AWS_ACCOUNT_ID }}/g' ./k8s/deployment.yaml
+        
+    - name: Apply Kubernetes manifests
+      if: success()
+      run: |
+        aws eks --region us-east-1 update-kubeconfig --name dog-eks-cluster
+        kubectl apply -f ./k8s/deployment.yaml
+    
+    - name: Update Kubernetes deployment
+      env:
+        ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+        ECR_REPOSITORY: dog-restaurant-api
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        aws eks --region us-east-1 update-kubeconfig --name dog-eks-cluster
+        kubectl set image deployment/dog-restaurant-api dog-restaurant-api=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }} 
