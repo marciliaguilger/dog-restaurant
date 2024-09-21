@@ -25,3 +25,6 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 3000
+        env:
+        - name: AWS_REGION
+          value: "us-east-1"   
