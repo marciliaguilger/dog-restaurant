@@ -53,7 +53,7 @@ jobs:
     - name: Replace AWS Account ID in deployment.yaml
       if: success()
       run: |
-        sed -i 's/<AWS_ACCOUNT_ID>/${{ secrets.AWS_ACCOUNT_ID }}/g' deployment.yaml
+        sed -i 's/<AWS_ACCOUNT_ID>/${{ secrets.AWS_ACCOUNT_ID }}/g' ./k8s/deployment.yaml
         
 
     - name: Apply Kubernetes manifests
