@@ -50,6 +50,12 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
+    - name: Replace AWS Account ID in deployment.yaml
+      if: success()
+      run: |
+        sed -i 's/<AWS_ACCOUNT_ID>/${{ secrets.AWS_ACCOUNT_ID }}/g' deployment.yaml
+        
+
     - name: Apply Kubernetes manifests
       if: success()
       run: |
