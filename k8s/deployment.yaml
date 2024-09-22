@@ -32,20 +32,20 @@ spec:
         - name: DB_HOST
           valueFrom:
             secretKeyRef:
-              name: DB_HOST
+              name: dbhost
               key: DB_HOST
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: DB_PASSWORD
+              name: dbpassword
               key: DB_PASSWORD        
         - name: DB_USER
           valueFrom:
             secretKeyRef:
-              name: DB_USER
+              name: dbuser
               key: DB_USER                           
         - name: DB_NAME
           valueFrom:
             secretKeyRef:
-              name: DB_NAME
+              name: dbname
               key: DB_NAME          
