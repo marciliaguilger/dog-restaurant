@@ -29,23 +29,3 @@ spec:
         env:
         - name: AWS_REGION
           value: "us-east-1"   
-        - name: DB_HOST
-          valueFrom:
-            secretKeyRef:
-              name: dbhost
-              key: DB_HOST
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: dbpassword
-              key: DB_PASSWORD        
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: dbuser
-              key: DB_USER                           
-        - name: DB_NAME
-          valueFrom:
-            secretKeyRef:
-              name: dbname
-              key: DB_NAME          
