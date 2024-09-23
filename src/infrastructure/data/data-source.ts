@@ -2,12 +2,12 @@ import { DataSource } from 'typeorm';
 require('dotenv').config();
 
 const AppDataSource = new DataSource({
-  type: 'mssql',
+  type: 'postgres',
   host: process.env.DB_HOST,
-  port: 1433,
-  username: 'sa',
+  port: 5432,
+  username: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: 'DogRestaurant',
+  database: process.env.DB_NAME,
   entities: [
     __dirname + '/**/entities/*.entity{.ts,.js}',
   ],
@@ -16,9 +16,8 @@ const AppDataSource = new DataSource({
   ],
   synchronize: false, 
   logging: true,
-  options: {
-    encrypt: true,
-    trustServerCertificate: true,
+  extra: {
+    ssl: true
   }
 });
 
