@@ -1,37 +1,103 @@
-terraform {
-    required_providers {
-      aws = {
-        source = "hashicorp/aws"
-        version = "~> 4.0.0"
-      }
-    }
-}
-
 //Make sure you are connected to AWS cli
+# Specify the provider
 provider "aws" {
-    region = "us-east-1"
+  region  = "us-east-1"  # Change to your desired region
+  profile = "bia"        # Specify the profile
+}
+# Create a security group
+resource "aws_security_group" "balancers_security_group" {
+  name        = "balancers-security-group"
+  description = "Permitir trafego do api gateway ate o eks"
+  vpc_id      = "vpc-0a288c24930e9a742"  # Your VPC ID
+
+  # Inbound rules
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Anywhere-IPv4
+  }
+
+  # Outbound rules
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "balancers-security-group"
+  }
+}
+resource "aws_security_group" "cluster_security_group" {
+  name        = "cluster-security-group"
+  description = "Grupo de seguranca do cluster"
+  vpc_id      = "vpc-0a288c24930e9a742"  # Your VPC ID
+
+  # Inbound rules
+  ingress {
+    from_port       = 3000
+    to_port         = 3000
+    protocol        = "tcp"
+    security_groups = ["sg-0b804dd8ca3753013"]  # Reference to balancer-security-group
+  }
+
+  # Outbound rules
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "cluster-security-group"
+  }
+}
+resource "aws_lb_target_group" "dog_tg" {
+  name        = "dog-tg"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = "vpc-0a288c24930e9a742"
+  target_type = "ip"
+
+  health_check {
+    interval            = 30
+    path                = "/"
+    protocol            = "HTTP"
+    timeout             = 5
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+  }
+
+  tags = {
+    Name = "dog-tg"
+  }
+}
+# Create an Application Load Balancer
+resource "aws_lb" "eks_dog_load_balancer" {
+  name               = "eks-dog-load-balancer"
+  internal           = true
+  load_balancer_type = "application"
+  security_groups    = ["sg-0b804dd8ca3753013"]
+  subnets            = ["subnet-08bf99e4f496868fb", "subnet-0c18fc34912b5cde3"]
+  ip_address_type    = "ipv4"
+
+  enable_deletion_protection = false
+
+  tags = {
+    Name = "eks-dog-load-balancer"
+  }
 }
 
-//Create the ECR Repository
-resource "aws_ecr_repository" "dog_restaurant_service" {
-  name = "dog-restaurant-service"
-}
-
-//Upload your docker image into the ECR Repository
-/*
-# Authenticate Docker to your ECR registry
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com
-
-# Build your Docker image
-docker build -t dog-restaurant-service .
-
-# Tag your Docker image
-docker tag dog-restaurant-service:latest <aws_account_id>.dkr.ecr.us-west-2.amazonaws.com/dog-restaurant-service:latest
-
-# Push your Docker image to ECR
-docker push <aws_account_id>.dkr.ecr.us-east-1.amazonaws.com/dog-restaurant-service:latest
-*/
-
-resource "aws_ecs_cluster" "dog_restaurant_cluster" {
-  name = "dog-restaurant-cluster"
+# Create a Listener for the Load Balancer
+resource "aws_lb_listener" "http_listener" {
+  load_balancer_arn = aws_lb.eks_dog_load_balancer.arn
+  port              = 80
+  protocol          = "HTTP"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.dog_tg.arn
+  }
 }
