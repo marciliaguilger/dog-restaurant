@@ -6,6 +6,9 @@ const connectWithRetry = async (dataSourceOptions, maxRetries = 5, retryDelay = 
   while (retries < maxRetries) {
     try {
       console.log(process.env.DB_HOST)
+      console.log(process.env.DB_USER)
+      console.log(process.env.DB_PASSWORD)
+      console.log(process.env.DB_HOST)
       const dataSource = new DataSource(dataSourceOptions);
       await dataSource.initialize();
       console.log('Database connection established');
@@ -26,7 +29,7 @@ export const databaseProviders = [
     provide: 'DATA_SOURCE',
     useFactory: async () => {
       return connectWithRetry({
-        type: 'postgres',
+        type: 'mysql',
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
         username: process.env.DB_USER,
@@ -38,14 +41,10 @@ export const databaseProviders = [
         migrations: [
           __dirname + '/**/entities/*.entity{.ts,.js}',
         ],
-
         synchronize: false,
         logging: true,
         logger: 'advanced-console',
-        options: {
-          encrypt: true,
-          trustServerCertificate: true,
-        }
+        
       });
     },
   },

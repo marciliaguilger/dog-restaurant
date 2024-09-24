@@ -8,16 +8,16 @@ import { getSecretValue } from './loadsecrets';
 require('dotenv').config();
 
 async function bootstrap() {
-  try {
-    var secrets = await getSecretValue()
-    for (const key in secrets) {
-      process.env[key] = secrets[key];
-    }
-    console.log("segredo:" + secrets)
-    console.log('Segredos carregados com sucesso!');
-    } catch (err) {
-      console.error('Erro ao carregar os segredos:', err);
-    }
+  // try {
+    // var secrets = await getSecretValue()
+    // for (const key in secrets) {
+    //   process.env[key] = secrets[key];
+    // }
+    // console.log("segredo:" + secrets)
+    // console.log('Segredos carregados com sucesso!');
+    // } catch (err) {
+    //   console.error('Erro ao carregar os segredos:', err);
+    // }
   
   const app = await NestFactory.create(AppModule);
 
