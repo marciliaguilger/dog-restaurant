@@ -2,41 +2,37 @@ networks:
   default:
 
 services:
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-latest
-    networks:
-      - default    
+  db:
+    image: mysql:latest
+    container_name: mysql_container
     environment:
-      SA_PASSWORD: "SqlServer2019!"
-      ACCEPT_EULA: "Y"
-      MSSQL_PID: "Developer"
+      MYSQL_ROOT_PASSWORD: Dogdog1029
+      MYSQL_DATABASE: dogrestaurantdb
+      MYSQL_USER: dogadmin
+      MYSQL_PASSWORD: Dogdog1029
     ports:
-      - "1433:1433"
-  mssqltools:
-    image: mcr.microsoft.com/mssql-tools
-    depends_on:
-      - sqlserver
-    networks:
-      - default      
+      - "3306:3306"
     volumes:
-      - ./db/01.sql:/tmp/01.sql
-      - ./db/02.sql:/tmp/02.sql
-      - ./db/init.sh:/tmp/init.sh
-    command: /bin/bash ./tmp/init.sh      
+      - mysql_data:/var/lib/mysql
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - '3000:3000'
+  #   container_name: dogrestaurantapi
+  #   restart: always
+  #   #environment:
+  #     #- NODE_ENV=development
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - ./src:/app/src
+  #   networks:
+  #     - default
 
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - '3000:3000'
-    container_name: dogrestaurantapi
-    restart: always
-    #environment:
-      #- NODE_ENV=development
-    depends_on:
-      - sqlserver
-    volumes:
-      - ./src:/app/src
-    networks:
-      - default
+volumes:
+  mysql_data:
+  
+
+  
