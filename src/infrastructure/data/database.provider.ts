@@ -5,10 +5,6 @@ const connectWithRetry = async (dataSourceOptions, maxRetries = 5, retryDelay = 
   
   while (retries < maxRetries) {
     try {
-      console.log(process.env.DB_HOST)
-      console.log(process.env.DB_USER)
-      console.log(process.env.DB_PASSWORD)
-      console.log(process.env.DB_HOST)
       const dataSource = new DataSource(dataSourceOptions);
       await dataSource.initialize();
       console.log('Database connection established');

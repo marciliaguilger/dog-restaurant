@@ -1,23 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: loadbalancer-dog-restaurant-api
+  name: dog-eks-service
+  namespace: default
 spec:
-  ports:
-  - port: 3000
-    targetPort: 3000
+  type: LoadBalancer
   selector:
     app: dog-restaurant-api
-  type: LoadBalancer    
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: loadbalancer-mssql
-spec:
   ports:
-  - port: 1433
-    targetPort: 1433
-  selector:
-    app: mssql
-  type: LoadBalancer    
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
