@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: dog-restaurant-api
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: dog-restaurant-api
@@ -16,7 +16,7 @@ spec:
       serviceAccountName: dog-service-account
       containers:
       - name: dog-restaurant-api
-        image: <AWS_ACCOUNT_ID>.dkr.ecr.us-east-1.amazonaws.com/dog-restaurant-api:latest
+        image: 764549915701.dkr.ecr.us-east-1.amazonaws.com/dog-restaurant-api:286b4fbc47e9e7a50bd29181d354ff8c8ff80692
         resources:
           requests:
             memory: "256Mi"
@@ -29,3 +29,13 @@ spec:
         env:
         - name: AWS_REGION
           value: "us-east-1"   
+        - name: DB_NAME
+          value: "dogrestaurantdb"          
+        - name: DB_PORT
+          value: "3306"          
+        - name: DB_USER
+          value: "dogadmin"          
+        - name: DB_PASSWORD
+          value: "Dogdog1029"                                        
+        - name: DB_HOST
+          value: "terraform-20240924003527026300000001.chg4syiuol8m.us-east-1.rds.amazonaws.com"              
