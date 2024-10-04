@@ -1,7 +1,7 @@
-CREATE DATABASE DogRestaurant
+CREATE DATABASE dogrestaurantdb
 GO
 
-USE DogRestaurant
+USE dogrestaurantdb
 GO
 
 CREATE TABLE dbo.Categorias(

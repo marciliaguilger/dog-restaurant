@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: dog-restaurant-api
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: dog-restaurant-api
@@ -13,9 +13,10 @@ spec:
         app: dog-restaurant-api
     spec:
       hostname: dog-restaurant-api
+      serviceAccountName: dog-service-account
       containers:
       - name: dog-restaurant-api
-        image: marciliaguilger/dog-restaurant:v16
+        image: <ACCOUNT>.dkr.ecr.us-east-1.amazonaws.com/dog-restaurant-api:<TAG>
         resources:
           requests:
             memory: "256Mi"
@@ -26,13 +27,15 @@ spec:
         ports:
         - containerPort: 3000
         env:
-        - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: data
-              key: DB_HOST
+        - name: AWS_REGION
+          value: ''  
+        - name: DB_NAME
+          value: ''
+        - name: DB_PORT
+          value: ''
+        - name: DB_USER
+          value: ''
         - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: apppasswords
-              key: DB_PASSWORD
+          value: ''
+        - name: DB_HOST
+          value: ''

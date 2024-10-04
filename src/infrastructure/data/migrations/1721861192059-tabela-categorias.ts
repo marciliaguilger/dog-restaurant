@@ -4,7 +4,7 @@ export class TabelaCategorias1721861192059 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(
-            `USE DogRestaurant
+            `USE dogrestaurantdb
 
             CREATE TABLE dbo.Categorias(
                 CategoriaId varchar(40) NOT NULL,

@@ -11,6 +11,7 @@ const connectWithRetry = async (dataSourceOptions, maxRetries = 5, retryDelay = 
       return dataSource;
     } catch (err) {
       retries++;
+      console.log(err)
       console.log(`Database connection failed, retry ${retries}/${maxRetries}...`);
       await new Promise(res => setTimeout(res, retryDelay));
     }
@@ -24,26 +25,22 @@ export const databaseProviders = [
     provide: 'DATA_SOURCE',
     useFactory: async () => {
       return connectWithRetry({
-        type: 'mssql',
+        type: 'mysql',
         host: process.env.DB_HOST,
-        port: 1433,
-        username: 'sa',
+        port: process.env.DB_PORT,
+        username: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
-        database: 'DogRestaurant',
+        database: process.env.DB_NAME,
         entities: [
           __dirname + '/**/entities/*.entity{.ts,.js}',
         ],
         migrations: [
           __dirname + '/**/entities/*.entity{.ts,.js}',
         ],
-
         synchronize: false,
-        logging: false,
-        //logger: 'advanced-console',
-        options: {
-          encrypt: true,
-          trustServerCertificate: true,
-        }
+        logging: true,
+        logger: 'advanced-console',
+        
       });
     },
   },

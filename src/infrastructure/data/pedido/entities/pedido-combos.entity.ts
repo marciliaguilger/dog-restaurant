@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryColumn } from "typeorm"
 
-@Entity()
+@Entity('PedidosCombos')
 export class Pedidoscombos {
     @PrimaryColumn()
     PedidoId: string
